@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>پیام</title>
+
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description"
+        content="Datta Able Bootstrap admin template made using Bootstrap 4 and it has huge amount of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
+    <meta name="keywords"
+        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, datta able, datta able bootstrap admin template">
+    <meta name="author" content="Codedthemes" />
+
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../assets/fonts/fontawesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css"
+        integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../assets/plugins/animation/css/animate.min.css">
+
+    <link rel="stylesheet" href="../assets/plugins/notification/css/notification.min.css">
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <link rel="stylesheet" href="../assets/css/layouts/rtl.css">
+
+    <link rel="stylesheet" href="../assets/plugins/jstree/css/style.min.css">
+
+
+</head>
+
+<body>
+
+    <!-- <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div> -->
+
+
+    <nav class="pcoded-navbar">
+        <div class="navbar-wrapper">
+            <br>
+            <div class="navbar-brand header-logo">
+                <a href="index.html" class="b-brand">
+                    <div class="b-bg">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <span class="b-title">پنل مدیریت</span>
+                </a>
+                <!-- <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a> -->
+            </div>
+            <div class="navbar-content scroll-div">
+                <ul class="nav pcoded-inner-navbar">
+                    <!-- <li class="nav-item pcoded-menu-caption">
+                            <label></label>
+                        </li> -->
+                    <br>
+                    <li data-username="message" class="nav-item "><a href="index.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-home"></i></span><span
+                                class="pcoded-mtext">داشبورد</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="personnel.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-users"></i></span><span
+                                class="pcoded-mtext">کارکنان</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="students.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span
+                                class="pcoded-mtext">دانش آموزان</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="verification.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-check-square"></i></span><span
+                                class="pcoded-mtext">تاییدیه ها</span></a></li>
+                    <li data-username="message" class="nav-item "><a href="news.html"
+                            class="nav-link"><span class="pcoded-micon"><i class="far fa-newspaper"></i></span><span
+                                class="pcoded-mtext"></span>اخبار</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="advertise.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="fas fa-bullhorn"></i></span><span
+                                class="pcoded-mtext">تبلیغات</span></a></li>
+                    <li data-username="message" class="nav-item active"><a href="message.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-message-circle"></i></span><span
+                                class="pcoded-mtext">پیام</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="setting.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-settings"></i></span><span
+                                class="pcoded-mtext">تنظیمات</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="signin.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-log-out"></i></span><span
+                                class="pcoded-mtext">خروج</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <header class="navbar pcoded-header navbar-expand-lg navbar-light">
+        <div class="m-header">
+            <a class="mobile-menu" id="mobile-collapse1" href="#!" dideo-checked="true"><span></span></a>
+            <a href="index.html" class="b-brand" dideo-checked="true">
+                <div class="b-bg">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <span class="b-title">پنل مدیریت</span>
+            </a>
+        </div>
+    </header>
+
+
+    <section class="header-user-list">
+        <button class="btn btn-theme btn-icon btn-msg-send" type="button"><i class="feather icon-play"></i></button>
+        <div class="h-list-header">
+            <div class="input-group">
+                <input type="text" id="search-friends" class="form-control" placeholder="Search Friend . . .">
+            </div>
+        </div>
+        <div class="h-list-body">
+            <a href="#!" class="h-close-text"><i class="feather icon-chevrons-right"></i></a>
+            <div class="main-friend-cont scroll-div">
+                <div class="main-friend-list">
+                    <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image ">
+                            <div class="live-status">3</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Josephin Doe<small class="d-block text-c-green">Typing . . </small>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Lary Doe<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alice<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="4" data-status="offline" data-username="Alia">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alia<small class="d-block text-muted">10 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="5" data-status="offline" data-username="Suzen">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-4.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Suzen<small class="d-block text-muted">15 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image ">
+                            <div class="live-status">3</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Josephin Doe<small class="d-block text-c-green">Typing . . </small>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Lary Doe<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alice<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="4" data-status="offline" data-username="Alia">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alia<small class="d-block text-muted">10 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="5" data-status="offline" data-username="Suzen">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-4.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Suzen<small class="d-block text-muted">15 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image ">
+                            <div class="live-status">3</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Josephin Doe<small class="d-block text-c-green">Typing . . </small>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Lary Doe<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alice<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="4" data-status="offline" data-username="Alia">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alia<small class="d-block text-muted">10 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="5" data-status="offline" data-username="Suzen">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-4.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Suzen<small class="d-block text-muted">15 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image ">
+                            <div class="live-status">3</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Josephin Doe<small class="d-block text-c-green">Typing . . </small>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Lary Doe<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alice<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="4" data-status="offline" data-username="Alia">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alia<small class="d-block text-muted">10 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="5" data-status="offline" data-username="Suzen">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-4.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Suzen<small class="d-block text-muted">15 min ago</small></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="header-chat">
+        <div class="h-list-header">
+            <h6>Josephin Doe</h6>
+            <a href="#!" class="h-back-user-list"><i class="feather icon-chevron-left"></i></a>
+        </div>
+        <div class="h-list-body">
+            <div class="main-chat-cont scroll-div">
+                <div class="main-friend-chat">
+                    <div class="media chat-messages">
+                        <a class="media-right photo-table" href="#!"><img
+                                class="media-object img-radius img-radius m-t-5"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body chat-menu-content">
+                            <div class="">
+                                <p class="chat-cont">hello Datta! Will you tell me something</p>
+                                <p class="chat-cont">about yourself?</p>
+                            </div>
+                            <p class="chat-time">8:20 a.m.</p>
+                        </div>
+                    </div>
+                    <div class="media chat-messages">
+                        <div class="media-body chat-menu-reply">
+                            <div class="">
+                                <p class="chat-cont">Ohh! very nice</p>
+                            </div>
+                            <p class="chat-time">8:22 a.m.</p>
+                        </div>
+                    </div>
+                    <div class="media chat-messages">
+                        <a class="media-left photo-table" href="#!"><img
+                                class="media-object img-radius img-radius m-t-5"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body chat-menu-content">
+                            <div class="">
+                                <p class="chat-cont">can you help me?</p>
+                            </div>
+                            <p class="chat-time">8:20 a.m.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="h-list-footer">
+            <div class="input-group">
+                <input type="file" class="chat-attach" style="display:none">
+                <a href="#!" class="input-group-prepend btn btn-success btn-attach">
+                    <i class="feather icon-paperclip"></i>
+                </a>
+                <input type="text" name="h-chat-text" class="form-control h-send-chat" placeholder="Write hear . . ">
+                <button type="submit" class="input-group-append btn-send btn btn-primary">
+                    <i class="feather icon-message-circle"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+
+
+                    <div class="main-body">
+                        <div class="page-wrapper">
+
+                            <div class="row">
+
+
+                                <div class="col-sm-12">
+                                    <div class="card msg-card mb-0">
+                                        <div class="card-body msg-block">
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-12">
+                                                    <div class="message-mobile">
+                                                        <div class="task-right-header-status">
+                                                            <span class="f-w-400" data-toggle="collapse">لیست
+                                                                مکالمات</span>
+                                                            <i class="fas fa-times float-right m-t-10"></i>
+                                                        </div>
+                                                        <div class="taskboard-right-progress">
+                                                            <div class="h-list-header m-b-20">
+
+                                                                <div class="input-group">
+
+                                                                    <input type="text" id="msg-friends"
+                                                                        class="form-control" placeholder="جستجو ..."
+                                                                        style="    background-color: #f4f7fa;     border: 1px solid #ced4da !important;"    >
+                                                                    <button id=""
+                                                                        class="btn btn-secondary btn-icon mr-1 "
+                                                                        type="button" id="contactList"
+                                                                        data-toggle="dropdown"><i
+                                                                            class="feather icon-align-justify "></i></button>
+                                                                    <!-- <button class="btn btn-secondary dropdown-toggle"
+                                                                        type="button" id="dropdownMenuButton"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        Dropdown button
+                                                                    </button> -->
+                                                                    <div class="dropdown-menu"
+                                                                        aria-labelledby="contactList">
+                                                                        <a class="dropdown-item" href="#"
+                                                                            data-toggle="modal"
+                                                                            data-target="#personnelListModal">کارکنان</a>
+                                                                        <a class="dropdown-item" href="#"
+                                                                            data-toggle="modal"
+                                                                            data-target="#studentsListModal">دانش
+                                                                            آموزان</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="h-list-body">
+                                                                <div class="msg-user-list scroll-div" id="df">
+                                                                    <div class="main-friend-list" id="personList">
+                                                                        <!-- <div class="media userlist-box " data-id="1"
+                                                                            data-status="online"
+                                                                            data-username="Josephin Doe">
+                                                                            <a class="media-left" href="#!"><img
+                                                                                    class="media-object img-radius"
+                                                                                    src="../assets/images/user/avatar-1.jpg"
+                                                                                    alt="Generic placeholder image ">
+                                                                            </a>
+                                                                            <div class="media-body">
+                                                                                <h6 class="chat-header">Josephin
+                                                                                    Doe</h6>
+                                                                            </div>
+                                                                        </div> -->
+                                                                        <!-- <div class="media userlist-box active " id="'+id+'"                                                                             data-id="2" data-status="online"
+                                                                            data-username="Lary Doe">
+                                                                            <a class="media-left" href="#!"><img
+                                                                                    class="media-object img-radius"
+                                                                                    src="../assets/images/user/avatar-2.jpg"
+                                                                                    alt="Generic placeholder image">
+                                                                            </a>
+                                                                            <div class="media-body">
+                                                                                <h6 class="chat-header">'+name+'
+                                                                                </h6>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="media userlist-box " data-id="3"
+                                                                            data-status="online" data-username="Alice">
+                                                                            <a class="media-left" href="#!"><img
+                                                                                    class="media-object img-radius"
+                                                                                    src="../assets/images/user/avatar-3.jpg"
+                                                                                    alt="Generic placeholder image"></a>
+                                                                            <div class="media-body">
+                                                                                <h6 class="chat-header">Alice<small
+                                                                                        class="d-block text-c-green">online</small>
+                                                                                </h6>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="media userlist-box " data-id="4"
+                                                                            data-status="offline" data-username="Alia">
+                                                                            <a class="media-left" href="#!"><img
+                                                                                    class="media-object img-radius"
+                                                                                    src="../assets/images/user/avatar-1.jpg"
+                                                                                    alt="Generic placeholder image">
+                                                                                <div class="live-status">1</div>
+                                                                            </a>
+                                                                            <div class="media-body">
+                                                                                <h6 class="chat-header">Alia<small
+                                                                                        class="d-block text-muted">10
+                                                                                        min ago</small></h6>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="media userlist-box " data-id="5"
+                                                                            data-status="offline" data-username="Suzen">
+                                                                            <a class="media-left" href="#!"><img
+                                                                                    class="media-object img-radius"
+                                                                                    src="../assets/images/user/avatar-4.jpg"
+                                                                                    alt="Generic placeholder image"></a>
+                                                                            <div class="media-body">
+                                                                                <h6 class="chat-header">Suzen<small
+                                                                                        class="d-block text-muted">15
+                                                                                        min ago</small></h6>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="media userlist-box " data-id="1"
+                                                                            data-status="online"
+                                                                            data-username="Josephin Doe">
+                                                                            <a class="media-left" href="#!"><img
+                                                                                    class="media-object img-radius"
+                                                                                    src="../assets/images/user/avatar-1.jpg"
+                                                                                    alt="Generic placeholder image "></a>
+                                                                            <div class="media-body">
+                                                                                <h6 class="chat-header">Josephin
+                                                                                    Doe<small
+                                                                                        class="d-block text-muted">10
+                                                                                        min ago</small></h6>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="media userlist-box " data-id="2"
+                                                                            data-status="online"
+                                                                            data-username="Lary Doe">
+                                                                            <a class="media-left" href="#!"><img
+                                                                                    class="media-object img-radius"
+                                                                                    src="../assets/images/user/avatar-2.jpg"
+                                                                                    alt="Generic placeholder image"></a>
+                                                                            <div class="media-body">
+                                                                                <h6 class="chat-header">Lary Doe<small
+                                                                                        class="d-block text-c-green">online</small>
+                                                                                </h6>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="media userlist-box " data-id="3"
+                                                                            data-status="online" data-username="Alice">
+                                                                            <a class="media-left" href="#!"><img
+                                                                                    class="media-object img-radius"
+                                                                                    src="../assets/images/user/avatar-3.jpg"
+                                                                                    alt="Generic placeholder image"></a>
+                                                                            <div class="media-body">
+                                                                                <h6 class="chat-header">Alice<small
+                                                                                        class="d-block text-c-green">online</small>
+                                                                                </h6>
+                                                                            </div>
+                                                                        </div> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-9 col-md-12">
+                                                    <div class="ch-block">
+                                                        <div class="h-list-body">
+                                                            <div class="msg-user-chat scroll-div">
+                                                                <div class="main-friend-chat" id="chatBox">
+                                                                    <!-- <div class="media chat-messages">
+                                                                        <div class="media-body chat-menu-reply">
+                                                                            <div class="">
+                                                                                <p class="chat-cont">'+text+'</p>
+                                                                            </div>
+                                                                            <p class="chat-time">'+date+'</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media chat-messages">
+                                                                        <div class="media-body chat-menu-content">
+                                                                            <div class="">
+
+                                                                                <p class="chat-cont"> سلام تشکر بله
+                                                                                    درخدمتم .</p>
+                                                                            </div>
+                                                                            <p class="chat-time">8:20</p>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media chat-messages">
+
+                                                                        <div class="media-body chat-menu-reply">
+                                                                            <div class="">
+                                                                                <p class="chat-cont">راضی هستید ازشون؟
+                                                                                </p>
+                                                                            </div>
+                                                                            <p class="chat-time">8:20</p>
+                                                                        </div>
+                                                                        <a class="media-left photo-table" href="#!"><img
+                                                                                class="media-object img-radius img-radius m-t-5"
+                                                                                src="../assets/images/user/avatar-2.jpg"
+                                                                                alt="Generic placeholder image"></a>
+                                                                    </div> -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="msg-form">
+                                                            <div class="input-group mb-0">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-theme btn-icon btn-msg-send"
+                                                                        type="button"><i
+                                                                            class="feather icon-play"></i></button>
+                                                                </div>
+                                                                <input type="text" class="form-control msg-send-chat" id="cahtContent"
+                                                                    placeholder="متن ...." style="border: 1px solid rgba(0,0,0,.1) !important;">
+                                                                <div class="input-group-append">
+                                                                    <input type="file" id="imgupload"
+                                                                        style="display:none" />
+                                                                    <!-- <button id="OpenImgUpload"
+                                                                        class="btn btn-secondary btn-icon" type="button"
+                                                                        data-toggle="tooltip" title="file attachment"><i
+                                                                            class="feather icon-paperclip"></i></button> -->
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="personnelListModal" class="modal fade" tabindex="-1" role="dialog"
+                                    aria-labelledby="personnelListModal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <!-- <div class="input-group m-b-20">
+                                                    <input type="text" id="personnelSearch" class="form-control"
+                                                    style="    background-color: #f4f7fa;     border: 1px solid #ced4da !important;
+                                                    " placeholder="جستجو ...">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"><i
+                                                                class="feather icon-search"></i></span>
+                                                    </div>
+                                                </div> -->
+                                                <div class="table-responsive" style="margin-top:20px;">
+                                                    <table class="table table-hover">
+                                                            <div class="table-responsive">
+                                                                    <table class="table table-hover m-t-15">
+                                                                
+                                                                        <tbody id="StaffList">
+                                                                           
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                    </table>
+                                                </div>
+
+                                                <button type="button" class="btn btn-outline-danger closes col-lg-1" style="margin-right: 10px;" 
+                                                    data-dismiss="modal">بستن</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="studentsListModal" class="modal fade" tabindex="-1" role="dialog"
+                                    aria-labelledby="studentsListModal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+
+                                                <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
+                                                    <nav class="navbar m-b-30 p-10  border border-info"
+                                                        style="padding-top:20px;padding-bottom: 20px; ">
+
+                                                        <div class="col-sm-3">
+                                                            <select id="maghtaStudentsList"
+                                                                class="browser-default custom-select">
+                                                                <option value="یس" disabled selected>
+                                                                مقاطع:</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-sm-3" id="payeSelectStudents">
+                                                            <select class="browser-default custom-select"
+                                                                id="payeStudentsList" disabled>
+                                                                <option value="یس" disabled selected>
+                                                                    پایه ها:</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-sm-3">
+                                                            <select id="classStudentsList"
+                                                                class="browser-default custom-select" disabled>
+                                                                <option value="یس" disabled selected>
+                                                                    کلاس ها:</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-sm-3">
+                                                            <button id="StudentsListFilter" type="button"
+                                                                class="btn btn-primary btn-icon m-0"
+                                                                data-toggle="tooltip" data-placement="top"
+                                                                title="اعمال فیلتر" style="float: left;">
+                                                                <i class="fas fa-list-ul"></i>
+                                                            </button>
+                                                        </div>
+                                                    </nav>
+                                                </div>
+                                                <!-- <div class="input-group m-b-20" style="width: 30%;">
+                                                    <input type="text" id="studentsSearch" class="form-control"
+                                                        style="    background-color: #f4f7fa;     border: 1px solid #ced4da !important;
+                                                        " placeholder="جستجو ...">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"><i
+                                                                class="feather icon-search"></i></span>
+                                                    </div>
+                                                </div> -->
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        
+                                                        <tbody id="StudentsList">
+                            
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+
+                                                <button type="button" class="btn btn-outline-danger closes" 
+                                                    data-dismiss="modal">بستن</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div id="speedAccess" class="modal fade" tabindex="-1" role="dialog"
+                                    aria-labelledby="speedAccess" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="card-block">
+                                                    <div id="html" class="demo">
+                                                        <ul>
+                                                            <li data-jstree='{ "opened" : true }'> مدرسه غیر دولتی شایان
+                                                                <ul>
+                                                                    <li>دبستان
+                                                                        <ul>
+                                                                            <li>پایه اول
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a class="dropdown-item"
+                                                                                            onclick="closeSpeedAccess()"
+                                                                                            href="#" data-toggle="modal"
+                                                                                            data-target="#studentsListModal">کلاس
+                                                                                            101</a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a class="dropdown-item"
+                                                                                            href="#" data-toggle="modal"
+                                                                                            data-target="#studentsListModal">کلاس
+                                                                                            102</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                            <li>پایه دوم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                            <li>پایه سوم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+
+                                                                            <li>پایه چهارم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+
+                                                                            <li>پایه پنجم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                            <li>پایه ششم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li>راهنمایی
+                                                                        <ul>
+                                                                            <li>پایه هفتم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                            <li>پایه هشتم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                            <li>پایه نهم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li>دبیرستان
+                                                                        <ul>
+                                                                            <li>پایه دهم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                            <li>پایه یازدهم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                            <li>پایه دوازدهم
+                                                                                <ul>
+                                                                                    <li>کلاس 101
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>کلاس 102
+                                                                                        <ul>
+                                                                                            <li>ریاضی</li>
+                                                                                            <li>علوم</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <button id="errorNotification" class="btn notifications btn-danger"
+                                style="display: none;" data-type="danger" data-from="top"
+                                data-align="right">Danger</button>
+                            <button id="successNotification" class="btn notifications btn-success"
+                                data-type="success" style="display: none;" data-from="top"
+                                data-align="right">success</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/vendor-all.min.js"></script>
+    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/js/pcoded.min.js"></script>
+    <script src="../assets/js/menu-setting.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#msg-friends").on("keyup", function () {
+                var g = $(this).val().toLowerCase();
+                $(".msg-user-list .userlist-box .media-body .chat-header").each(function () {
+                    var s = $(this).text().toLowerCase();
+                    $(this).closest('.userlist-box')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+                });
+            });
+            
+            function closeSpeedAccess() {
+                alert("fd");
+                $("#speedAccess").hide();
+            }
+            $('#OpenImgUpload').click(function () {
+                $('#imgupload').trigger('click');
+            });
+            // $('.msg-send-chat').on('keyup', function (e) {
+            //     msg_cfc(e);
+            // });
+            // $('.btn-msg-send').on('click', function (e) {
+            //     msg_fc(e);
+            // });
+
+            // function msg_cfc(e) {
+            //     if (e.which == 13) {
+            //         msg_fc(e);
+            //     }
+            // };
+
+            // function msg_fc(e) {
+            //     $('.msg-block .main-friend-chat').append('' +
+            //         '<div class="media chat-messages">' +
+            //         '<div class="media-body chat-menu-content">' +
+            //         '<div class="">' +
+            //         '<p class="chat-cont">' + $('.msg-send-chat').val() + '</p>' +
+            //         '</div>' +
+            //         '<p class="chat-time">now</p>' +
+            //         '</div>' +
+            //         '</div>' +
+            //         '');
+            //     msg_frc($('.msg-send-chat').val());
+            //     msg_fsc();
+            //     $('.msg-send-chat').val(null);
+            // };
+
+            // function msg_frc(wrmsg) {
+            //     setTimeout(function () {
+            //         $('.msg-block .main-friend-chat').append('' +
+            //             '<div class="media chat-messages typing">' +
+            //             '<div class="media-body chat-menu-reply">' +
+            //             '<div class="rem-msg">' +
+            //             '<p class="chat-cont">Typing . . .</p>' +
+            //             '</div>' +
+            //             '<p class="chat-time">now</p>' +
+            //             '</div>' +
+            //             '<a class="media-left photo-table" href="#!"><img class="media-object img-radius img-radius m-t-5" src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image"></a>' +
+            //             '</div>' +
+            //             '');
+            //         msg_fsc();
+            //     }, 1500);
+            //     setTimeout(function () {
+            //         document.getElementsByClassName("rem-msg")[0].innerHTML = "<p class='chat-cont'>شت  :((  </p>";
+            //         $('.rem-msg').removeClass("rem-msg");
+            //         $('.typing').removeClass("typing");
+            //         msg_fsc();
+            //     }, 3000);
+            // };
+
+            // function msg_fsc() {
+            //     var tmph = $('.header-chat .main-friend-chat');
+            //     $('.msg-user-chat.scroll-div').scrollTop(tmph.outerHeight());
+            // }
+            var ps = new PerfectScrollbar('.msg-user-list.scroll-div', {
+                wheelSpeed: .5,
+                swipeEasing: 0,
+                suppressScrollX: !0,
+                wheelPropagation: 1,
+                minScrollbarLength: 40,
+            });
+            var ps = new PerfectScrollbar('.msg-user-chat.scroll-div', {
+                wheelSpeed: .5,
+                swipeEasing: 0,
+                suppressScrollX: !0,
+                wheelPropagation: 1,
+                minScrollbarLength: 40,
+            });
+            $(".task-right-header-status").on('click', function () {
+                $(".taskboard-right-progress").slideToggle();
+            });
+
+            $(".message-mobile .media").on('click', function () {
+                var vw = $(window)[0].innerWidth;
+                if (vw < 992) {
+                    $(".taskboard-right-progress").slideUp();
+                    $(".msg-block").addClass('dis-chat');
+                }
+            });
+        });
+    </script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="../assets/plugins/notification/js/bootstrap-growl.min.js"></script>
+
+    <script src="../assets/js/pages-api/message.js"></script>
+
+</body>
+
+</html>

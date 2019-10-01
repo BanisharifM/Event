@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>تاییدیه ها</title>
+
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description"
+        content="Datta Able Bootstrap admin template made using Bootstrap 4 and it has huge amount of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
+    <meta name="keywords"
+        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, datta able, datta able bootstrap admin template">
+    <meta name="author" content="Codedthemes" />
+
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../assets/fonts/fontawesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css"
+        integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../assets/plugins/animation/css/animate.min.css">
+
+    <link rel="stylesheet" href="../assets/plugins/notification/css/notification.min.css">
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <link rel="stylesheet" href="../assets/css/layouts/rtl.css">
+
+    <link rel="stylesheet" href="../assets/plugins/select2/css/select2.min.css">
+
+    <link rel="stylesheet" href="../assets/plugins/smart-wizard/css/smart_wizard.min.css">
+    <link rel="stylesheet" href="../assets/plugins/smart-wizard/css/smart_wizard_theme_arrows.min.css">
+    <link rel="stylesheet" href="../assets/plugins/smart-wizard/css/smart_wizard_theme_circles.min.css">
+    <link rel="stylesheet" href="../assets/plugins/smart-wizard/css/smart_wizard_theme_dots.min.css">
+
+    <link rel="stylesheet" href="../assets/plugins/notification/css/notification.min.css">
+
+    <link rel="stylesheet" href="../assets/plugins/jstree/css/style.min.css">
+
+
+</head>
+
+<body>
+
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+
+
+    <nav class="pcoded-navbar">
+        <div class="navbar-wrapper">
+            <br>
+            <div class="navbar-brand header-logo">
+                <a href="index.html" class="b-brand">
+                    <div class="b-bg">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <span class="b-title">پنل مدیریت</span>
+                </a>
+                <!-- <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a> -->
+            </div>
+            <div class="navbar-content scroll-div">
+                <ul class="nav pcoded-inner-navbar">
+                    <!-- <li class="nav-item pcoded-menu-caption">
+                            <label></label>
+                        </li> -->
+                    <br>
+                    <li data-username="message" class="nav-item "><a href="index.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-home"></i></span><span
+                                class="pcoded-mtext">داشبورد</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="personnel.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-users"></i></span><span
+                                class="pcoded-mtext">کارکنان</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="students.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span
+                                class="pcoded-mtext">دانش آموزان</span></a></li>
+                    <li data-username="message" class="nav-item active"><a href="verification.html"
+                            class="nav-link"><span class="pcoded-micon"><i
+                                    class="feather icon-check-square"></i></span><span class="pcoded-mtext">تاییدیه
+                                ها</span></a></li>
+                    <li data-username="message" class="nav-item "><a href="news.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="far fa-newspaper"></i></span><span
+                                class="pcoded-mtext"></span>اخبار</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="advertise.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="fas fa-bullhorn"></i></span><span
+                                class="pcoded-mtext">تبلیغات</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="message.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-message-circle"></i></span><span
+                                class="pcoded-mtext">پیام</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="setting.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-settings"></i></span><span
+                                class="pcoded-mtext">تنظیمات</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="signin.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="feather icon-log-out"></i></span><span
+                                class="pcoded-mtext">خروج</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <header class="navbar pcoded-header navbar-expand-lg navbar-light">
+        <div class="m-header">
+            <a class="mobile-menu" id="mobile-collapse1" href="#!" dideo-checked="true"><span></span></a>
+            <a href="index.html" class="b-brand" dideo-checked="true">
+                <div class="b-bg">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <span class="b-title">پنل مدیریت</span>
+            </a>
+        </div>
+    </header>
+
+
+    <section class="header-user-list">
+        <div class="h-list-header">
+            <div class="input-group">
+                <input type="text" id="search-friends" class="form-control" placeholder="Search Friend . . .">
+            </div>
+        </div>
+        <div class="h-list-body">
+            <a href="#!" class="h-close-text"><i class="feather icon-chevrons-right"></i></a>
+            <div class="main-friend-cont scroll-div">
+                <div class="main-friend-list">
+                    <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image ">
+                            <div class="live-status">3</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Josephin Doe<small class="d-block text-c-green">Typing . . </small>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Lary Doe<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alice<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="4" data-status="offline" data-username="Alia">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alia<small class="d-block text-muted">10 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="5" data-status="offline" data-username="Suzen">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-4.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Suzen<small class="d-block text-muted">15 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image ">
+                            <div class="live-status">3</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Josephin Doe<small class="d-block text-c-green">Typing . . </small>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Lary Doe<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alice<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="4" data-status="offline" data-username="Alia">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alia<small class="d-block text-muted">10 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="5" data-status="offline" data-username="Suzen">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-4.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Suzen<small class="d-block text-muted">15 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image ">
+                            <div class="live-status">3</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Josephin Doe<small class="d-block text-c-green">Typing . . </small>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Lary Doe<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alice<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="4" data-status="offline" data-username="Alia">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alia<small class="d-block text-muted">10 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="5" data-status="offline" data-username="Suzen">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-4.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Suzen<small class="d-block text-muted">15 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="1" data-status="online" data-username="Josephin Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image ">
+                            <div class="live-status">3</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Josephin Doe<small class="d-block text-c-green">Typing . . </small>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="2" data-status="online" data-username="Lary Doe">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Lary Doe<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alice<small class="d-block text-c-green">online</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="4" data-status="offline" data-username="Alia">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+                            <div class="live-status">1</div>
+                        </a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Alia<small class="d-block text-muted">10 min ago</small></h6>
+                        </div>
+                    </div>
+                    <div class="media userlist-box" data-id="5" data-status="offline" data-username="Suzen">
+                        <a class="media-left" href="#!"><img class="media-object img-radius"
+                                src="../assets/images/user/avatar-4.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h6 class="chat-header">Suzen<small class="d-block text-muted">15 min ago</small></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="header-chat">
+        <div class="h-list-header">
+            <h6>Josephin Doe</h6>
+            <a href="#!" class="h-back-user-list"><i class="feather icon-chevron-left"></i></a>
+        </div>
+        <div class="h-list-body">
+            <div class="main-chat-cont scroll-div">
+                <div class="main-friend-chat">
+                    <div class="media chat-messages">
+                        <a class="media-left photo-table" href="#!"><img
+                                class="media-object img-radius img-radius m-t-5"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body chat-menu-content">
+                            <div class="">
+                                <p class="chat-cont">hello Datta! Will you tell me something</p>
+                                <p class="chat-cont">about yourself?</p>
+                            </div>
+                            <p class="chat-time">8:20 a.m.</p>
+                        </div>
+                    </div>
+                    <div class="media chat-messages">
+                        <div class="media-body chat-menu-reply">
+                            <div class="">
+                                <p class="chat-cont">Ohh! very nice</p>
+                            </div>
+                            <p class="chat-time">8:22 a.m.</p>
+                        </div>
+                    </div>
+                    <div class="media chat-messages">
+                        <a class="media-left photo-table" href="#!"><img
+                                class="media-object img-radius img-radius m-t-5"
+                                src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image"></a>
+                        <div class="media-body chat-menu-content">
+                            <div class="">
+                                <p class="chat-cont">can you help me?</p>
+                            </div>
+                            <p class="chat-time">8:20 a.m.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="h-list-footer">
+            <div class="input-group">
+                <input type="file" class="chat-attach" style="display:none">
+                <a href="#!" class="input-group-prepend btn btn-success btn-attach">
+                    <i class="feather icon-paperclip"></i>
+                </a>
+                <input type="text" name="h-chat-text" class="form-control h-send-chat" placeholder="Write hear . . ">
+                <button type="submit" class="input-group-append btn-send btn btn-primary">
+                    <i class="feather icon-message-circle"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+
+
+                    <div class="main-body">
+                        <div class="page-wrapper">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5 class="mb-3">تایید تاریخ امتحانات</h5>
+                                    <hr>
+                                    <div class="accordion" id="accordionExample1">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0"><a href="#!" data-toggle="collapse"
+                                                        data-target="#collapse1" aria-expanded="true"
+                                                        aria-controls="collapse1">لیست امتحانات</a></h5>
+                                            </div>
+                                            <div id="collapse1" class=" card-body collapse "
+                                                aria-labelledby="headingOne" data-parent="#accordionExample1">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="border-top-0">وضعیت</th>
+                                                                <th class="border-top-0">اسم</th>
+                                                                <th class="border-top-0">اطلاعات</th>
+                                                                <th class="border-top-0" style="text-align: center;">
+                                                                    تاریخ</th>
+                                                                <th class="border-top-0">نمره امتحان</th>
+                                                                <th class="border-top-0">توضیحات</th>
+                                                                <th class="border-top-0">
+
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="TestDateList">
+                                                            <!-- <tr>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <div class="checkbox checkbox-fill d-inline">
+                                                                                <input type="checkbox"
+                                                                                    name="checkbox-fill-1"
+                                                                                    id="checkbox-fill-1" checked>
+                                                                                <label for="checkbox-fill-1"
+                                                                                    class="cr"><span
+                                                                                        class="badge badge-danger">جدید</span></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <h6 class="mb-1">فیزیک</h6>
+                                                                    </td>
+                                                                    <td><span class="pie_1">دبیرستان/ پایه دوم/ کلاس
+                                                                            101</span></td>
+                                                                    <td>
+                                                                        <h6 class="m-0">تاریخ</h6>
+                                                                    </td>
+                                                                    <td>
+                                                                        <h6 class="m-0">توضیحات ...</h6>
+                                                                    </td>
+                                                                    <td>
+                                                                        <i
+                                                                            class="fas fa-edit theme-bg2 label text-white user-list-style"></i>
+                                                                        <i
+                                                                            class="fas  fa-trash-alt theme-bg3 label text-white user-list-style"></i>
+                                                                    </td>
+                                                                </tr> -->
+                                                            <!-- <tr>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <div
+                                                                                class="checkbox checkbox-primary checkbox-fill d-inline">
+                                                                                <input type="checkbox"
+                                                                                    name="checkbox-fill-p-1"
+                                                                                    id="checkbox-p-fill-2">
+                                                                                <label for="checkbox-p-fill-2"
+                                                                                    class="cr"></label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <h6 class="mb-1">فیزیک</h6>
+                                                                    </td>
+                                                                    <td><span class="pie_1">دبیرستان/ پایه دوم/ کلاس
+                                                                            101</span></td>
+                                                                    <td>
+                                                                        <h6 class="m-0">تاریخ</h6>
+                                                                    </td>
+                                                                    <td>
+                                                                        <h6 class="m-0">توضیحات ...</h6>
+                                                                    </td>
+                                                                    <td>
+                                                                        <i
+                                                                            class="fas fa-edit theme-bg2 label text-white user-list-style"></i>
+                                                                        <i
+                                                                            class="fas  fa-trash-alt theme-bg3 label text-white user-list-style"></i>
+                                                                    </td>
+                                                                </tr> -->
+                                                            <!-- <tr>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <div
+                                                                                class="checkbox checkbox-danger checkbox-fill d-inline m-r-10">
+                                                                                <input type="checkbox"
+                                                                                    id="checkbox-d-fill-4" disabled checked>
+                                                                                <label for="checkbox-d-fill-4"
+                                                                                    class="cr"></label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <h6 class="mb-1">فیزیک</h6>
+                                                                    </td>
+                                                                    <td><span class="pie_1">دبیرستان/ پایه دوم/ کلاس
+                                                                            101</span></td>
+                                                                    <td>
+                                                                        <h6 class="m-0">تاریخ</h6>
+                                                                    </td>
+                                                                    <td>
+                                                                        <h6 class="m-0">توضیحات ...</h6>
+                                                                    </td>
+                                                                    <td>
+                                                                        <i
+                                                                            class="fas fa-edit theme-bg2 label text-white user-list-style"></i>
+                                                                        <i
+                                                                            class="fas  fa-trash-alt theme-bg3 label text-white user-list-style"></i>
+                                                                    </td>
+                                                                </tr> -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <h5 class="mb-3">تایید نمرات</h5>
+                                    <hr>
+                                    <div class="accordion" id="accordionExample4">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0"><a href="#!" data-toggle="collapse"
+                                                        data-target="#collapse4" aria-expanded="true"
+                                                        aria-controls="collapse4">لیست امتحانات</a></h5>
+                                            </div>
+                                            <div id="collapse4" class=" card-body collapse "
+                                                aria-labelledby="headingOne" data-parent="#accordionExample4">
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <h5 class="mb-3">تایید ازمون آنلاین</h5>
+                                    <hr>
+                                    <div class="accordion" id="accordionExample2">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOneg">
+                                                <h5 class="mb-0"><a href="#!" data-toggle="collapse"
+                                                        data-target="#collapse2" aria-expanded="true"
+                                                        aria-controls="collapseOne">لیست آزمون ها</a></h5>
+                                            </div>
+                                            <div id="collapse2" class=" card-body collapse "
+                                                aria-labelledby="headingOne" data-parent="#accordionExample2">
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="border-top-0">وضعیت</th>
+                                                                <th class="border-top-0">اسم</th>
+                                                                <th class="border-top-0">اطلاعات</th>
+                                                                <th class="border-top-0">تاریخ شروع</th>
+                                                                <th class="border-top-0">تاریخ پایان</th>
+                                                                <th class="border-top-0">مدت زمان</th>
+                                                                <th class="border-top-0">توضیحات</th>
+                                                                <th class="border-top-0">
+
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="AzmoonStatusTable"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h5 class="mb-3">تایید نمونه سوال</h5>
+                                    <hr>
+                                    <div class="accordion" id="accordionExample3">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0"><a href="#!" data-toggle="collapse"
+                                                        data-target="#collapse3" aria-expanded="true"
+                                                        aria-controls="collapse3">لیست نمونه سوالات</a></h5>
+                                            </div>
+                                            <div id="collapse3" class=" card-body collapse "
+                                                aria-labelledby="headingOne" data-parent="#accordionExample3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="border-top-0">وضعیت</th>
+                                                                <th class="border-top-0">امتحان</th>
+                                                                <th class="border-top-0">فایل</th>
+                                                                <th class="border-top-0"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="NemuneSoalList">
+                                                            <!-- <tr>
+                                                                <td>
+                                                                    <div class="form-group">
+                                                                        <div class="checkbox checkbox-fill d-inline">
+                                                                            <input type="checkbox"
+                                                                                name="checkbox-fill-11"
+                                                                                id="checkbox-fill-11" checked>
+                                                                            <label for="checkbox-fill-11"
+                                                                                class="cr"></label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </td>
+                                                                <td>
+                                                                    <h6 class="mb-1">فیزیک</h6>
+                                                                </td>
+                                                                <td><span class="pie_1">test.pdf</span></td>
+                                                                
+                                                                <td>
+                                                                    <i
+                                                                        class="fas fa-edit theme-bg2 label text-white user-list-style"></i>
+                                                                    <i
+                                                                        class="fas  fa-trash-alt theme-bg3 label text-white user-list-style"></i>
+                                                                </td>
+                                                            </tr> -->
+                                                            <!-- <tr>
+                                                                <td>
+                                                                    <div class="form-group">
+                                                                        <div
+                                                                            class="checkbox checkbox-danger checkbox-fill d-inline">
+                                                                            <input type="checkbox"
+                                                                                name="checkbox-d-fill-12"
+                                                                                id="checkbox-d-fill-12" checked>
+                                                                            <label for="checkbox-d-fill-12"
+                                                                                class="cr"></label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </td>
+                                                                <td>
+                                                                    <h6 class="mb-1">فیزیک</h6>
+                                                                </td>
+                                                                <td><span class="pie_1"><a href="http://iums.ac.ir/uploads/aludegi_havai_16341.pdf"  target="_blank"> dfg</a></span></td>
+                                                                
+                                                                <td>
+                                                                    <i
+                                                                        class="fas fa-edit theme-bg2 label text-white user-list-style"></i>
+                                                                    <i
+                                                                        class="fas  fa-trash-alt theme-bg3 label text-white user-list-style"></i>
+                                                                </td>
+                                                            </tr> -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <button id="errorNotification" class="btn notifications btn-danger" style="display: none;"
+                        data-type="danger" data-from="top" data-align="right">Danger</button>
+                    <button id="successNotification" class="btn notifications btn-success" data-type="success"
+                        style="display: none;" data-from="top" data-align="right">success</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="../assets/js/pages-api/verification.js"></script>
+
+    <script src="../assets/plugins/notification/js/bootstrap-growl.min.js"></script>
+
+    <script src="../assets/js/vendor-all.min.js"></script>
+    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/js/menu-setting.min.js"></script>
+    <script src="../assets/js/pcoded.min.js"></script>
+
+
+    <script src="../assets/js/pages/form-masking-custom.js"></script>
+    <script src="../assets/plugins/inputmask/js/inputmask.min.js"></script>
+    <script src="../assets/plugins/inputmask/js/jquery.inputmask.min.js"></script>
+    <script src="../assets/plugins/inputmask/js/autoNumeric.js"></script>
+
+    <script src="../assets/plugins/notification/js/bootstrap-growl.min.js"></script>
+
+    <script src="../assets/js/pages/dashboard-custom.js"></script>
+
+    <script src="../assets/plugins/smart-wizard/js/jquery.smartWizard.min.js"></script>
+    <script src="../assets/js/pages/wizard-custom.js"></script>
+
+</body>
+
+</html>
+
+
+
+<!-- <div class="card">
+                                                            <div class="card-header" id="headingOne">
+                                                                <h5 class="mb-0"><a href="#!" data-toggle="collapse"
+                                                                        data-target="#collapse2" aria-expanded="true"
+                                                                        aria-controls="collapseOne">لیست آزمون ها</a></h5>
+                                                            </div>
+                                                            <div id="collapse2" class=" card-body collapse "
+                                                                aria-labelledby="headingOne" data-parent="#accordionExample2">
+
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th class="border-top-0">وضعیت</th>
+                                                                                <th class="border-top-0">تاریخ</th>
+                                                                                <th class="border-top-0" >مدت زمان</th>
+                                                                                <th class="border-top-0"></th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="">
+                                                                            
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div id="smartwizard-left" class="sw-vertical-left">
+                                                                    <ul>
+                                                                        <li><a href="#step-l-1">
+                                                                                <h6>سوال 1</h6>
+                                                                            </a></li>
+                                                                        <li><a href="#step-l-2">
+                                                                                <h6>سوال 2</h6>
+                                                                            </a></li>
+                                                                        <li><a href="#step-l-3">
+                                                                                <h6>سوال 3</h6>
+                                                                            </a></li>
+                                                                        <li><a href="#step-l-4">
+                                                                                <h6>سوال 4</h6>
+                                                                            </a></li>
+                                                                    </ul>
+                                                                    <div>
+                                                                        <div id="step-l-1">
+                                                                            <h5> سوال اول</h5>
+                                                                            <hr>
+                                                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+                                                                                و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه
+                                                                                روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
+                                                                                شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف
+                                                                                بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و
+                                                                                سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان
+                                                                                را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان
+                                                                                رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان
+                                                                                فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و
+                                                                                دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان
+                                                                                رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و
+                                                                                جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد
+                                                                                استفاده قرار گیرد.</p>
+                                                                        </div>
+                                                                        <div id="step-l-2">
+                                                                            <h5> سوال دوم</h5>
+                                                                            <hr>
+                                                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+                                                                                و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه
+                                                                                روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
+                                                                                شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف
+                                                                                بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و
+                                                                                سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان
+                                                                                را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان
+                                                                                رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان
+                                                                                فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و
+                                                                                دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان
+                                                                                رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و
+                                                                                جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد
+                                                                                استفاده قرار گیرد.</p>
+                                                                        </div>
+                                                                        <div id="step-l-3">
+                                                                            <h5> سوال سوم</h5>
+                                                                            <hr>
+                                                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+                                                                                و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه
+                                                                                روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
+                                                                                شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف
+                                                                                بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و
+                                                                                سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان
+                                                                                را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان
+                                                                                رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان
+                                                                                فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و
+                                                                                دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان
+                                                                                رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و
+                                                                                جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد
+                                                                                استفاده قرار گیرد.</p>
+                                                                        </div>
+                                                                        <div id="step-l-4">
+                                                                            <h5> سوال چهارم</h5>
+                                                                            <hr>
+                                                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+                                                                                و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه
+                                                                                روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
+                                                                                شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف
+                                                                                بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و
+                                                                                سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان
+                                                                                را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان
+                                                                                رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان
+                                                                                فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و
+                                                                                دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان
+                                                                                رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و
+                                                                                جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد
+                                                                                استفاده قرار گیرد.</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div> -->
