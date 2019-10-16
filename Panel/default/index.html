@@ -2,9 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>پنل مدیریت</title>
-
-
+    <title>داشبورد</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -50,10 +48,11 @@
             <br>
             <div class="navbar-brand header-logo">
                 <a href="index.html" class="b-brand">
-                    <div class="b-bg">
+                    <img src="../assets/images/widget/event9.png" style="width:200px;height:50px;">
+                    <!-- <div class="b-bg">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <span class="b-title">پنل مدیریت</span>
+                    <span class="b-title">پنل مدیریت</span> -->
                 </a>
                 <!-- <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a> -->
             </div>
@@ -62,25 +61,19 @@
                     <!-- <li class="nav-item pcoded-menu-caption">
                             <label></label>
                         </li> -->
-                    <br>
+                    <!-- <br> -->
                     <li data-username="message" class="nav-item active"><a href="index.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="feather icon-home"></i></span><span
                                 class="pcoded-mtext">داشبورد</span></a></li>
-                    <li data-username="message" class="nav-item"><a href="personnel.html" class="nav-link"><span
+                    <li data-username="message" class="nav-item"><a href="users.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="feather icon-users"></i></span><span
-                                class="pcoded-mtext">کارکنان</span></a></li>
-                    <li data-username="message" class="nav-item"><a href="students.html" class="nav-link"><span
-                                class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span
-                                class="pcoded-mtext">دانش آموزان</span></a></li>
-                    <li data-username="message" class="nav-item"><a href="verification.html" class="nav-link"><span
-                                class="pcoded-micon"><i class="feather icon-check-square"></i></span><span
-                                class="pcoded-mtext">تاییدیه ها</span></a></li>
+                                class="pcoded-mtext">شرکت کنندگان</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="schedule.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="fas fa-list-ul fa-rotate-180"></i></span><span
+                                class="pcoded-mtext">برنامه</span></a></li>
                     <li data-username="message" class="nav-item "><a href="news.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="far fa-newspaper"></i></span><span
                                 class="pcoded-mtext"></span>اخبار</span></a></li>
-                    <li data-username="message" class="nav-item"><a href="advertise.html" class="nav-link"><span
-                                class="pcoded-micon"><i class="fas fa-bullhorn"></i></span><span
-                                class="pcoded-mtext">تبلیغات</span></a></li>
                     <li data-username="message" class="nav-item"><a href="message.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="feather icon-message-circle"></i></span><span
                                 class="pcoded-mtext">پیام</span></a></li>
@@ -362,27 +355,33 @@
                             <div class="row">
 
 
-                                <div class="col-xl-4 col-md-12 mx-auto">
+                                <div class="col-xl-8 col-md-12 mx-auto">
                                     <div class="card">
                                         <div class="card-block p-0">
-                                            <img class="img-fluid" style="width:100%; height: 100%;" id="imageUrl"
-                                                 alt="dashboard-user">
-                                                <input id="imageUrlInp" type="file" accept="image/*" style="display: none" />
-                                            <div class="ux-designer">
-                                                <button class="btn btn-primary" id="editSchool" >
-                                                    <i class="fas fa-pencil-alt f-14 mr-0" id="editSchoolIcon" data-toggle="tooltip"
-                                                    data-placement="top" title="ویرایش تصویر"></i>
-                                                    <i class="fas fa-check-circle f-14 mr-0" id="saveSchoolIcon" style="display:none;"data-toggle="tooltip"
-                                                    data-placement="top" title="ذخیره"></i>
-                                                <i id="cancelSchoolIcon" class="fas fa-times-circle f-14 mr-0r label text-white" style="display:none"data-toggle="tooltip"
-                                                data-placement="bottom" title="لغو"></i>
-                                                </button>
-                                                <h5 class="text-center" id="schoolName"></h5>
-                                                <input id="schoolNameInp" type="text" style="display:none;text-align: center; margin:auto;" value="dsfg">
-                                                <span id="schoolDetail"
-                                                    style="text-align: center; display:block; margin:auto;"></span>
-                                                <textarea id="schoolDetailInp" rows="2" cols="40" type="text"
-                                                    style="display:none;text-align: center;color: #888; margin:auto;"></textarea>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="ux-designer">
+                                                        <button class="btn btn-primary" id="editSchool" >
+                                                            <i class="fas fa-pencil-alt f-14 mr-0" id="editSchoolIcon" data-toggle="tooltip"
+                                                            data-placement="top" title="ویرایش"></i>
+                                                            <i class="fas fa-check-circle f-14 mr-0" id="saveSchoolIcon" style="display:none;"data-toggle="tooltip"
+                                                            data-placement="top" title="ذخیره"></i>
+                                                        <i id="cancelSchoolIcon" class="fas fa-times-circle f-14 mr-0r label text-white" style="display:none"data-toggle="tooltip"
+                                                        data-placement="bottom" title="لغو"></i>
+                                                        </button>
+                                                        <h5 class="text-center" id="schoolName"></h5>
+                                                        <input id="schoolNameInp" type="text" style="display:none;text-align: center; margin:auto;" value="dsfg">
+                                                        <span id="schoolDetail"
+                                                            style="text-align: center; display:block; margin:auto;"></span>
+                                                        <textarea id="schoolDetailInp" rows="2" cols="40" type="text"
+                                                            style="display:none;text-align: center;color: #888; margin:auto;"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <img class="img-fluid" style="width:100%; height: 100%;" id="imageUrl"
+                                                         alt="dashboard-user">
+                                                        <input id="imageUrlInp" type="file" accept="image/*" style="display: none" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -407,516 +406,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-sm-12" style="margin-top: 60px;">
-                                    <h5 class="mt-4">تقویم</h5>
-                                    <hr>
-                                    <div class="card">
-
-                                        <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr class="bg-warning text-white">
-                                                        <th class="border-top-0">روز</th>
-                                                        <th class="border-top-0">تاریخ</th>
-                                                        <th class="border-top-0">عنوان</th>
-                                                        <th class="border-top-0">متن</th>
-                                                        <th class="border-top-0">
-                                                            <i id="previous"
-                                                                class="fas fa-chevron-right btn- label text-white"
-                                                                data-toggle="tooltip" data-placement="top"
-                                                                title="هفته قبل"></i>
-                                                            <i id="next"
-                                                                class="fas fa-chevron-left btn- label text-white"
-                                                                data-toggle="tooltip" data-placement="top"
-                                                                title="هفته بعد"></i>
-                                                        </th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="callender">
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12" style="margin-top: 40px;">
-                                    <h5 class="mt-4">نمودار</h5>
-                                    <hr>
-                                </div>
-                                <div class="col-xl-12 col-md-12 m-t-10">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>نمودار مدرسه</h5>
-                                            <div class="card-header-right">
-                                                <div class="btn-group card-option">
-                                                    <button type="button" class="btn dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="feather icon-more-horizontal"></i>
-                                                    </button>
-                                                    <ul
-                                                        class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                                        <li class="dropdown-item full-card"><a href="#!"><span><i
-                                                                        class="feather icon-maximize"></i>
-                                                                    maximize</span><span style="display:none"><i
-                                                                        class="feather icon-minimize"></i>
-                                                                    Restore</span></a></li>
-                                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i
-                                                                        class="feather icon-minus"></i>
-                                                                    collapse</span><span style="display:none"><i
-                                                                        class="feather icon-plus"></i> expand</span></a>
-                                                        </li>
-                                                        <li class="dropdown-item reload-card"><a href="#!"><i
-                                                                    class="feather icon-refresh-cw"></i> reload</a></li>
-                                                        <li class="dropdown-item close-card"><a href="#!"><i
-                                                                    class="feather icon-trash"></i> remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-block">
-                                            <div class="earning-price mb-4">
-                                            </div>
-                                            <div id="Widget-line-chart1" class="WidgetlineChart " style="height:400px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-12 col-md-12 m-t-10">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>نمودار کلاس</h5>
-                                            <div class="card-header-right">
-                                                <div class="btn-group card-option">
-                                                    <button type="button" class="btn dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="feather icon-more-horizontal"></i>
-                                                    </button>
-                                                    <ul
-                                                        class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                                        <li class="dropdown-item full-card"><a href="#!"><span><i
-                                                                        class="feather icon-maximize"></i>
-                                                                    maximize</span><span style="display:none"><i
-                                                                        class="feather icon-minimize"></i>
-                                                                    Restore</span></a></li>
-                                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i
-                                                                        class="feather icon-minus"></i>
-                                                                    collapse</span><span style="display:none"><i
-                                                                        class="feather icon-plus"></i> expand</span></a>
-                                                        </li>
-                                                        <li class="dropdown-item reload-card"><a href="#!"><i
-                                                                    class="feather icon-refresh-cw"></i> reload</a></li>
-                                                        <li class="dropdown-item close-card"><a href="#!"><i
-                                                                    class="feather icon-trash"></i> remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-block pb-0">
-                                            <div id="bar-chart2" class="bar-chart2" style="height:350px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div class="col-xl-4 col-md-12 m-t-30">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>نمودار 3</h5>
-                                            <div class="card-header-right">
-                                                <div class="btn-group card-option">
-                                                    <button type="button" class="btn dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="feather icon-more-horizontal"></i>
-                                                    </button>
-                                                    <ul
-                                                        class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                                        <li class="dropdown-item full-card"><a href="#!"><span><i
-                                                                        class="feather icon-maximize"></i>
-                                                                    maximize</span><span style="display:none"><i
-                                                                        class="feather icon-minimize"></i>
-                                                                    Restore</span></a></li>
-                                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i
-                                                                        class="feather icon-minus"></i>
-                                                                    collapse</span><span style="display:none"><i
-                                                                        class="feather icon-plus"></i> expand</span></a>
-                                                        </li>
-                                                        <li class="dropdown-item reload-card"><a href="#!"><i
-                                                                    class="feather icon-refresh-cw"></i> reload</a></li>
-                                                        <li class="dropdown-item close-card"><a href="#!"><i
-                                                                    class="feather icon-trash"></i> remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-block pl-0 pr-0 pb-2">
-                                            <div id="bar-chart" class="ChartShadow BarChart" style="height:250px;">
-                                            </div>
-                                        </div>
-                                        <div class="card-block border-top">
-                                            <div class="row">
-                                                <div class="col text-center">
-                                                    <span class="theme-bg d-block rounded-circle mx-auto mb-2"
-                                                        style="width:10px; height:10px;"></span>
-                                                    <h6 class="mb-2">53</h6>
-                                                    <h6 class="mt-2 mb-0">پایه سوم</h6>
-                                                </div>
-                                                <div class="col text-center">
-                                                    <span class="theme-bg2 d-block rounded-circle mx-auto mb-2"
-                                                        style="width:10px; height:10px;"></span>
-                                                    <h6 class="mb-2">13</h6>
-                                                    <h6 class="mt-2 mb-0">پایه چهارم</h6>
-                                                </div>
-                                                <div class="col text-center">
-                                                    <span class="bg-c-blue d-block rounded-circle mx-auto mb-2"
-                                                        style="width:10px; height:10px;"></span>
-                                                    <h6 class="mb-2">30</h6>
-                                                    <h6 class="mt-2 mb-0">پایه پنجم</h6>
-                                                </div>
-                                                <div class="col text-center">
-                                                    <span class="bg-c-red d-block rounded-circle mx-auto mb-2"
-                                                        style="width:10px; height:10px;"></span>
-                                                    <h6 class="mb-2">4</h6>
-                                                    <h6 class="mt-2 mb-0">پایه ششم</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-xl-4 col-md-6 m-t-30">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>نمودار 4</h5>
-                                            <div class="card-header-right">
-                                                <div class="btn-group card-option">
-                                                    <button type="button" class="btn dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="feather icon-more-horizontal"></i>
-                                                    </button>
-                                                    <ul
-                                                        class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                                        <li class="dropdown-item full-card"><a href="#!"><span><i
-                                                                        class="feather icon-maximize"></i>
-                                                                    maximize</span><span style="display:none"><i
-                                                                        class="feather icon-minimize"></i>
-                                                                    Restore</span></a></li>
-                                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i
-                                                                        class="feather icon-minus"></i>
-                                                                    collapse</span><span style="display:none"><i
-                                                                        class="feather icon-plus"></i> expand</span></a>
-                                                        </li>
-                                                        <li class="dropdown-item reload-card"><a href="#!"><i
-                                                                    class="feather icon-refresh-cw"></i> reload</a></li>
-                                                        <li class="dropdown-item close-card"><a href="#!"><i
-                                                                    class="feather icon-trash"></i> remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-block">
-                                            <div id="chart-percent" class="chart-percent" style="height:290px;"></div>
-                                            <div class="row mb-3">
-                                                <div class="col">
-                                                    <span class="mb-1 text-muted d-block">23%</span>
-                                                    <div class="progress" style="height: 5px;">
-                                                        <div class="progress-bar progress-c-green" role="progressbar"
-                                                            style="width: 23%;" aria-valuenow="23" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <span class="mb-1 text-muted d-block">14%</span>
-                                                    <div class="progress" style="height: 5px;">
-                                                        <div class="progress-bar progress-c-yellow" role="progressbar"
-                                                            style="width: 14%;" aria-valuenow="14" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-2">
-                                                <div class="col">
-                                                    <span class="mb-1 text-muted d-block">35%</span>
-                                                    <div class="progress" style="height: 5px;">
-                                                        <div class="progress-bar progress-c-purple" role="progressbar"
-                                                            style="width: 35%;" aria-valuenow="35" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <span class="mb-1 text-muted d-block">28%</span>
-                                                    <div class="progress" style="height: 5px;">
-                                                        <div class="progress-bar progress-c-blue" role="progressbar"
-                                                            style="width: 28%;" aria-valuenow="28" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-xl-4 col-sm-6 m-t-30">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="mb-2">نمودار 5</h5>
-                                            <div class="card-header-right">
-                                                <div class="btn-group card-option">
-                                                    <button type="button" class="btn dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="feather icon-more-horizontal"></i>
-                                                    </button>
-                                                    <ul
-                                                        class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                                        <li class="dropdown-item full-card"><a href="#!"><span><i
-                                                                        class="feather icon-maximize"></i>
-                                                                    maximize</span><span style="display:none"><i
-                                                                        class="feather icon-minimize"></i>
-                                                                    Restore</span></a></li>
-                                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i
-                                                                        class="feather icon-minus"></i>
-                                                                    collapse</span><span style="display:none"><i
-                                                                        class="feather icon-plus"></i> expand</span></a>
-                                                        </li>
-                                                        <li class="dropdown-item reload-card"><a href="#!"><i
-                                                                    class="feather icon-refresh-cw"></i> reload</a></li>
-                                                        <li class="dropdown-item close-card"><a href="#!"><i
-                                                                    class="feather icon-trash"></i> remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-block">
-                                            <div id="Stack-age" class="Stackchart" style="height:250px;"></div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-sm-6 col-md-6 m-t-30">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>دسترسی سریع</h5>
-                                        </div>
-                                        <div class="card-block">
-                                            <div id="html" class="demo">
-                                                <ul>
-                                                    <li data-jstree='{ "opened" : true }'> مدرسه غیر دولتی شایان
-                                                        <ul>
-                                                            <li>دبستان
-                                                                <ul>
-                                                                    <li>پایه اول
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-                                                                    <li>پایه دوم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-                                                                    <li>پایه سوم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-
-                                                                    <li>پایه چهارم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-
-                                                                    <li>پایه پنجم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-                                                                    <li>پایه ششم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li>راهنمایی
-                                                                <ul>
-                                                                    <li>پایه هفتم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-                                                                    <li>پایه هشتم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-                                                                    <li>پایه نهم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li>دبیرستان
-                                                                <ul>
-                                                                    <li>پایه دهم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-                                                                    <li>پایه یازدهم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-                                                                    <li>پایه دوازدهم
-                                                                        <ul>
-                                                                            <li>کلاس 101
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                            <li>کلاس 102
-                                                                                <ul>
-                                                                                    <li>ریاضی</li>
-                                                                                    <li>علوم</li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
 
                                 <button id="showAllClass" type="button" data-toggle="modal" style="display:none"
                                     data-target="#exampleModalLong2"></button>
@@ -1023,16 +512,6 @@
     <script src="../assets/js/menu-setting.min.js"></script>
     <script src="../assets/js/pcoded.min.js"></script>
 
-    <script src="../assets/plugins/amchart/js/amcharts.js"></script>
-    <script src="../assets/plugins/amchart/js/gauge.js"></script>
-    <script src="../assets/plugins/amchart/js/serial.js"></script>
-    <script src="../assets/plugins/amchart/js/light.js"></script>
-    <script src="../assets/plugins/amchart/js/pie.min.js"></script>
-    <script src="../assets/plugins/amchart/js/ammap.min.js"></script>
-    <script src="../assets/plugins/amchart/js/usaLow.js"></script>
-    <script src="../assets/plugins/amchart/js/radar.js"></script>
-    <script src="../assets/plugins/amchart/js/worldLow.js"></script>
-
     <script src="../assets/plugins/flot/js/jquery.flot.js"></script>
     <script src="../assets/plugins/flot/js/jquery.flot.categories.js"></script>
     <script src="../assets/plugins/flot/js/curvedLines.js"></script>
@@ -1040,11 +519,11 @@
 
     <script src="../assets/plugins/waterball/js/createWaterBall-jquery.js"></script>
 
-    <script src="../assets/js/pages/chart.js"></script>
+    <!-- <script src="../assets/js/pages/chart.js"></script> -->
 
     <script src="../assets/plugins/notification/js/bootstrap-growl.min.js"></script>
 
-    <script src="../assets/js/pages/dashboard-custom.js"></script>
+    <!-- <script src="../assets/js/pages/dashboard-custom.js"></script> -->
 
     <script src="../assets/js/pages/form-select-custom.js"></script>
 
@@ -1054,9 +533,6 @@
     <script src="../assets/plugins/inputmask/js/inputmask.min.js"></script>
     <script src="../assets/plugins/inputmask/js/jquery.inputmask.min.js"></script>
     <script src="../assets/plugins/inputmask/js/autoNumeric.js"></script>
-
-    <script src="../assets/plugins/jstree/js/jstree.min.js"></script>
-    <script src="../assets/js/pages/ac-treeview.js"></script>
 
     <script src="../assets/js/pages-api/index.js"></script>
 

@@ -571,7 +571,7 @@ $(document).ready(function(){
         //enable sending message
     }
     setInterval(function(){
-        if(UserCahtList!=undefined){
+        if(UserCahtList!=undefined || UserCahtList.length!=0){
             GetUserNewChate(UserCahtList[UserCahtList.length-1].id)
         }
     },5000);

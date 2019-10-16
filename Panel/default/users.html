@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>دانش آموزان</title>
+    <title>شرکت کنندگان</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -55,10 +55,11 @@
             <br>
             <div class="navbar-brand header-logo">
                 <a href="index.html" class="b-brand">
-                    <div class="b-bg">
+                    <img src="../assets/images/widget/event9.png" style="width:200px;height:50px;">
+                    <!-- <div class="b-bg">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <span class="b-title">پنل مدیریت</span>
+                    <span class="b-title">پنل مدیریت</span> -->
                 </a>
                 <!-- <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a> -->
             </div>
@@ -67,25 +68,19 @@
                     <!-- <li class="nav-item pcoded-menu-caption">
                             <label></label>
                         </li> -->
-                    <br>
+                    <!-- <br> -->
                     <li data-username="message" class="nav-item "><a href="index.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="feather icon-home"></i></span><span
                                 class="pcoded-mtext">داشبورد</span></a></li>
-                    <li data-username="message" class="nav-item"><a href="personnel.html" class="nav-link"><span
+                    <li data-username="message" class="nav-item active"><a href="users.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="feather icon-users"></i></span><span
-                                class="pcoded-mtext">کارکنان</span></a></li>
-                    <li data-username="message" class="nav-item active"><a href="students.html" class="nav-link"><span
-                                class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span
-                                class="pcoded-mtext">دانش آموزان</span></a></li>
-                    <li data-username="message" class="nav-item"><a href="verification.html" class="nav-link"><span
-                                class="pcoded-micon"><i class="feather icon-check-square"></i></span><span
-                                class="pcoded-mtext">تاییدیه ها</span></a></li>
-                    <li data-username="message" class="nav-item "><a href="news.html" class="nav-link"><span
+                                class="pcoded-mtext">شرکت کنندگان</span></a></li>
+                    <li data-username="message" class="nav-item"><a href="schedule.html" class="nav-link"><span
+                                class="pcoded-micon"><i class="fas fa-list-ul fa-rotate-180"></i></span><span
+                                class="pcoded-mtext">برنامه</span></a></li>
+                    <li data-uername="message" class="nav-item "><a href="news.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="far fa-newspaper"></i></span><span
                                 class="pcoded-mtext"></span>اخبار</span></a></li>
-                    <li data-username="message" class="nav-item"><a href="advertise.html" class="nav-link"><span
-                                class="pcoded-micon"><i class="fas fa-bullhorn"></i></span><span
-                                class="pcoded-mtext">تبلیغات</span></a></li>
                     <li data-username="message" class="nav-item"><a href="message.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="feather icon-message-circle"></i></span><span
                                 class="pcoded-mtext">پیام</span></a></li>
@@ -350,7 +345,6 @@
             </div>
         </div>
     </section>
-
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
             <div class="pcoded-content">
@@ -363,20 +357,12 @@
                                 <ul class="nav nav-tabs" id="myTab1" role="tablist">
 
                                     <li class="nav-item">
-                                        <a class="nav-link " id="user-tab" data-toggle="tab" href="#toggleMaghateh"
-                                            role="tab">پایه ها</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="designer-tab" data-toggle="tab" href="#toggleClass"
-                                            role="tab">کلاس ها</a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a class="nav-link" id="Developer-tab" data-toggle="tab" href="#toggleDarsha"
-                                            role="tab">درس ها</a>
+                                            role="tab">سخنرانان</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link active" id="Developer-tab" data-toggle="tab"
-                                            href="#toggleStudents" role="tab">دانش آموزان</a>
+                                            href="#toggleStudents" role="tab">شرکت کنندگان</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content User-Lists" id="myTabContent1">
@@ -385,8 +371,8 @@
                                         <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
                                             <nav class="navbar m-b-30  border border-info">
 
-                                                <div class="col-sm-3">
-                                                    <label>مقطع :</label>
+                                                <div class="col-sm-4">
+                                                    <label>حوزه ی فعالیت :</label>
                                                     <select id="maghtaStudentsList"
                                                         class="browser-default custom-select">
                                                         <option value="یس" disabled selected style="display:none;">
@@ -394,27 +380,7 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-sm-3" id="payeSelectStudents">
-                                                    <label>پایه :</label>
-                                                    <select class="browser-default custom-select" id="payeStudentsList"
-                                                        disabled>
-                                                        <option value="یس" disabled selected style="display:none;">
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <label>کلاس :</label>
-                                                    <select id="classStudentsList" class="browser-default custom-select"
-                                                        disabled>
-                                                        <option value="یس" disabled selected style="display:none;">
-                                                        </option>
-                                                        <!-- <option value="AL">کلاس 101</option>
-                                                        <option value="WY">کلاس 102</option>
-                                                        <option value="WY">کلاس 103</option> -->
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <label> </label>
                                                     <button id="StudentsListFilter" type="button"
                                                         class="btn btn-primary btn-icon m-0" data-toggle="tooltip"
@@ -428,12 +394,12 @@
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr>
+                                                        <th class="border-top-0"></th>
                                                         <th class="border-top-0">تصویر</th>
                                                         <th class="border-top-0">مشخصات</th>
-                                                        <th class="border-top-0">کد ملی</th>
-                                                        <th class="border-top-0">کلاس</th>
                                                         <th class="border-top-0">شماره تماس</th>
                                                         <th class="border-top-0">جزئیات</th>
+                                                        <th class="border-top-0">حوزه فعالیت</th>
                                                         <th class="border-top-0">
                                                             <i id="addStudents"
                                                                 class="fas fa-user-plus btn-success label text-white"></i>
@@ -441,47 +407,16 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="StudentsList">
-                                                    <!-- <tr>
-                                                        <td><img class="rounded-circle" style="width:40px;"
-                                                                src="../assets/images/user/avatar-1.jpg"
-                                                                alt="activity-user"></td>
-                                                        <td>
-                                                            <h6 class="mb-1">رضا بهرامی</h6>
-                                                        </td>
-                                                        <td><span class="pie_1">4614614610</span></td>
-                                                        <td>
-                                                            <h6 class="m-0">دبیرستان/ پایه یازدهم/ کلاس 101
-                                                            </h6>
-                                                        </td>
-                                                        <td>
-                                                            <h6 class="m-0">09109109109</h6>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn" data-toggle="modal"
-                                                                data-target="#exampleModalLong">
-                                                                <p class="theme-bg2 label text-white "
-                                                                    style="width:max-content;">مشاهده</p>
-                                                            </button>
-                                                        </td>
-                                                        <td>
-                                                            <i class="fas fa-edit theme-bg2 label text-white"></i>
-                                                            <i class="fas  fa-trash-alt theme-bg3 label text-white"></i>
-                                                        </td>
-                                                    </tr> -->
+                                    
                                                 </tbody>
                                             </table>
                                             <button id="showStudentsDetail" style="display:none" type="button"
                                                 data-toggle="modal" data-target="#exampleModalLong"></button>
-                                                <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog"
+                                            <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
-                                                        <!-- <div class="modal-header">
-                                                                    <button type="button" class="close"
-                                                                        data-dismiss="modal"
-                                                                        aria-label="Close"><span
-                                                                            aria-hidden="true">&times;</span></button>
-                                                                </div> -->
+                                                        
                                                         <div class="modal-body ">
                                                             <div class="row">
                                                                 <div class="col-xl-8 col-md-8 mx-auto">
@@ -543,11 +478,6 @@
                                                                             </div>
 
                                                                         </div>
-                                                                        <!-- <h6 class=" m-b-0"
-                                                                                id="">
-                                                                                
-                                                                               
-                                                                            </h6> -->
 
                                                                         <button id="editTitution" type="button"
                                                                             class="btn btn-outline-primary mx-auto m-t-30">تغییر</button>
@@ -556,14 +486,6 @@
                                                                             style="display: none;">ذخیره
                                                                             تغییرات</button>
 
-                                                                        <!--  FIXME: <div class="row m-t-30">
-                                                                                <div class="col-6 mx-auto">
-                                                                                    <button type="button"
-                                                                                        class="btn text-uppercase border btn-block btn-outline-primary"
-                                                                                        title="" data-toggle="tooltip"
-                                                                                        data-original-title="btn btn-outline-primary">تغییر</button>
-                                                                                </div>
-                                                                            </div> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -617,26 +539,8 @@
                                                                 </div>
                                                             </div>
 
-
-                                                            <!-- <div class="col-xl-6">
-                                                                    <div class="card">
-                                                                        <div class="card-header">
-                                                                            <h5>وضعیت
-                                                                                تحصیلی
-                                                                            </h5>
-                                                                        </div>
-                                                                        <div class="card-block">
-                                                                            <div id="morris-line-chart"
-                                                                                class="ChartShadow"
-                                                                                style="height:300px">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div> -->
-
                                                         </div>
 
-                                                        <!--FIXME:-->
                                                         <button type="button" class="btn btn-outline-danger"
                                                             data-dismiss="modal">بستن</button>
 
@@ -652,162 +556,25 @@
                                                 data-align="right">success</button>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade " id="toggleMaghateh" role="tabpanel">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="border-top-0">پایه</th>
-                                                        <th class="border-top-0">شهریه</th>
-                                                        <th class="border-top-0"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="GradeList">
-                                                    <!-- <tr>
-                                                        <td>
-                                                            <h6 class="mb-1">پایه اول</h6>
-                                                        </td>
-                                                        <td><span class="pie_1">10،000،000 ریال</span></td>
-                                                        <td>
-                                                            <i class="fas fa-edit theme-bg2 label text-white"></i>
-                                                        </td>
-                                                    </tr> -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="toggleClass" role="tabpanel">
-                                        <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
-                                            <nav class="navbar m-b-30  border border-info">
-                                                <div class="col-sm-3">
-                                                    <label>مقطع :</label>
-                                                    <select id="maghtaClassesList"
-                                                        class="browser-default custom-select">
-                                                        <option value="یبس" disabled selected style="display:none;">
-                                                        </option>
-                                                        <!-- <option value="WY">ابتدایی</option>
-                                                        <option value="WY">راهنمایی</option>
-                                                        <option value="WY">دبیرستان</option> -->
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <label>پایه :</label>
-                                                    <select id="payeClassesList" class="browser-default custom-select"
-                                                        disabled>
-                                                        <option value="یبس" disabled selected style="display:none;">
-                                                        </option>
-                                                        <!-- <option value="AL">پایه اول</option>
-                                                        <option value="WY">پایه دوم</option>
-                                                        <option value="WY">پایه سوم</option>
-                                                        <option value="WY">پایه چهارم </option>
-                                                        <option value="WY">پایه پنجم</option>
-                                                        <option value="WY">پایه ششم</option> -->
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <label></label>
-                                                    <button id="ClassesListFilter" type="button"
-                                                        class="btn btn-primary btn-icon m-0" data-toggle="tooltip"
-                                                        data-placement="top" title="اعمال فیلتر" style="float: left;">
-                                                        <i class="fas fa-list-ul"></i>
-                                                    </button>
-                                                </div>
-                                            </nav>
-                                        </div>
-                                        <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="border-top-0">اسم</th>
-                                                        <th class="border-top-0">مقطع</th>
-                                                        <th class="border-top-0">پایه</th>
-                                                        <th class="border-top-0">
-                                                            <i id="addClass"
-                                                                class="fas fa-plus-square btn-success label text-white"></i>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="ClassesList">
-                                                    <!-- <tr>
-                                                        <td>
-                                                            <h6 class="mb-1">کلاس 101</h6>
-                                                        </td>
-                                                        <td><span class="pie_1">دبیرستان</span></td>
-                                                        <td>
-                                                            <h6 class="m-0">پایه دوم</h6>
-                                                        </td>
-                                                        <td>
-                                                            <i class="fas fa-edit theme-bg2 label text-white"></i>
-                                                            <i class="fas  fa-trash-alt theme-bg3 label text-white"></i>
-                                                        </td>
-                                                    </tr> -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
                                     <div class="tab-pane fade " id="toggleDarsha" role="tabpanel">
-                                        <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
-                                            <nav class="navbar m-b-30  border border-info">
-                                                <div class="col-sm-3">
-                                                    <label>مقطع :</label>
-                                                    <select id="maghtaCourseList" class="browser-default custom-select">
-                                                        <option value="یبس" disabled selected style="display:none;">
-                                                        </option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <label>پایه :</label>
-                                                    <select id="payeCourseList" class="browser-default custom-select"
-                                                        disabled>
-                                                        <option value="یبس" disabled selected style="display:none;">
-                                                        </option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <label></label>
-                                                    <button id="CourseListFilter" type="button"
-                                                        class="btn btn-primary btn-icon m-0" data-toggle="tooltip"
-                                                        data-placement="top" title="اعمال فیلتر" style="float: left;">
-                                                        <i class="fas fa-list-ul"></i>
-                                                    </button>
-                                                </div>
-                                            </nav>
-                                        </div>
+                                        
                                         <div class="table-responsive">
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr>
+                                                        <th class="border-top-0"></th>
                                                         <th class="border-top-0">تصویر</th>
-                                                        <th class="border-top-0">اسم</th>
-                                                        <th class="border-top-0">مقطع</th>
-                                                        <th class="border-top-0">پایه</th>
+                                                        <th class="border-top-0">مشخصات</th>
+                                                        <th class="border-top-0">شماره تماس</th>
+                                                        <th class="border-top-0">جزئیات</th>
+                                                        <th class="border-top-0">حوزه فعالیت</th>
                                                         <th class="border-top-0">
-                                                            <i id="addCourse"
-                                                                class="fas fa-plus-square btn-success label text-white"></i>
+                                                            <i id="addStudents"
+                                                                class="fas fa-user-plus btn-success label text-white"></i>
                                                         </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="CourseList">
-                                                    <!-- <tr>
-                                                        <td><img class="rounded-circle" style="width:40px;"
-                                                                src="../assets/images/user/avatar-6.jpg"
-                                                                alt="activity-user"></td>
-                                                        <td>
-                                                            <h6 class="mb-1">فیزیک</h6>
-                                                        </td>
-                                                        <td><span class="pie_1">دبیرستان/ پایه دوم</span></td>
-                                                        <td>
-                                                            <h6 class="m-0">مهدی توانگر</h6>
-                                                        </td>
-                                                        <td>
-                                                            <i class="fas fa-edit theme-bg2 label text-white"></i>
-                                                            <i class="fas  fa-trash-alt theme-bg3 label text-white"></i>
-                                                        </td>
-                                                    </tr> -->
                                                 </tbody>
                                             </table>
                                         </div>
@@ -821,6 +588,8 @@
             </div>
         </div>
     </div>
+
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="../assets/plugins/notification/js/bootstrap-growl.min.js"></script>

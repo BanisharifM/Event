@@ -10,195 +10,195 @@ $(document).ready(function(){
     let allReports;
     GetReport();
 
-    let callenderList;
-    var nextWeekCount=0;
+    // let callenderList;
+    // var nextWeekCount=0;
     
-    let days=["شنبه","یکشنبه","دو شنبه","سه شنبه","چهار شنبه","پنج شنبه","جمعه"]
-    GetStudentAlert("default");
+    // let days=["شنبه","یکشنبه","دو شنبه","سه شنبه","چهار شنبه","پنج شنبه","جمعه"]
+    // GetStudentAlert("default");
     
-    function AddCallender(){
-        $('#callender').empty();
-        // callenderList.reverse()
-        for(i in callenderList){
-            let tr=createCallenderTr(callenderList[i],"Callender",days[i]);
-            let id=callenderList[i].id;
-            $('#callender').append(tr);
-            addActionCallender("Callender"+id);
-        }
-    }
+    // function AddCallender(){
+    //     $('#callender').empty();
+    //     // callenderList.reverse()
+    //     for(i in callenderList){
+    //         let tr=createCallenderTr(callenderList[i],"Callender",days[i]);
+    //         let id=callenderList[i].id;
+    //         $('#callender').append(tr);
+    //         addActionCallender("Callender"+id);
+    //     }
+    // }
 
-    function createCallenderTr(person,type,day,date){
-        return(
-            '<tr id="tr'+type+person.id+'" >'+
-                '<td>'+callenderDay(person.id,type,day)+'</td>'+
-                '<td>'+callenderDate(person.id,type,person.date.substring(0,10))+'</td>'+
-                '<td>'+callenderTitle(person.id,type,person.title)+'</td>'+
-                '<td>'+callenderDetail(person.id,type,person.text)+'</td>'+
-                '<td>'+callenderToolbar(person.id,type)+'</td>'+
-            '</tr>'
-        );
-    }
-    function callenderDay(id,type,firstName){
-        return(
-            '<h6 id="informationFirstName'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+firstName+'</h6>'+
-            '<input id="informationInp'+type+id+'" type="text" value="'+firstName+'" objectId="'+type+id+'" style="display:none" > '
+    // function createCallenderTr(person,type,day,date){
+    //     return(
+    //         '<tr id="tr'+type+person.id+'" >'+
+    //             '<td>'+callenderDay(person.id,type,day)+'</td>'+
+    //             '<td>'+callenderDate(person.id,type,person.date.substring(0,10))+'</td>'+
+    //             '<td>'+callenderTitle(person.id,type,person.title)+'</td>'+
+    //             '<td>'+callenderDetail(person.id,type,person.text)+'</td>'+
+    //             '<td>'+callenderToolbar(person.id,type)+'</td>'+
+    //         '</tr>'
+    //     );
+    // }
+    // function callenderDay(id,type,firstName){
+    //     return(
+    //         '<h6 id="informationFirstName'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+firstName+'</h6>'+
+    //         '<input id="informationInp'+type+id+'" type="text" value="'+firstName+'" objectId="'+type+id+'" style="display:none" > '
             
-        );
-    }
-    function callenderDate(id,type,code,phoneNumber){
-        return(
-            '<span  id="date'+type+id+'" class="pie_1" objectId="'+type+id+'" style="color:black"> '+code+'</span>'+
-            '<input id="dateInp'+type+id+'" type="number" dir="ltr" value="'+code+'" objectId="'+type+id+'" style="display:none" >'
-        );
-    }
-    function callenderTitle(id,type,title){
-        return(
-            '<h6 id="title'+type+id+'" class="m-0" objectId="'+type+id+'" > '+title+'</h6>'+
-            '<input id="titleInp'+type+id+'" type="text" value="'+title+'" objectId="'+type+id+'" style="display:none" >'
-        );
-    }
-    function callenderDetail(id,type,detail){
-        return(
-            '<span id="informationText'+type+id+'" class="text-c-green" objectId="'+type+id+'" >'+detail+'</span>'+
-            '<textarea id="informationTextInp'+type+id+'" rows="2" cols="20" type="text" objectId="'+type+id+'" style="display:none" >'+detail+'</textarea>'
-        );
-    }
-    function callenderToolbar(id,type){
-        return(
-            '<i id="toolbarEdit'+type+id+'" class="fas fa-edit btn- text-primary label text-white" objectId="'+type+id+'" style="margin-right:16px;"></i>'+
-            '<i id="toolbarDelete'+type+id+'" class="fas fa-times btn- text-danger label text-white" objectId="'+type+id+'" style="display:none;font-size:16px;"></i>'+
-            '<i id="toolbarSave'+type+id+'" class="fas fa-check-circle text-success btn- label text-white" objectId="'+type+id+'" style="display:none;font-size:18px;"></i>'+
-            '<i id="toolbarCancel'+type+id+'" class="fas fa-times-circle btn- text-danger label text-white" objectId="'+type+id+'" style="display:none;font-size:18px;"></i>'
-        );
-    }
-    function callenderEditClick(){
-        let objectId=$(this).attr('objectId');
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        $("#informationTextInp"+objectId).val($("#informationText"+objectId).text());
-        $("#titleInp"+objectId).val($("#title"+objectId).text());
-        enableEditCallender(objectId);
-    }
-    function callenderDeleteClick(){
-        let objectId=$(this).attr('objectId');
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        if(!confirm("آیا مطمئن  هستید حذف شود؟"))
-            return;
-        DeleteStudentAlert(id);
-    }
-    function callenderSaveClick(){
-        let objectId=$(this).attr('objectId');
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        let recentCall=callenderList.find(x => x.id==id);
-        let text=$("#informationTextInp"+objectId).val()=="null" ? " " :   $("#informationTextInp"+objectId).val();
-        let title=$("#titleInp"+objectId).val()=="null" ? " " :   $("#titleInp"+objectId).val();
+    //     );
+    // }
+    // function callenderDate(id,type,code,phoneNumber){
+    //     return(
+    //         '<span  id="date'+type+id+'" class="pie_1" objectId="'+type+id+'" style="color:black"> '+code+'</span>'+
+    //         '<input id="dateInp'+type+id+'" type="number" dir="ltr" value="'+code+'" objectId="'+type+id+'" style="display:none" >'
+    //     );
+    // }
+    // function callenderTitle(id,type,title){
+    //     return(
+    //         '<h6 id="title'+type+id+'" class="m-0" objectId="'+type+id+'" > '+title+'</h6>'+
+    //         '<input id="titleInp'+type+id+'" type="text" value="'+title+'" objectId="'+type+id+'" style="display:none" >'
+    //     );
+    // }
+    // function callenderDetail(id,type,detail){
+    //     return(
+    //         '<span id="informationText'+type+id+'" class="text-c-green" objectId="'+type+id+'" >'+detail+'</span>'+
+    //         '<textarea id="informationTextInp'+type+id+'" rows="2" cols="20" type="text" objectId="'+type+id+'" style="display:none" >'+detail+'</textarea>'
+    //     );
+    // }
+    // function callenderToolbar(id,type){
+    //     return(
+    //         '<i id="toolbarEdit'+type+id+'" class="fas fa-edit btn- text-primary label text-white" objectId="'+type+id+'" style="margin-right:16px;"></i>'+
+    //         '<i id="toolbarDelete'+type+id+'" class="fas fa-times btn- text-danger label text-white" objectId="'+type+id+'" style="display:none;font-size:16px;"></i>'+
+    //         '<i id="toolbarSave'+type+id+'" class="fas fa-check-circle text-success btn- label text-white" objectId="'+type+id+'" style="display:none;font-size:18px;"></i>'+
+    //         '<i id="toolbarCancel'+type+id+'" class="fas fa-times-circle btn- text-danger label text-white" objectId="'+type+id+'" style="display:none;font-size:18px;"></i>'
+    //     );
+    // }
+    // function callenderEditClick(){
+    //     let objectId=$(this).attr('objectId');
+    //     let id=objectId.match(/\d+/)[0];
+    //     let type=objectId.replace(id, "");
+    //     $("#informationTextInp"+objectId).val($("#informationText"+objectId).text());
+    //     $("#titleInp"+objectId).val($("#title"+objectId).text());
+    //     enableEditCallender(objectId);
+    // }
+    // function callenderDeleteClick(){
+    //     let objectId=$(this).attr('objectId');
+    //     let id=objectId.match(/\d+/)[0];
+    //     let type=objectId.replace(id, "");
+    //     if(!confirm("آیا مطمئن  هستید حذف شود؟"))
+    //         return;
+    //     DeleteStudentAlert(id);
+    // }
+    // function callenderSaveClick(){
+    //     let objectId=$(this).attr('objectId');
+    //     let id=objectId.match(/\d+/)[0];
+    //     let type=objectId.replace(id, "");
+    //     let recentCall=callenderList.find(x => x.id==id);
+    //     let text=$("#informationTextInp"+objectId).val()=="null" ? " " :   $("#informationTextInp"+objectId).val();
+    //     let title=$("#titleInp"+objectId).val()=="null" ? " " :   $("#titleInp"+objectId).val();
 
-        datas={
-            "text": text,
-            "title": title,
-            "dateTime": recentCall.date
-        }
-        PutStudentAlert(datas,id,objectId);
-    }
-    function callenderCancelClick(){
-        let objectId=$(this).attr('objectId');
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        disableEditCallender(objectId);
-    }
+    //     datas={
+    //         "text": text,
+    //         "title": title,
+    //         "dateTime": recentCall.date
+    //     }
+    //     PutStudentAlert(datas,id,objectId);
+    // }
+    // function callenderCancelClick(){
+    //     let objectId=$(this).attr('objectId');
+    //     let id=objectId.match(/\d+/)[0];
+    //     let type=objectId.replace(id, "");
+    //     disableEditCallender(objectId);
+    // }
 
-    function addActionCallender(objectId){
-        document.getElementById('toolbarEdit'+objectId).onclick = callenderEditClick;
-        document.getElementById('toolbarDelete'+objectId).onclick = callenderDeleteClick;
-        document.getElementById('toolbarSave'+objectId).onclick = callenderSaveClick;
-        document.getElementById('toolbarCancel'+objectId).onclick = callenderCancelClick;
+    // function addActionCallender(objectId){
+    //     document.getElementById('toolbarEdit'+objectId).onclick = callenderEditClick;
+    //     document.getElementById('toolbarDelete'+objectId).onclick = callenderDeleteClick;
+    //     document.getElementById('toolbarSave'+objectId).onclick = callenderSaveClick;
+    //     document.getElementById('toolbarCancel'+objectId).onclick = callenderCancelClick;
 
-    }
-    function enableEditCallender(objectId){
+    // }
+    // function enableEditCallender(objectId){
 
-        $('#toolbarEdit'+objectId).hide();
-        $('#toolbarSave'+objectId).show();
+    //     $('#toolbarEdit'+objectId).hide();
+    //     $('#toolbarSave'+objectId).show();
 
-        // $('#toolbarDelete'+objectId).hide();
-        $('#toolbarCancel'+objectId).show();  
+    //     // $('#toolbarDelete'+objectId).hide();
+    //     $('#toolbarCancel'+objectId).show();  
         
-        $('#informationText'+objectId).hide();
-        $('#informationTextInp'+objectId).show();
+    //     $('#informationText'+objectId).hide();
+    //     $('#informationTextInp'+objectId).show();
         
-        $('#title'+objectId).hide();
-        $('#titleInp'+objectId).show();
+    //     $('#title'+objectId).hide();
+    //     $('#titleInp'+objectId).show();
 
-    }
-    function disableEditCallender(objectId){
-        $('#toolbarEdit'+objectId).show();
-        $('#toolbarSave'+objectId).hide();
+    // }
+    // function disableEditCallender(objectId){
+    //     $('#toolbarEdit'+objectId).show();
+    //     $('#toolbarSave'+objectId).hide();
 
-        // $('#toolbarDelete'+objectId).show();
-        $('#toolbarCancel'+objectId).hide(); 
+    //     // $('#toolbarDelete'+objectId).show();
+    //     $('#toolbarCancel'+objectId).hide(); 
 
-        $('#informationText'+objectId).show();
-        $('#informationTextInp'+objectId).hide(); 
+    //     $('#informationText'+objectId).show();
+    //     $('#informationTextInp'+objectId).hide(); 
 
-        $('#title'+objectId).show();
-        $('#titleInp'+objectId).hide();   
+    //     $('#title'+objectId).show();
+    //     $('#titleInp'+objectId).hide();   
         
-    }
+    // }
 
-    function GetStudentAlert(mode){
-        let  vvv=nextWeekCount;
-        if(mode=="previous")
-            vvv=nextWeekCount-1;
-        else if(mode=="next")
-            vvv=nextWeekCount+1;
+    // function GetStudentAlert(mode){
+    //     let  vvv=nextWeekCount;
+    //     if(mode=="previous")
+    //         vvv=nextWeekCount-1;
+    //     else if(mode=="next")
+    //         vvv=nextWeekCount+1;
 
-        $.ajax(`${baseUrl}/Calendar?nextWeekCount=${vvv}`, {
-            type: "GET",
-            processData: false,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
-            success: function(res) {
-                callenderList=res;
-                nextWeekCount=vvv;
-                AddCallender();                
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function PutStudentAlert(data,calendarId,objectId){
-        $.ajax(`${baseUrl}/Calendar/${calendarId}`, {
-            data: JSON.stringify(data),
-            type: "PUT",
-            processData: false,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
-            success: function(res) {
-                errorMessage="با موفقیت ویرایش شد .";
-                $("#successNotification").trigger( "click" );
-                GetStudentAlert("default");
-                disableEditCallender(objectId);                
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-            $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
+    //     $.ajax(`${baseUrl}/Calendar?nextWeekCount=${vvv}`, {
+    //         type: "GET",
+    //         processData: false,
+    //         contentType: "application/json",
+    //         headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+    //         success: function(res) {
+    //             callenderList=res;
+    //             nextWeekCount=vvv;
+    //             AddCallender();                
+    //         },
+    //         error: function(jqXHR, textStatus, errorThrown,error) {
+    //             // set errorMessage
+    //             var err = eval("(" + jqXHR.responseText + ")");
+    //             errorMessage=err.Message;
+    //              $("#errorNotification").trigger( "click" );
+    //         }
+    //     });
+    // }
+    // function PutStudentAlert(data,calendarId,objectId){
+    //     $.ajax(`${baseUrl}/Calendar/${calendarId}`, {
+    //         data: JSON.stringify(data),
+    //         type: "PUT",
+    //         processData: false,
+    //         contentType: "application/json",
+    //         headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+    //         success: function(res) {
+    //             errorMessage="با موفقیت ویرایش شد .";
+    //             $("#successNotification").trigger( "click" );
+    //             GetStudentAlert("default");
+    //             disableEditCallender(objectId);                
+    //         },
+    //         error: function(jqXHR, textStatus, errorThrown,error) {
+    //             // set errorMessage
+    //             var err = eval("(" + jqXHR.responseText + ")");
+    //             errorMessage=err.Message;
+    //         $("#errorNotification").trigger( "click" );
+    //         }
+    //     });
+    // }
 
-    $("#previous").click(function(){
-        GetStudentAlert("previous");
-    })
-    $("#next").click(function(){
-        GetStudentAlert("next");
-    })
+    // $("#previous").click(function(){
+    //     GetStudentAlert("previous");
+    // })
+    // $("#next").click(function(){
+    //     GetStudentAlert("next");
+    // })
 
 
     let sections;
