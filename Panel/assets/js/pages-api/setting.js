@@ -243,6 +243,56 @@ $(document).ready(function() {
       .fadeOut();
   });
 
+  
+  let uploadedFile;
+  let addFileMode=false;
+  document.getElementById("selectFileIcon").addEventListener('click', () => {
+          document.getElementById('selectFileInp').click()               
+  })
+  document.getElementById('selectFileInp').onchange = FileChange;
+  function FileChange(){
+      uploadedFile=event.target.files[0]; 
+      $("#selectFile").text(uploadedFile.name)
+      addFileMode=true;       
+  }
+
+  $("#addFile-btn").click(function(){
+      if(!addFileMode)
+          return;
+      let fileType=uploadedFile.type;
+      let suffix=fileType.substring(fileType.indexOf("/") + 1);
+    //   PutFile(recentNews.id,suffix);
+      $("#selectFile").text("انتخاب فایل ...")  
+      addFileMode=false;     
+  });
+  function PutFile(newsId,suffix){
+      const datas = new FormData();
+      datas.append("file",uploadedFile)
+      $.ajax({
+          type: 'PUT',
+          url: `${baseUrl}/News/${newsId}/File/Suffix/${suffix}`,
+          data : datas,
+          enctype: 'multipart/form-data',
+          processData: false,       
+          contentType: false,   
+          headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+          success: function(res) {
+              recentNews.fileUrl.push(res)
+              AddFiles(recentNews.fileUrl);
+              errorMessage="فایل افزوده شد.";
+              $("#successNotification").trigger( "click" );
+          },
+          error: function(jqXHR, textStatus, errorThrown,error) {
+              var err = eval("(" + jqXHR.responseText + ")");
+              errorMessage="fg";
+              $("#errorNotification").trigger( "click" );
+              return false;
+          }
+      });
+  }
+
+
+
 //notification
 function notify(from, align, icon, type, animIn, animOut) {
   $.growl(
@@ -315,4 +365,3 @@ function delete_todo(e) {
       });
 }
 
-// نپوشیدن فرم

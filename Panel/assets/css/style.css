@@ -1403,6 +1403,13 @@
      color: #a389d4
  }
 
+ .bg-c-gray {
+     background:#fb9ea9;
+ }
+
+ .text-c-gray {
+     color: #fb9ea9;
+ }
  .card-border-c-blue {
      border-top: 4px solid #04a9f5
  }

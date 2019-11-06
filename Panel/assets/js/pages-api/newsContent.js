@@ -672,7 +672,7 @@ $(document).ready(function() {
 
     $("#addFile-btn").click(function(){
         if(!addFileMode)
-        return;
+            return;
         let fileType=uploadedFile.type;
         let suffix=fileType.substring(fileType.indexOf("/") + 1);
         PutFile(recentNews.id,suffix);
