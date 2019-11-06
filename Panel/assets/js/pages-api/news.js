@@ -169,7 +169,7 @@ $(document).ready(function() {
         $('#newsList').empty();
         for(i in Students){
             let id=Students[i].id
-            let src=Students[i].imageUrl.length!=0 ?Students[i].imageUrl[0].url :"../assets/images/user/blank.jpg";
+            let src=Students[i].images.length!=0 ?Students[i].images[0].url :"../assets/images/user/blank.jpg";
             let text=Students[i].text!=null ?Students[i].text.split(/\s+/).slice(0,15).join(" ") : "";
             let tr=createStaffTr(id,Students[i].title,text,src);
             $('#newsList').append(tr);
