@@ -1,11 +1,43 @@
 // "use strict";
 $(document).ready(function() {
 
-    let token=localStorage.getItem("token");
-    if(token==""||null)
+    var token = localStorage.getItem("token");
+    var refreshToken = localStorage.getItem("refreshToken");
+    if(token==""||token==null||refreshToken==""||refreshToken==null)
         window.location="signin.html"; 
-        
-    var baseUrl=localStorage.getItem("baseUrl");
+    baseUrl=localStorage.getItem("baseUrl");
+    tokenValidate();
+
+    function tokenValidate(){
+        $.ajax(`${baseUrl}/auth/token/check`, {
+            type: "GET",
+            processData: true,
+            contentType: "application/json",
+            headers: {'token': token},            
+            success: function(res) {
+                if(res.expire<20)        
+                    refreshToken();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                refreshToken();
+            }
+        });
+    }
+    function refreshToken(){
+        $.ajax(`${baseUrl}/auth/token/refresh`, {
+            data: JSON.stringify({"refresh_token":refreshToken}),
+            type: "POST",
+            processData: true,
+            contentType: "application/json",           
+            success: function(res) {
+                token=res.access_token;
+                localStorage.setItem('token',token);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // window.location="signin.html";                 
+            }
+        });
+    }
         
 
     let newsTag;
