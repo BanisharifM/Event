@@ -197,15 +197,14 @@ $(document).ready(function() {
         let data={
             "title": title,
             "text":text ,
-            "newsCategory":[],
-            "classId":[],
-            "gradeId":[],
-            "sectionId": []
+            "category":[],
+            "images":[],
+            "files":[]
         }
         PostNews(data);
     });
     function PostNews(data){
-        $.ajax(`${baseUrl}/News`, {
+        $.ajax(`${baseUrl}/news`, {
             data: JSON.stringify(data),
             type: "POST",
             processData: true,
