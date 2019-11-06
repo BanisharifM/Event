@@ -101,7 +101,6 @@ $(document).ready(function() {
         });
     }
     function preparePage(){
-        AddSchoolTags();    
         GetNewsTag();
         AddImages(recentNews.imageUrl);
         AddFiles(recentNews.fileUrl);
@@ -113,37 +112,8 @@ $(document).ready(function() {
             disableEdit();
             enableEdit();
         }
-        // else if(pageStatus==status.EDIT){
-        //     enableEdit();
-        // }
-        // $("#newsBody").append(createNewsBody(recentNews,"newsBody"));
-        // document.getElementById("sendNews").onclick=sendNews;
     }
 
-    function AddSchoolTags(){
-        $("#classTagsList").empty();
-        for(i in recentNews.newsSectionId){
-            let id=recentNews.newsSectionId[i].id;
-            let name=recentNews.newsSectionId[i].name;
-            let StudentsOpt=createMaghtaOpt(id,name,"SectionTags");
-            $("#classTagsList").append(StudentsOpt);    
-            $("#maghtaSectionTags"+id).prop("selected",true);
-        }
-        for(i in recentNews.newsGradeId){
-            let id=recentNews.newsGradeId[i].id;
-            let name=recentNews.newsGradeId[i].name;
-            let StudentsOpt=createMaghtaOpt(id,name,"GradeTags");
-            $("#classTagsList").append(StudentsOpt);    
-            $("#maghtaGradeTags"+id).prop("selected",true);
-        }
-        for(i in recentNews.newsClassId){
-            let id=recentNews.newsClassId[i].id;
-            let name=recentNews.newsClassId[i].name;
-            let StudentsOpt=createMaghtaOpt(id,name,"ClassTags");
-            $("#classTagsList").append(StudentsOpt);    
-            $("#maghtaClassTags"+id).prop("selected",true);
-        }
-    }
     function AddNewsTag(){
         // $("#tagsList").empty();
         for(i in recentNews.newsCategoryId){
@@ -298,157 +268,6 @@ $(document).ready(function() {
         gradeId:""
     }
 
-    function createMaghtaOpt(id,name,type){
-        return(
-            '<option id="maghta'+type+id+'" value="'+type+id+'" objectId="'+type+id+'" sectionName="'+name+'" >'+name+'</option>'
-        );
-    }
-    function maghtaOptClick(){
-        let objectId=$(this).val();
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        filterNav[type].sectionId=id;
-        filterNav[type].sectionName=$("#maghta"+type+id).attr('sectionName');
-        
-        $("#classStudentsList").empty().prop("disabled", true); 
-        $("#classStudentsList").append('<option value="یبس" disabled selected style="display:none;"></option>');
-        filterNav[type].status1=true;        
-        GetGrade(id,type);
-        sectionOptChange=true;
-    }
-
-    function createPayeOpt(id,name,type,sectionId){
-        return(
-            '<option id="paye'+type+id+'" value="'+type+id+'" objectId="'+type+id+'" gradeName="'+name+'">'+name+'</option>'            
-        );
-    }
-    function payeOptClick(){
-        let objectId=$(this).val();
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        filterNav[type].gradeId=id;
-        filterNav[type].gradeName=$("#paye"+type+id).attr('gradeName');
-        if(type=="Students"){
-            GetClass(id,type);
-            filterNav[type].status2=true;
-        }
-        gradeOptChange=true;
-    }
-
-    function createClassOpt(id,name,type,sectionId){
-        return(
-            '<option id="class'+type+id+'" value="'+type+id+'" objectId="'+type+id+'" className="'+name+'">'+name+'</option>'            
-        );
-    }
-    function classOptClick(){
-        let objectId=$(this).val();
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        filterNav[type].classId=id;
-        filterNav[type].className=$("#class"+type+id).attr('className');
-        filterNav[type].status3=true;
-        classOptChange=true;
-    }
-
-    function GetSection(){
-        $.ajax(`${baseUrl}/Section`, {
-            type: "GET",
-            processData: false,
-            contentType: "application/json",
-            headers: {'token':token}, 
-            success: function(res) {
-                sections=res;
-                AddSection();
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.msg;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function AddSection(){
-        for(i in sections){
-            let id=sections[i].id;
-            
-            let StudentsOpt=createMaghtaOpt(id,sections[i].name,"Students");
-            $("#maghtaStudentsList").append(StudentsOpt);
-            document.getElementById('maghtaStudentsList').onchange = maghtaOptClick;
-        }
-    }
-    function GetGrade(sectionId,type){
-        $.ajax(`${baseUrl}/Section/${sectionId}/Grade`, {
-            type: "GET",
-            processData: false,
-            contentType: "application/json",
-            headers: {'token':token}, 
-            success: function(res) {
-                if(type!="payeha"){
-                    grades=res;
-                    AddGrade(type);
-                }
-                else{
-                    payeha=res;
-                    AddPayeha();
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.msg;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function AddGrade(type){
-        $("#paye"+type+"List").empty().prop("disabled", false); 
-        $("#paye"+type+"List").append('<option value="یبس" disabled selected style="display:none;"></option>');
-        for(i in grades){
-            const paye=grades[i];
-            let opt=createPayeOpt(paye.id,paye.name,type,paye.sectionId);
-            $("#paye"+type+"List").append(opt);
-            document.getElementById('paye'+type+'List').onchange = payeOptClick;
-            //FIXME:
-            // document.getElementById("select-paye"+type+"List-container").onclick = payeOptClicked;
-        }
-    }
-    function GetClass(gradeId,type){
-        $.ajax({
-            url: `${baseUrl}/Class`,
-            data:{"gradeId":gradeId},
-            type: "GET",
-            contentType: "application/json",
-            headers: {'token':token}, 
-            success: function(res) {
-                if(type=="Students"){
-                    classes=res;
-                    AddClass(type);
-                }
-                else if(type=="Classes"){
-                    kelasha=res;
-                    AddKelass(type);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.msg;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function AddClass(type){
-        $("#class"+type+"List").empty().prop("disabled", false); 
-        $("#class"+type+"List").append('<option value="یبس" disabled selected style="display:none;"></option>');
-        for(i in classes){
-            const kelas=classes[i];
-            const opt=createClassOpt(kelas.id,kelas.name,type,kelas.sectionId);
-            $("#class"+type+"List").append(opt);
-            document.getElementById('class'+type+'List').onchange = classOptClick;
-        }
-    }
-
     function GetNewsTag(){
         $.ajax(`${baseUrl}/News/Category`, {
             type: "GET",
@@ -486,39 +305,6 @@ $(document).ready(function() {
     // function newsTagChange(){
         
     // }
-
-    let sectionOptChange=false;
-    let gradeOptChange=false;
-    let classOptChange=false;
-
-    $("#addSectionTag").click(function(){
-        if(filterNav["Students"].status1==false||!sectionOptChange)
-           return;
-        sectionOptChange=false;
-
-        let id=filterNav["Students"].sectionId;
-        let StudentsOpt=createMaghtaOpt(id,filterNav["Students"].sectionName,"SectionTags");
-        $("#classTagsList").append(StudentsOpt);    
-        $("#maghtaSectionTags"+id).prop("selected",true);
-    })
-    $("#addGradeTag").click(function(){
-        if(filterNav["Students"].status2==false || !gradeOptChange)
-           return;
-        
-        let id=filterNav["Students"].gradeId;
-        let StudentsOpt=createMaghtaOpt(id,filterNav["Students"].gradeName,"GradeTags");
-        $("#classTagsList").append(StudentsOpt);    
-        $("#maghtaGradeTags"+id).prop("selected",true);
-    })
-    $("#addClassTag").click(function(){
-        if(filterNav["Students"].status3==false || !classOptChange)
-           return;
-        
-        let id=filterNav["Students"].classId;
-        let StudentsOpt=createMaghtaOpt(id,filterNav["Students"].className,"ClassTags");
-        $("#classTagsList").append(StudentsOpt);    
-        $("#maghtaClassTags"+id).prop("selected",true);
-    });
     
 
     $("#editIcon").click(function(){
