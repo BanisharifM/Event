@@ -605,7 +605,7 @@ $(document).ready(function() {
         });
     }
     function DeleteNews(){
-        $.ajax(`${baseUrl}/News/${recentNews.id}`, {
+        $.ajax(`${baseUrl}/news/${recentNews.id}`, {
             type: "DELETE",
             processData: false,
             contentType: "application/json",
@@ -613,9 +613,7 @@ $(document).ready(function() {
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
-                window.location="news.html";         
-                // $("#closeModal1").click();
-
+                window.location="news.html";      
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 var err = eval("(" + jqXHR.responseText + ")");
