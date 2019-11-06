@@ -2,23 +2,54 @@
 $(document).ready(function() {
 
     var token = localStorage.getItem("token");
-    if(token==""||null)
+    var refreshToken = localStorage.getItem("refreshToken");
+    if(token==""||token==null||refreshToken==""||refreshToken==null)
         window.location="signin.html"; 
-        
     baseUrl=localStorage.getItem("baseUrl");
-        
+    tokenValidate();
+
+    function tokenValidate(){
+        $.ajax(`${baseUrl}/auth/token/check`, {
+            type: "GET",
+            processData: true,
+            contentType: "application/json",
+            headers: {'token': token},            
+            success: function(res) {
+                if(res.expire<20)        
+                    refreshToken();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                refreshToken();
+            }
+        });
+    }
+    function refreshToken(){
+        $.ajax(`${baseUrl}/auth/token/refresh`, {
+            data: JSON.stringify({"refresh_token":refreshToken}),
+            type: "POST",
+            processData: true,
+            contentType: "application/json",           
+            success: function(res) {
+                token=res.access_token;
+                localStorage.setItem('token',token);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // window.location="signin.html";                 
+            }
+        });
+    }
+    
     let mode="default";
     let allTags, task;
     GetAllTags();
 
 
     function GetAllTags(){
-        $.ajax(`${baseUrl}/News/Category`, {
-            // data: JSON.stringify({"classId":classId}),
+        $.ajax(`${baseUrl}/news/category`, {
             type: "GET",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token':token},            
             success: function(res) {
                 allTags=res;
                 if(mode=="default")
@@ -45,12 +76,12 @@ $(document).ready(function() {
         mode="add"
     }
     function PostTags(add_todo,task){
-        $.ajax(`${baseUrl}/News/Category`, {
+        $.ajax(`${baseUrl}/news/category`, {
             data: JSON.stringify({"name":task}),
             type: "POST",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token':token},         
             success: function(res) {
                 
                 errorMessage="با موفقیت افزوده شد.";
@@ -106,9 +137,7 @@ $(document).ready(function() {
         .fadeOut();
     });
 
-
-  //TODO:
-  let Students;
+    let Students;
     GetAllStudent();
 
     function createStaffTr(id,title,text,src){
@@ -118,12 +147,12 @@ $(document).ready(function() {
     }
 
     function GetAllStudent(){
-        $.ajax(`${baseUrl}/News`, {
+        $.ajax(`${baseUrl}/news`, {
             // data: JSON.stringify({"classId":classId}),
             type: "GET",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token':token},             
             success: function(res) {
                 Students=res;
                 AddAllStudents();
@@ -131,7 +160,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -181,7 +210,7 @@ $(document).ready(function() {
             type: "POST",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token':token},         
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger('click')
@@ -198,7 +227,7 @@ $(document).ready(function() {
         });
     }
 
-  //notification
+    //notification
 //   let errorMessage;
     function notify(from, align, icon, type, animIn, animOut) {
         $.growl(
@@ -252,23 +281,22 @@ var errorMessage;
 var baseUrl;
 function delete_todo(e) {
     let token=localStorage.getItem("token");
-    $.ajax(`${baseUrl}/News/Category/`+e, {
-            data: JSON.stringify({"enable": true}),
+    $.ajax(`${baseUrl}/news/category/`+e, {
             type: "DELETE",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
-            success: function(res) {
+            headers: {'token':token}, 
+            success:function(res){
                 errorMessage="با موفقیت حذف شد.";
                 $("#successNotification").trigger( "click" );
                 $("#" + e).fadeOut();
-                // GetAllTags();
+
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-            $("#errorNotification").trigger( "click" );
+                errorMessage=err.msg;
+                $("#errorNotification").trigger( "click" );
             }
+
         });
 }
