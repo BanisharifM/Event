@@ -82,11 +82,11 @@ $(document).ready(function() {
     }
 
     function GetNews(newsId){
-        $.ajax(`${baseUrl}/News/${newsId}`, {
+        $.ajax(`${baseUrl}/news/${newsId}`, {
             type: "GET",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 recentNews=res
                 console.log(res);
@@ -95,7 +95,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -355,7 +355,7 @@ $(document).ready(function() {
             type: "GET",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 sections=res;
                 AddSection();
@@ -363,7 +363,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -382,7 +382,7 @@ $(document).ready(function() {
             type: "GET",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 if(type!="payeha"){
                     grades=res;
@@ -396,7 +396,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -419,7 +419,7 @@ $(document).ready(function() {
             data:{"gradeId":gradeId},
             type: "GET",
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 if(type=="Students"){
                     classes=res;
@@ -433,7 +433,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -454,7 +454,7 @@ $(document).ready(function() {
             type: "GET",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 newsTag=res;
                 if(pageStatus==status.NEW)
@@ -465,7 +465,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -589,7 +589,7 @@ $(document).ready(function() {
             type: "PUT",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
@@ -599,7 +599,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
             $("#errorNotification").trigger( "click" );
             }
         });
@@ -609,7 +609,7 @@ $(document).ready(function() {
             type: "DELETE",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},
+            headers: {'token':token},
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
@@ -619,7 +619,7 @@ $(document).ready(function() {
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -674,7 +674,7 @@ $(document).ready(function() {
             enctype: 'multipart/form-data',
             processData: false,       
             contentType: false,   
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 recentNews.imageUrl.push(res)
                 AddImages(recentNews.imageUrl);
@@ -721,7 +721,7 @@ $(document).ready(function() {
             enctype: 'multipart/form-data',
             processData: false,       
             contentType: false,   
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 recentNews.fileUrl.push(res)
                 AddFiles(recentNews.fileUrl);
@@ -850,7 +850,7 @@ $(document).ready(function() {
             type: "DELETE",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 for(i in recentNews.imageUrl){
                     if(recentNews.imageUrl[i].id==id)
@@ -864,7 +864,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
             $("#errorNotification").trigger( "click" );
             }
         });
@@ -877,7 +877,7 @@ $(document).ready(function() {
             type: "DELETE",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 for(i in recentNews.fileUrl){
                     if(recentNews.fileUrl[i].id==id)
@@ -891,7 +891,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
             $("#errorNotification").trigger( "click" );
             }
         });
