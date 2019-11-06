@@ -5,8 +5,6 @@ $(document).ready(function() {
     let token=localStorage.getItem("token");
     if(token==""||null)
         window.location="signin.html"; 
-        
-
 
     let user;
     let userId=localStorage.getItem("userId");
@@ -167,6 +165,7 @@ $(document).ready(function() {
     }
     function AddAllTags(){
         $(".new-task").empty();
+        addImageMode=true;
         for(j in allTags){
             if(allTags[j].isEnabled==true)
                 continue;
@@ -175,7 +174,8 @@ $(document).ready(function() {
             $("#add-btn").trigger('click');
             // GetAllTags();
         }
-        mode="add"
+        mode="add";
+        addImageMode=false;
     }
     function PostTags(add_todo,task){
         $.ajax(`${baseUrl}/samplealert`, {
@@ -190,11 +190,6 @@ $(document).ready(function() {
                 $("#successNotification").trigger( "click" );
                 mode="default"
                 GetAllTags();
-                // $(add_todo)
-                // .appendTo(".new-task")
-                // .hide()
-                // .fadeIn(300);
-                // $(".add_task_todo").val("");
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
@@ -209,9 +204,11 @@ $(document).ready(function() {
   $("#add-btn").on("click", function() {
     $(".md-form-control").removeClass("md-valid");
     var task = $(".add_task_todo").val();
-    if (task == "") {
+    if (task == "")
       alert("لطفا کادر را پر کنید .");
-    } else {
+    else if(addImageMode==false)
+          alert("لطفا تصویر انتخاب کنید .") 
+    else {
         var add_todo = $(
             '<div class="to-do-list mb-3" id="' +
               i +
@@ -232,6 +229,7 @@ $(document).ready(function() {
             .hide()
             .fadeIn(300);
             $(".add_task_todo").val("");
+            $("#imageUrlImg").attr('src','../assets/images/user/add-image2.png');
         }
 
     }
@@ -247,7 +245,7 @@ $(document).ready(function() {
   let uploadedFile;
   let addFileMode=false;
   document.getElementById("selectFileIcon").addEventListener('click', () => {
-          document.getElementById('selectFileInp').click()               
+        document.getElementById('selectFileInp').click()               
   })
   document.getElementById('selectFileInp').onchange = FileChange;
   function FileChange(){
@@ -262,7 +260,6 @@ $(document).ready(function() {
       let fileType=uploadedFile.type;
       let suffix=fileType.substring(fileType.indexOf("/") + 1);
     //   PutFile(recentNews.id,suffix);
-      $("#selectFile").text("انتخاب فایل ...")  
       addFileMode=false;     
   });
   function PutFile(newsId,suffix){
@@ -277,10 +274,11 @@ $(document).ready(function() {
           contentType: false,   
           headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
           success: function(res) {
-              recentNews.fileUrl.push(res)
-              AddFiles(recentNews.fileUrl);
-              errorMessage="فایل افزوده شد.";
-              $("#successNotification").trigger( "click" );
+            recentNews.fileUrl.push(res)
+            AddFiles(recentNews.fileUrl);
+            errorMessage="فایل افزوده شد.";
+            $("#successNotification").trigger( "click" );
+            $("#selectFile").text("");
           },
           error: function(jqXHR, textStatus, errorThrown,error) {
               var err = eval("(" + jqXHR.responseText + ")");
@@ -291,7 +289,17 @@ $(document).ready(function() {
       });
   }
 
-
+  let uploadedImage;
+  let addImageMode=false;
+  document.getElementById("imageUrlImg").addEventListener('click', () => {
+    document.getElementById('imageUrlInp').click()               
+  })
+  document.getElementById('imageUrlInp').onchange = ImageChange;
+  function ImageChange(){
+    uploadedImage=event.target.files[0];
+    $("#imageUrlImg").attr('src', URL.createObjectURL(uploadedImage));
+    addImageMode=true;       
+  }
 
 //notification
 function notify(from, align, icon, type, animIn, animOut) {
