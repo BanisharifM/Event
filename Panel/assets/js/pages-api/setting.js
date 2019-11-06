@@ -2,9 +2,42 @@ var baseUrl=localStorage.getItem("baseUrl");
 var errorMessage;
 $(document).ready(function() {
 
-    let token=localStorage.getItem("token");
-    if(token==""||null)
+    var token = localStorage.getItem("token");
+    var refreshToken = localStorage.getItem("refreshToken");
+    if(token==""||token==null||refreshToken==""||refreshToken==null)
         window.location="signin.html"; 
+    tokenValidate();
+
+    function tokenValidate(){
+        $.ajax(`${baseUrl}/auth/token/check`, {
+            type: "GET",
+            processData: true,
+            contentType: "application/json",
+            headers: {'token': token},            
+            success: function(res) {
+                if(res.expire<20)        
+                    refreshToken();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                refreshToken();
+            }
+        });
+    }
+    function refreshToken(){
+        $.ajax(`${baseUrl}/auth/token/refresh`, {
+            data: JSON.stringify({"refresh_token":refreshToken}),
+            type: "POST",
+            processData: true,
+            contentType: "application/json",           
+            success: function(res) {
+                token=res.access_token;
+                localStorage.setItem('token',token);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // window.location="signin.html";                 
+            }
+        });
+    }
 
     let user;
     let userId=localStorage.getItem("userId");
@@ -14,7 +47,7 @@ $(document).ready(function() {
             type: "GET",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token': token}, 
             success: function(res) {
                 user=res;
                 $("#phoneNumber").attr('placeholder',user.phoneNumber);
@@ -22,7 +55,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -56,7 +89,7 @@ $(document).ready(function() {
             type: "PUT",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token': token}, 
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
@@ -66,7 +99,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
             $("#errorNotification").trigger( "click" );
             }
         });
@@ -83,7 +116,7 @@ $(document).ready(function() {
             type: "POST",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token': token},            
             success: function(res) {
                 
                 errorMessage="با موفقیت ارسال شد.";
@@ -95,7 +128,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -118,7 +151,7 @@ $(document).ready(function() {
             type: "POST",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token': token},            
             success: function(res) {
                 
                 errorMessage="با موفقیت تغییر کرد";
@@ -131,7 +164,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -144,12 +177,11 @@ $(document).ready(function() {
 
 
     function GetAllTags(){
-        $.ajax(`${baseUrl}/Samplealert`, {
-            // data: JSON.stringify({"classId":classId}),
+        $.ajax(`${baseUrl}/industry`, {
             type: "GET",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token': token},            
             success: function(res) {
                 allTags=res;
                 if(mode=="default")
@@ -158,7 +190,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -169,7 +201,7 @@ $(document).ready(function() {
         for(j in allTags){
             if(allTags[j].isEnabled==true)
                 continue;
-            $(".add_task_todo").val(allTags[j].text);
+            $(".add_task_todo").val(allTags[j].name);
             i=allTags[j].id
             $("#add-btn").trigger('click');
             // GetAllTags();
@@ -178,12 +210,12 @@ $(document).ready(function() {
         addImageMode=false;
     }
     function PostTags(add_todo,task){
-        $.ajax(`${baseUrl}/samplealert`, {
-            data: JSON.stringify({"title":"-","text":task}),
+        $.ajax(`${baseUrl}/industry`, {
+            data: JSON.stringify({"imageId":"1","name":task}),
             type: "POST",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token': token},            
             success: function(res) {
                 
                 errorMessage="با موفقیت افزوده شد.";
@@ -194,7 +226,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
+                errorMessage=err.msg;
                  $("#errorNotification").trigger( "click" );
             }
         });
@@ -272,7 +304,7 @@ $(document).ready(function() {
           enctype: 'multipart/form-data',
           processData: false,       
           contentType: false,   
-          headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+          headers: {'token': token}, 
           success: function(res) {
             recentNews.fileUrl.push(res)
             AddFiles(recentNews.fileUrl);
@@ -351,12 +383,11 @@ $(".notifications.btn").on("click", function(e) {
 });
 function delete_todo(e) {
   let token=localStorage.getItem("token");
-  $.ajax(`${baseUrl}/samplealert/`+e, {
-        //   data: JSON.stringify({"enable": true}),
+  $.ajax(`${baseUrl}/industry/`+e, {
           type: "DELETE",
           processData: true,
           contentType: "application/json",
-          headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+          headers: {'token': token}, 
           success: function(res) {
               errorMessage="با موفقیت حذف شد.";
             //   alert(errorMessage)
@@ -367,7 +398,7 @@ function delete_todo(e) {
           error: function(jqXHR, textStatus, errorThrown,error) {
               // set errorMessage
               var err = eval("(" + jqXHR.responseText + ")");
-              errorMessage=err.Message;
+              errorMessage=err.msg;
           $("#errorNotification").trigger( "click" );
           }
       });
