@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
-  localStorage.setItem("token","");
-  localStorage.setItem("refreshToken","");
+  // localStorage.setItem("token","");
+  // localStorage.setItem("refreshToken","");
   localStorage.setItem("userId",0);
   
   var baseUrl=localStorage.getItem("baseUrl");
