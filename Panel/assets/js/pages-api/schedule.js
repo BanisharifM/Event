@@ -6,12 +6,43 @@
 
 $(document).ready(function(){
 
-    let token=localStorage.getItem("token");
-    if(token==""||null)
+    var token = localStorage.getItem("token");
+    var refreshToken = localStorage.getItem("refreshToken");
+    if(token==""||token==null||refreshToken==""||refreshToken==null)
         window.location="signin.html"; 
-        
-    var baseUrl=localStorage.getItem("baseUrl");
+    baseUrl=localStorage.getItem("baseUrl");
+    tokenValidate();
 
+    function tokenValidate(){
+        $.ajax(`${baseUrl}/auth/token/check`, {
+            type: "GET",
+            processData: true,
+            contentType: "application/json",
+            headers: {'token': token},            
+            success: function(res) {
+                if(res.expire<20)        
+                    refreshToken();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                refreshToken();
+            }
+        });
+    }
+    function refreshToken(){
+        $.ajax(`${baseUrl}/auth/token/refresh`, {
+            data: JSON.stringify({"refresh_token":refreshToken}),
+            type: "POST",
+            processData: true,
+            contentType: "application/json",           
+            success: function(res) {
+                token=res.access_token;
+                localStorage.setItem('token',token);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // window.location="signin.html";                 
+            }
+        });
+    }
 
     let industry;
     GetIndustry();
@@ -560,7 +591,7 @@ $(document).ready(function(){
             type: "GET",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 industry=res;
                 AddIndustry();
@@ -588,7 +619,7 @@ $(document).ready(function(){
             data:{"gradeId":gradeId},
             type: "GET",
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 darsha=res;
                 AddCourse();
@@ -618,7 +649,7 @@ $(document).ready(function(){
             type: "DELETE",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token':token},            
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );  
@@ -638,7 +669,7 @@ $(document).ready(function(){
             type: "PUT",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
@@ -658,7 +689,7 @@ $(document).ready(function(){
             type: "POST",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
@@ -682,7 +713,7 @@ $(document).ready(function(){
             enctype: 'multipart/form-data',
             processData: false,       
             contentType: false,   
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 errorMessage="تصویر به روز شد.";
                 $("#successNotification").trigger( "click" );
@@ -702,7 +733,7 @@ $(document).ready(function(){
             type: "GET",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token':token},            
             success: function(res) {
                 Students=res;
                 AddAllStudents();
@@ -734,7 +765,7 @@ $(document).ready(function(){
             type: "DELETE",
             processData: true,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            headers: {'token':token},            
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );  
@@ -755,7 +786,7 @@ $(document).ready(function(){
             type: "PUT",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
@@ -777,7 +808,7 @@ $(document).ready(function(){
             type: "POST",
             processData: false,
             contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
@@ -806,7 +837,7 @@ $(document).ready(function(){
             enctype: 'multipart/form-data',
             processData: false,       
             contentType: false,   
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            headers: {'token':token}, 
             success: function(res) {
                 errorMessage="تصویر به روز شد.";
                 uploadedFile=false;
