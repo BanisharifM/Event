@@ -45,7 +45,8 @@ $(document).ready(function(){
     }
 
     let industry;
-    GetIndustry();
+    // GetIndustry();
+    GetCourse();
 
     let Students,darsha;
 
@@ -66,7 +67,7 @@ $(document).ready(function(){
         }
     }
     let pageStatus={
-        "Classes" : states["Classes"].DEFUALT,
+        "Course" : states["Course"].DEFUALT,
         "Students" : states["Students"].DEFUALT
     }
     const editCalcoItems={
@@ -93,13 +94,9 @@ $(document).ready(function(){
 
     const rawCourse={
         id:0,
-        gradeName : "",
-        name: "",
-        imageUrl : "",
-        teachers : [],
-        isEnable : true,
-        sampleQuestion: [],
-        gradeId: 0
+        date : "0000-00-00",
+        start : "00:00:00",
+        end : "00:00:00"
     }
 
     const filterNav={
@@ -143,49 +140,46 @@ $(document).ready(function(){
         filterNav[type].industryName=$("#industry"+type+id).attr('industryName');
     }
      
-    function createCalcoTr(calco,type,industryName,gradeName,gradeId){
+    function createCalcoTr(calco,type){
         return(
             '<tr id="tr'+type+calco.id+'" >'+
-                '<td>'+calcoImageUrl(calco.id,type,calco.imageUrl)+'</td>'+
-                '<td>'+calcoInformation(calco.id,type,calco.name,gradeId)+'</td>'+
-                '<td><span id="nationalId'+type+calco.id+'" class="pie_1" objectId="'+type+calco.id+'" > '+industryName+'</span></td>'+
-                '<td><h6 id="title'+type+calco.id+'" class="m-0" objectId="'+type+calco.id+'" > '+gradeName+'</h6></td>'+
+                '<td>'+date(calco.id,type,calco.date)+'</td>'+
+                '<td>'+timeStart(calco.id,type,calco.start)+'</td>'+
+                '<td>'+timeEnd(calco.id,type,calco.end)+'</td>'+
                 '<td>'+calcoToolbar(calco.id,type)+'</td>'+
             '</tr>'
         );
     }
-
-    function calcoImageUrl(id,type,src){
+    
+    function date(id,type,detail){
         return(
-            '<div id="imageUrl'+type+id+'" >'+
-                '<input id="imageUrlInp'+type+id+'" type="file" key="'+id+'" objectId="'+type+id+'" accept="image/*" style="display: none" />'+
-                '<img id="imageUrlImg'+type+id+'" class="rounded-circle" key="'+id+'" objectId="'+type+id+'" style="width:40px;" src='+src+' alt="تصویر">'+
-            '</div>'
+            '<span id="date'+type+id+'" objectId="'+type+id+'" >'+detail+'</span>'+
+            '<input id="dateInp'+type+id+'" type="text" value="'+detail+'" "objectId="'+type+id+'" style="display:none" > '
         );
     }
-    let CourseSelectImage;
-    function calcoImageUrlChange(){
-        CourseSelectImage=event.target.files[0];
+    function dateChange(){
+        let detail=$(this).val();
         let objectId=$(this).attr('objectId');
-        editCalcoItems[objectId].imageUrl=CourseSelectImage;
-        $("#imageUrlImg"+objectId).attr('src', URL.createObjectURL(CourseSelectImage));
     }
-
-    function calcoInformation(id,type,name,gradeId){
+    function timeStart(id,type,detail){
         return(
-            '<h6 id="FirstName'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+name+'</h6>'+
-            '<input id="informationInp'+type+id+'" type="text" value="'+name+'" gradeId="'+gradeId+'"objectId="'+type+id+'" style="display:none" > '
+            '<span id="timeStart'+type+id+'" objectId="'+type+id+'" >'+detail+'</span>'+
+            '<input id="timeStartInp'+type+id+'" type="text" value="'+detail+'" "objectId="'+type+id+'" style="display:none" > '
         );
     }
-    function calcoFirstNameChange(){
-        let name=$(this).val();
+    function timeStartChange(){
+        let detail=$(this).val();
         let objectId=$(this).attr('objectId');
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        let gradeId=$(this).attr('gradeId');
-        editCalcoItems[objectId].name=name;
-        // editCalcoItems[objectId].id=id;
-        editCalcoItems[objectId].gradeId=gradeId;
+    }
+    function timeEnd(id,type,detail){
+        return(
+            '<span id="timeEnd'+type+id+'" objectId="'+type+id+'" >'+detail+'</span>'+
+            '<input id="timeEndInp'+type+id+'" type="text" value="'+detail+'" "objectId="'+type+id+'" style="display:none" > '
+        );
+    }
+    function timeEndChange(){
+        let detail=$(this).val();
+        let objectId=$(this).attr('objectId');
     }
 
     function calcoToolbar(id,type){
@@ -233,19 +227,17 @@ $(document).ready(function(){
         let objectId=$(this).attr('objectId');
         let id=objectId.match(/\d+/)[0];
         let type=objectId.replace(id, "");
+        data = {
+            date: $("#dateInp"+objectId).val(),
+            start: $("#timeStartInp"+objectId).val(),
+            end:$("#timeEndInp"+objectId).val(),
+            programs:[]
+        };
+
         if (pageStatus[type] == states[type].EDIT) {
           pageStatus[type] = states[type].DEFUALT;
-
-          if(type=="Course"&&editCalcoItems[objectId].imageUrl!=false)
-            PutCourseImage(id);
-
-          let gradeId=filterNav[type].gradeId;
-          data = {
-            name: $("#informationInp"+objectId).val(),
-            schoolGradeId: gradeId
-          };
           if (type == "Course") {
-            PutCourse(data,editCalcoItems[objectId].id );
+            PutCourse(data,id);
           }
 
           editCalcoItems[objectId] = JSON.parse(
@@ -254,13 +246,9 @@ $(document).ready(function(){
         }
         if(pageStatus[type]==states[type].ADDED){
             pageStatus[type]=states[type].DEFUALT;
-            data = {
-                name: editCalcoItems[objectId].name,
-                schoolGradeId: filterNav[type].gradeId
-              };
-              if (type == "Course") {
-                PostCourse(data,editCalcoItems[objectId].id);
-              }
+            if (type == "Course") {
+            PostCourse(data);
+            }
             editCalcoItems[objectId]=JSON.parse(JSON.stringify(editCalcoItems.raw));
         }        
     }
@@ -283,9 +271,9 @@ $(document).ready(function(){
     }
 
     $("#addCourse").click(function(){
-        if(pageStatus["Course"]==states["Course"].DEFUALT && filterNav["Course"].isFilter){
+        if(pageStatus["Course"]==states["Course"].DEFUALT){
             pageStatus["Course"]=states["Course"].ADD;
-            let tr=createCalcoTr(rawCourse,"Course",filterNav["Course"].industryName,filterNav["Course"].gradeName,filterNav["Course"].gradeId);
+            let tr=createCalcoTr(rawCourse,"Course");
             editCalcoItems["Course0"]=JSON.parse(JSON.stringify(rawCourse));
             $("#CourseList").append(tr);
             addActionCalco('Course0');
@@ -295,16 +283,9 @@ $(document).ready(function(){
 
     function addActionCalco(objectId){
 
-        
-        if(objectId.includes('Course')){
-            document.getElementById('imageUrl'+objectId).addEventListener('click', () => {
-                if(editCalcoItems[objectId].status===true){
-                    document.getElementById('imageUrlInp'+objectId).click()                
-                }
-            })
-            document.getElementById('imageUrlInp'+objectId).onchange = calcoImageUrlChange;
-        }        
-        document.getElementById('informationInp'+objectId).onchange = calcoFirstNameChange;
+        document.getElementById('dateInp'+objectId).onchange = dateChange;
+        document.getElementById('timeStartInp'+objectId).onchange = timeStartChange;
+        document.getElementById('timeEndInp'+objectId).onchange = timeEndChange;
         document.getElementById('toolbarEdit'+objectId).onclick = calcoEditClick;
         document.getElementById('toolbarDelete'+objectId).onclick = calcoDeleteClick;
         document.getElementById('toolbarSave'+objectId).onclick = calcoSaveClick;
@@ -317,8 +298,14 @@ $(document).ready(function(){
         $('#toolbarDelete'+objectId).hide();
         $('#toolbarCancel'+objectId).show(); 
 
-        $('#FirstName'+objectId).hide();
-        $('#informationInp'+objectId).show();
+        $('#date'+objectId).hide();
+        $('#dateInp'+objectId).show();
+
+        $('#timeStart'+objectId).hide();
+        $('#timeStartInp'+objectId).show();
+        
+        $('#timeEnd'+objectId).hide();
+        $('#timeEndInp'+objectId).show();
     }
     function disableEditCalco(objectId){
         $('#toolbarEdit'+objectId).show();
@@ -327,8 +314,14 @@ $(document).ready(function(){
         $('#toolbarDelete'+objectId).show();
         $('#toolbarCancel'+objectId).hide(); 
 
-        $('#FirstName'+objectId).show();
-        $('#informationInp'+objectId).hide();
+        $('#date'+objectId).show();
+        $('#dateInp'+objectId).hide();
+
+        $('#timeStart'+objectId).show();
+        $('#timeStartInp'+objectId).hide();
+        
+        $('#timeEnd'+objectId).show();
+        $('#timeEndInp'+objectId).hide();
     }
     
     $("#StudentsListFilter").click(function(){
@@ -615,7 +608,7 @@ $(document).ready(function(){
     }
     function GetCourse(gradeId){
         $.ajax({
-            url: `${baseUrl}/Course`,
+            url: `${baseUrl}/schedule`,
             data:{"gradeId":gradeId},
             type: "GET",
             contentType: "application/json",
@@ -637,7 +630,7 @@ $(document).ready(function(){
         for(i in darsha){
             if(darsha[i].enable==true)
                 continue;
-            let tr=createCalcoTr(darsha[i],"Course",filterNav["Course"].industryName,filterNav["Course"].gradeName,filterNav["Course"].gradeId);
+            let tr=createCalcoTr(darsha[i],"Course");
             let id=darsha[i].id;
             editCalcoItems["Course"+id]= JSON.parse(JSON.stringify(editCalcoItems.raw));
             $('#CourseList').append(tr);
@@ -645,7 +638,7 @@ $(document).ready(function(){
         }
     }
     function DeleteCourse(courseId){
-        $.ajax(`${baseUrl}/Course/${courseId}`, {
+        $.ajax(`${baseUrl}/schedule/${courseId}`, {
             type: "DELETE",
             processData: true,
             contentType: "application/json",
@@ -653,7 +646,7 @@ $(document).ready(function(){
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );  
-                GetCourse(filterNav["Course"].gradeId);
+                GetCourse();
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
@@ -664,7 +657,7 @@ $(document).ready(function(){
         });
     }
     function PutCourse(data,id){
-        $.ajax(`${baseUrl}/Course/`+id, {
+        $.ajax(`${baseUrl}/schedule/`+id, {
             data: JSON.stringify(data),
             type: "PUT",
             processData: false,
@@ -673,7 +666,7 @@ $(document).ready(function(){
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
-                GetCourse(filterNav["Course"].gradeId);
+                GetCourse();
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
@@ -684,7 +677,7 @@ $(document).ready(function(){
         });
     }
     function PostCourse(data,id){
-        $.ajax(`${baseUrl}/Course`, {
+        $.ajax(`${baseUrl}/schedule`, {
             data: JSON.stringify(data),
             type: "POST",
             processData: false,
@@ -699,29 +692,6 @@ $(document).ready(function(){
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
                 errorMessage=err.Message;
-            $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function PutCourseImage(id){
-        const datas = new FormData();
-        datas.append("file",CourseSelectImage)
-        $.ajax({
-            type: 'PUT',
-            url: `${baseUrl}/Course/${id}/Image`,
-            data : datas,
-            enctype: 'multipart/form-data',
-            processData: false,       
-            contentType: false,   
-            headers: {'token':token}, 
-            success: function(res) {
-                errorMessage="تصویر به روز شد.";
-                $("#successNotification").trigger( "click" );
-                GetCourse(filterNav["Course"].gradeId);
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage="fg";
             $("#errorNotification").trigger( "click" );
             }
         });
