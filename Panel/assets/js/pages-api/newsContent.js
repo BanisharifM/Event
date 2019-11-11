@@ -16,10 +16,10 @@ $(document).ready(function() {
             headers: {'token': token},            
             success: function(res) {
                 if(res.expire<20)        
-                    refreshToken();
+                    refreshingToken();
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
-                refreshToken();
+                refreshingToken();
             }
         });
     }
