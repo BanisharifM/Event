@@ -211,7 +211,7 @@ $(document).ready(function() {
     }
     function PostTags(add_todo,task){
         $.ajax(`${baseUrl}/industry`, {
-            data: JSON.stringify({"imageId":"1","name":task}),
+            data: JSON.stringify({"imageUrl":"1","name":task}),
             type: "POST",
             processData: true,
             contentType: "application/json",
@@ -273,65 +273,97 @@ $(document).ready(function() {
       .fadeOut();
   });
 
-  
-  let uploadedFile;
-  let addFileMode=false;
-  document.getElementById("selectFileIcon").addEventListener('click', () => {
-        document.getElementById('selectFileInp').click()               
-  })
-  document.getElementById('selectFileInp').onchange = FileChange;
-  function FileChange(){
-      uploadedFile=event.target.files[0]; 
-      $("#selectFile").text(uploadedFile.name)
-      addFileMode=true;       
-  }
+    let uploadedImage;
+    let addImageMode=false;
+    document.getElementById("selectImage").addEventListener('click', () => {
+            document.getElementById('selectImageInp').click()               
+    })
+    document.getElementById('selectImageInp').onchange = ImageChange;
+    function ImageChange(){
+        uploadedImage=event.target.files[0]; 
+        $("#selectImage").text(uploadedImage.name)
+        addImageMode=true;       
+    }
+    $("#addImage-btn").click(function(){
+        if(!addImageMode)
+            return;
+        PutImage(recentNews.id);
+        // $("#selectImage").text("انتخاب تصویر ...")  
+        addImageMode=false;     
+    });
+    function PutImage(newsId){
+        const datas = new FormData();
+        datas.append("file",uploadedImage)
+        $.ajax({
+            type: 'PUT',
+            url: `${baseUrl}/News/${newsId}/Image`,
+            data : datas,
+            enctype: 'multipart/form-data',
+            processData: false,       
+            contentType: false,   
+            headers: {'token':token}, 
+            success: function(res) {
+                recentNews.imageUrl.push(res)
+                AddImages(recentNews.imageUrl);
+                errorMessage="تصویر افزوده شد.";
+                $("#successNotification").trigger( "click" );
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage="fg";
+                $("#errorNotification").trigger( "click" );
+                return false;
+            }
+        });
+    }
 
-  $("#addFile-btn").click(function(){
-      if(!addFileMode)
-          return;
-      let fileType=uploadedFile.type;
-      let suffix=fileType.substring(fileType.indexOf("/") + 1);
+
+    let uploadedFile;
+    let addFileMode=false;
+    document.getElementById("selectFileIcon").addEventListener('click', () => {
+        document.getElementById('selectFileInp').click()               
+    })
+    document.getElementById('selectFileInp').onchange = FileChange;
+    function FileChange(){
+        uploadedFile=event.target.files[0]; 
+        $("#selectFile").text(uploadedFile.name)
+        addFileMode=true;       
+    }
+
+    $("#addFile-btn").click(function(){
+        if(!addFileMode)
+            return;
+        let fileType=uploadedFile.type;
+        let suffix=fileType.substring(fileType.indexOf("/") + 1);
     //   PutFile(recentNews.id,suffix);
-      addFileMode=false;     
-  });
-  function PutFile(newsId,suffix){
-      const datas = new FormData();
-      datas.append("file",uploadedFile)
-      $.ajax({
-          type: 'PUT',
-          url: `${baseUrl}/News/${newsId}/File/Suffix/${suffix}`,
-          data : datas,
-          enctype: 'multipart/form-data',
-          processData: false,       
-          contentType: false,   
-          headers: {'token': token}, 
-          success: function(res) {
+        addFileMode=false;     
+    });
+    function PutFile(newsId,suffix){
+        const datas = new FormData();
+        datas.append("file",uploadedFile)
+        $.ajax({
+            type: 'PUT',
+            url: `${baseUrl}/News/${newsId}/File/Suffix/${suffix}`,
+            data : datas,
+            enctype: 'multipart/form-data',
+            processData: false,       
+            contentType: false,   
+            headers: {'token': token}, 
+            success: function(res) {
             recentNews.fileUrl.push(res)
             AddFiles(recentNews.fileUrl);
             errorMessage="فایل افزوده شد.";
             $("#successNotification").trigger( "click" );
             $("#selectFile").text("");
-          },
-          error: function(jqXHR, textStatus, errorThrown,error) {
-              var err = eval("(" + jqXHR.responseText + ")");
-              errorMessage="fg";
-              $("#errorNotification").trigger( "click" );
-              return false;
-          }
-      });
-  }
-
-  let uploadedImage;
-  let addImageMode=false;
-  document.getElementById("imageUrlImg").addEventListener('click', () => {
-    document.getElementById('imageUrlInp').click()               
-  })
-  document.getElementById('imageUrlInp').onchange = ImageChange;
-  function ImageChange(){
-    uploadedImage=event.target.files[0];
-    $("#imageUrlImg").attr('src', URL.createObjectURL(uploadedImage));
-    addImageMode=true;       
-  }
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage="fg";
+                $("#errorNotification").trigger( "click" );
+                return false;
+            }
+        });
+    }
 
 //notification
 function notify(from, align, icon, type, animIn, animOut) {
