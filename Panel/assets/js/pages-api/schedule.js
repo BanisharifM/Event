@@ -24,11 +24,11 @@ $(document).ready(function(){
                     refreshToken();
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
-                refreshToken();
+                refreshingToken();
             }
         });
     }
-    function refreshToken(){
+    function refreshingToken(){
         $.ajax(`${baseUrl}/auth/token/refresh`, {
             data: JSON.stringify({"refresh_token":refreshToken}),
             type: "POST",
@@ -39,7 +39,7 @@ $(document).ready(function(){
                 localStorage.setItem('token',token);
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
-                // window.location="signin.html";                 
+                window.location="signin.html";                 
             }
         });
     }
