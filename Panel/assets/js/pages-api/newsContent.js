@@ -39,13 +39,11 @@ $(document).ready(function() {
         });
     }
         
-
     let newsTag;
 
     let pageStatus=localStorage.getItem("NEWS_Page_Status");
     let NEWS_Id=localStorage.getItem("NEWS_Id");
     GetNews(NEWS_Id);
-
 
     let recentNews;
     let rawnews={
@@ -102,8 +100,8 @@ $(document).ready(function() {
     }
     function preparePage(){
         GetNewsTag();
-        AddImages(recentNews.imageUrl);
-        AddFiles(recentNews.fileUrl);
+        AddImages(recentNews.images);
+        AddFiles(recentNews.file);
         AddBody();
         if(pageStatus==status.SHOW){
             disableEdit();
@@ -129,13 +127,13 @@ $(document).ready(function() {
         $("#carouselBody").empty();
         $(".new-image").empty();
         for(i in imageArr){
-            let src=imageArr[i].url;
-            let id=imageArr[i].id
+            let src=imageArr[i];
+            // let id=imageArr[i].id
             //carousel
             let caroselitem=caroselItem(src,isActiveImg);
             $("#carouselBody").append(caroselitem);
             //image list
-            addImgList(id,src,`تصویر ${parseInt(i)+1}`),
+            addImgList(src,`تصویر ${parseInt(i)+1}`),
             
             isActiveImg=false;
         }
@@ -147,13 +145,10 @@ $(document).ready(function() {
             '</div>'
         );
     }
-    function AddFiles(fileArr){
+    function AddFiles(file){
         $(".new-file").empty();
-        for(i in fileArr){
-            let src=fileArr[i].url;
-            let id=fileArr[i].id
-            addFileList(id,src,`فایل ${parseInt(i)+1}`);
-        }
+        let src=file;
+        addFileList(src,`فیلم`);
     }
     function AddBody(){
         let body=createNewsBody(recentNews,"News")
@@ -241,35 +236,9 @@ $(document).ready(function() {
         }
     }
 
-    let sections;
-    let grades;
-    let classes;
-    GetSection();
-    
-    const rawStudent={
-        id: 0,
-        phoneNumber: "",
-        firstName: "", 
-        lastName:"", 
-        nationalId:"",
-        className:"",
-        sectionName:"",
-        gradeName:"",
-        imageUrl:"../assets/images/user/avatar-2.jpg",
-        totalTuition:"",
-        paidTuution:"",
-        transaction:"",
-        grades:"",
-        onlineGrades:"",
-        alerts:"",
-        isActive:true,
-        classId:"",
-        sectionId:"",
-        gradeId:""
-    }
 
     function GetNewsTag(){
-        $.ajax(`${baseUrl}/News/Category`, {
+        $.ajax(`${baseUrl}/news/category`, {
             type: "GET",
             processData: false,
             contentType: "application/json",
@@ -302,9 +271,6 @@ $(document).ready(function() {
             // document.getElementById('tagsList').onchange = newsTagChange;
         }
     }
-    // function newsTagChange(){
-        
-    // }
     
 
     $("#editIcon").click(function(){
@@ -523,10 +489,10 @@ $(document).ready(function() {
     
 
 
-//   var i;
-  function addImgList(id,url,name) {
+  var i=0;
+  function addImgList(url,name) {
     task = name;
-    i=id
+    i++;
     var add_todo = $(
         '<div class="to-do-list mb-3" id="Image' +
           i +
@@ -551,9 +517,8 @@ $(document).ready(function() {
       .parent()
       .fadeOut();
   });
-  function addFileList(id,url,name) {
+  function addFileList(url,name) {
     task = name;
-    i=id
     var add_todo = $(
       '<div class="to-do-list mb-3" id="File' +
         i +
