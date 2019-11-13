@@ -433,7 +433,7 @@ function delete_todo(e) {
           error: function(jqXHR, textStatus, errorThrown,error) {
               // set errorMessage
               var err = eval("(" + jqXHR.responseText + ")");
-              errorMessage=err.msg;
+              errorMessage="امکان حذف وجود ندارد.";
           $("#errorNotification").trigger( "click" );
           }
       });
