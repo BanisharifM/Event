@@ -202,6 +202,7 @@ $(document).ready(function() {
             if(allTags[j].isEnabled==true)
                 continue;
             $(".add_task_todo").val(allTags[j].name);
+            imgUrl=allTags[j].imageUrl;
             i=allTags[j].id
             $("#add-btn").trigger('click');
             // GetAllTags();
@@ -209,9 +210,9 @@ $(document).ready(function() {
         mode="add";
         addImageMode=false;
     }
-    function PostTags(add_todo,task){
+    function PostTags(task,imageUrl){
         $.ajax(`${baseUrl}/industry`, {
-            data: JSON.stringify({"imageUrl":"1","name":task}),
+            data: JSON.stringify({"imageUrl":imageUrl,"name":task}),
             type: "POST",
             processData: true,
             contentType: "application/json",
@@ -232,19 +233,21 @@ $(document).ready(function() {
         });
     }
 
-  var i;
+  var i,imageUrl;
   $("#add-btn").on("click", function() {
     $(".md-form-control").removeClass("md-valid");
     var task = $(".add_task_todo").val();
-    if (task == "")
-      alert("لطفا کادر را پر کنید .");
-    else if(addImageMode==false)
+    if(addImageMode==false)
           alert("لطفا تصویر انتخاب کنید .") 
+    else if (task == "")
+      alert("لطفا کادر را پر کنید .");
     else {
         var add_todo = $(
             '<div class="to-do-list mb-3" id="' +
               i +
-              '"><div class="d-inline-block"><label class="check-task custom-control custom-checkbox d-flex justify-content-center"><span class="custom-control-label" for="checkbox' +
+              '"><div class="d-inline-block">'+
+              '<img id="imageUrlImg'+i+'" class="rounded-circle" style="width:40px;float:right;" src="'+imgUrl+'" alt="تصویر">'+
+              '<label class="check-task custom-control custom-checkbox d-flex justify-content-center" style="margin-top:12px;"><span class="custom-control-label" for="checkbox' +
               i +
               '">' +
               task +
@@ -253,7 +256,13 @@ $(document).ready(function() {
               ');" href="#!" class="delete_todolist"><i class="far fa-trash-alt"></i></a></div></div>'
           );
         if(mode=="add"){
-            PostTags(add_todo,task);
+            if(!addImageMode)
+                return;
+            let fileType=uploadedImage.type;
+            let suffix=fileType.substring(fileType.indexOf("/") + 1);
+            addImageMode=false; 
+            PutImage(task,suffix)
+            // PostTags(add_todo,task);
         }
         else{
             $(add_todo)
@@ -275,38 +284,31 @@ $(document).ready(function() {
 
     let uploadedImage;
     let addImageMode=false;
-    document.getElementById("selectImage").addEventListener('click', () => {
-            document.getElementById('selectImageInp').click()               
+    document.getElementById("imageUrlImg").addEventListener('click', () => {
+            document.getElementById('imageUrlInp').click()               
     })
-    document.getElementById('selectImageInp').onchange = ImageChange;
+    document.getElementById('imageUrlInp').onchange = ImageChange;
     function ImageChange(){
         uploadedImage=event.target.files[0]; 
-        $("#selectImage").text(uploadedImage.name)
+        $("#imageUrlImg").attr('src',URL.createObjectURL(uploadedImage));
         addImageMode=true;       
     }
-    $("#addImage-btn").click(function(){
-        if(!addImageMode)
-            return;
-        PutImage(recentNews.id);
-        // $("#selectImage").text("انتخاب تصویر ...")  
-        addImageMode=false;     
-    });
-    function PutImage(newsId){
+    // $("#addImage-btn").click(function(){
+            
+    // });
+    function PutImage(task,suffix){
         const datas = new FormData();
         datas.append("file",uploadedImage)
         $.ajax({
-            type: 'PUT',
-            url: `${baseUrl}/News/${newsId}/Image`,
+            type: 'POST',
+            url: `${baseUrl}/file/${suffix}`,
             data : datas,
             enctype: 'multipart/form-data',
             processData: false,       
             contentType: false,   
             headers: {'token':token}, 
             success: function(res) {
-                recentNews.imageUrl.push(res)
-                AddImages(recentNews.imageUrl);
-                errorMessage="تصویر افزوده شد.";
-                $("#successNotification").trigger( "click" );
+                PostTags(task,res.url)
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 var err = eval("(" + jqXHR.responseText + ")");
@@ -335,6 +337,7 @@ $(document).ready(function() {
             return;
         let fileType=uploadedFile.type;
         let suffix=fileType.substring(fileType.indexOf("/") + 1);
+        alert(suffix)
     //   PutFile(recentNews.id,suffix);
         addFileMode=false;     
     });
