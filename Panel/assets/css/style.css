@@ -12421,3 +12421,11 @@ input[type=number]::-webkit-outer-spin-button {
 #editIcon:hover , #saveIcon:hover{
     color:#16cea0;
 }
+
+#ticketQuestion:focus ,#ticketTitle{
+    
+    border: 1px solid #ced4da !important;
+  -webkit-box-shadow: none;
+  background-color: #e9ecef;
+  box-shadow: none;
+}

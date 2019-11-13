@@ -4,8 +4,6 @@
 <head>
     <title>پیام</title>
 
-
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -25,22 +23,24 @@
 
     <link rel="stylesheet" href="../assets/plugins/notification/css/notification.min.css">
 
+    <link href="https://cdn.rawgit.com/rastikerdar/vazir-font/v21.0.1/dist/font-face.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="../assets/css/style.css">
 
     <link rel="stylesheet" href="../assets/css/layouts/rtl.css">
 
-    <link rel="stylesheet" href="../assets/plugins/jstree/css/style.min.css">
+    <link rel="stylesheet" href="../assets/plugins/select2/css/select2.min.css">
 
+    <link rel="stylesheet" href="../assets/plugins/jstree/css/style.min.css">
 
 </head>
 
 <body>
 
-    <!-- <div class="loader-bg">
+    <div class="loader-bg">
         <div class="loader-track">
             <div class="loader-fill"></div>
         </div>
-    </div> -->
+    </div>
 
 
     <nav class="pcoded-navbar">
@@ -48,11 +48,10 @@
             <br>
             <div class="navbar-brand header-logo">
                 <a href="index.html" class="b-brand">
-                    <img src="../assets/images/widget/event9.png" style="width:200px;height:50px;">
-                    <!-- <div class="b-bg">
+                    <div class="b-bg">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <span class="b-title">پنل مدیریت</span> -->
+                    <span class="b-title">پنل مدیریت</span>
                 </a>
                 <!-- <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a> -->
             </div>
@@ -71,7 +70,7 @@
                     <li data-username="message" class="nav-item "><a href="schedule.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="fas fa-list-ul fa-rotate-180"></i></span><span
                                 class="pcoded-mtext">برنامه</span></a></li>
-                    <li data-username="message" class="nav-item "><a href="news.html" class="nav-link"><span
+                    <li data-username="message" class="nav-item"><a href="news.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="far fa-newspaper"></i></span><span
                                 class="pcoded-mtext"></span>اخبار</span></a></li>
                     <li data-username="message" class="nav-item active"><a href="message.html" class="nav-link"><span
@@ -103,7 +102,6 @@
 
 
     <section class="header-user-list">
-        <button class="btn btn-theme btn-icon btn-msg-send" type="button"><i class="feather icon-play"></i></button>
         <div class="h-list-header">
             <div class="input-group">
                 <input type="text" id="search-friends" class="form-control" placeholder="Search Friend . . .">
@@ -296,7 +294,7 @@
             <div class="main-chat-cont scroll-div">
                 <div class="main-friend-chat">
                     <div class="media chat-messages">
-                        <a class="media-right photo-table" href="#!"><img
+                        <a class="media-left photo-table" href="#!"><img
                                 class="media-object img-radius img-radius m-t-5"
                                 src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image"></a>
                         <div class="media-body chat-menu-content">
@@ -351,164 +349,60 @@
 
 
                     <div class="main-body">
-                        <div class="page-wrapper">
+                        <div class="page-wrapper row">
+                            
+                            <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
+                               
+                                <div class="row">
 
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <!-- <h5 class="mb-3">تایید تاریخ امتحانات</h5>
-                                    <hr> -->
-                                    <div class="accordion" id="accordionExample1">
-                                        <div class="card">
-                                            <div class="card-header" id="headingOne">
-                                                <h5 class="mb-0"><a href="#!" data-toggle="collapse"
-                                                        data-target="#collapse1" aria-expanded="true"
-                                                        aria-controls="collapse1">لیست پیام ها</a></h5>
-                                            </div>
-                                            <div id="collapse1" class=" card-body collapse show"
-                                                aria-labelledby="headingOne" data-parent="#accordionExample1">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="border-top-0">عنوان</th>
-                                                                <th class="border-top-0">تاریخ</th>
-                                                                <th class="border-top-0">متن</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="TestDateList">
-                                                         </tbody>
-                                                    </table>
-                                                </div>
+                                    <div class="col-sm-12 mx-auto">
+                                        <div class="card" id="newsBody">
+                                            <div class="card-body text-center">
+                                                <label style="float: right !important; margin-bottom:10px">عنوان :</label>
+                                                <input id="ticketTitle" autocomplete="off" class="form-control mb-4" type="text" readonly style="border: 1px solid #ced4da !important;" >
+                                                <label style="float: right !important; margin-bottom:10px">سوال :</label>
+                                                <textarea id="ticketQuestion" class="form-control mb-4" readonly rows="6" type="text" objectId="'+type+id+'"  >detail</textarea>
+                                                <label style="float: right !important; margin-bottom:10px">پاسخ :</label>
+                                                <textarea id="ticketAnswer" class="form-control mb-4" rows="9" type="text" objectId="'+type+id+'" placeholder="پاسخ دهید ..."  ></textarea>
+                                                <button id="ticketAnswering"class="btn btn-primary shadow-2 mb-3">ارسال</button>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
 
-
                             </div>
-
                         </div>
                     </div>
-
-                    <button id="errorNotification" class="btn notifications btn-danger" style="display: none;"
-                        data-type="danger" data-from="top" data-align="right">Danger</button>
-                    <button id="successNotification" class="btn notifications btn-success" data-type="success"
-                        style="display: none;" data-from="top" data-align="right">success</button>
-
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="../assets/js/vendor-all.min.js"></script>
-    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../assets/js/pcoded.min.js"></script>
-    <script src="../assets/js/menu-setting.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#msg-friends").on("keyup", function () {
-                var g = $(this).val().toLowerCase();
-                $(".msg-user-list .userlist-box .media-body .chat-header").each(function () {
-                    var s = $(this).text().toLowerCase();
-                    $(this).closest('.userlist-box')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
-                });
-            });
-            
-            function closeSpeedAccess() {
-                alert("fd");
-                $("#speedAccess").hide();
-            }
-            $('#OpenImgUpload').click(function () {
-                $('#imgupload').trigger('click');
-            });
-            // $('.msg-send-chat').on('keyup', function (e) {
-            //     msg_cfc(e);
-            // });
-            // $('.btn-msg-send').on('click', function (e) {
-            //     msg_fc(e);
-            // });
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="../assets/plugins/notification/js/bootstrap-growl.min.js"></script>
 
-            // function msg_cfc(e) {
-            //     if (e.which == 13) {
-            //         msg_fc(e);
-            //     }
-            // };
+        <script src="../assets/js/vendor-all.min.js"></script>
+        <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../assets/js/menu-setting.min.js"></script>
+        <script src="../assets/js/pcoded.min.js"></script>
 
-            // function msg_fc(e) {
-            //     $('.msg-block .main-friend-chat').append('' +
-            //         '<div class="media chat-messages">' +
-            //         '<div class="media-body chat-menu-content">' +
-            //         '<div class="">' +
-            //         '<p class="chat-cont">' + $('.msg-send-chat').val() + '</p>' +
-            //         '</div>' +
-            //         '<p class="chat-time">now</p>' +
-            //         '</div>' +
-            //         '</div>' +
-            //         '');
-            //     msg_frc($('.msg-send-chat').val());
-            //     msg_fsc();
-            //     $('.msg-send-chat').val(null);
-            // };
+        <script src="../assets/plugins/notification/js/bootstrap-growl.min.js"></script>
 
-            // function msg_frc(wrmsg) {
-            //     setTimeout(function () {
-            //         $('.msg-block .main-friend-chat').append('' +
-            //             '<div class="media chat-messages typing">' +
-            //             '<div class="media-body chat-menu-reply">' +
-            //             '<div class="rem-msg">' +
-            //             '<p class="chat-cont">Typing . . .</p>' +
-            //             '</div>' +
-            //             '<p class="chat-time">now</p>' +
-            //             '</div>' +
-            //             '<a class="media-left photo-table" href="#!"><img class="media-object img-radius img-radius m-t-5" src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image"></a>' +
-            //             '</div>' +
-            //             '');
-            //         msg_fsc();
-            //     }, 1500);
-            //     setTimeout(function () {
-            //         document.getElementsByClassName("rem-msg")[0].innerHTML = "<p class='chat-cont'>شت  :((  </p>";
-            //         $('.rem-msg').removeClass("rem-msg");
-            //         $('.typing').removeClass("typing");
-            //         msg_fsc();
-            //     }, 3000);
-            // };
+        <script src="../assets/js/pages/dashboard-custom.js"></script>
 
-            // function msg_fsc() {
-            //     var tmph = $('.header-chat .main-friend-chat');
-            //     $('.msg-user-chat.scroll-div').scrollTop(tmph.outerHeight());
-            // }
-            var ps = new PerfectScrollbar('.msg-user-list.scroll-div', {
-                wheelSpeed: .5,
-                swipeEasing: 0,
-                suppressScrollX: !0,
-                wheelPropagation: 1,
-                minScrollbarLength: 40,
-            });
-            var ps = new PerfectScrollbar('.msg-user-chat.scroll-div', {
-                wheelSpeed: .5,
-                swipeEasing: 0,
-                suppressScrollX: !0,
-                wheelPropagation: 1,
-                minScrollbarLength: 40,
-            });
-            $(".task-right-header-status").on('click', function () {
-                $(".taskboard-right-progress").slideToggle();
-            });
+        <script src="../assets/js/pages/form-select-custom.js"></script>
 
-            $(".message-mobile .media").on('click', function () {
-                var vw = $(window)[0].innerWidth;
-                if (vw < 992) {
-                    $(".taskboard-right-progress").slideUp();
-                    $(".msg-block").addClass('dis-chat');
-                }
-            });
-        });
-    </script>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="../assets/plugins/notification/js/bootstrap-growl.min.js"></script>
+        <script src="../assets/plugins/select2/js/select2.full.min.js"></script>
 
-    <script src="../assets/js/pages-api/message.js"></script>
+        <script src="../assets/js/pages/form-masking-custom.js"></script>
+        <script src="../assets/plugins/inputmask/js/inputmask.min.js"></script>
+        <script src="../assets/plugins/inputmask/js/jquery.inputmask.min.js"></script>
+        <script src="../assets/plugins/inputmask/js/autoNumeric.js"></script>
+
+        <script src="../assets/plugins/jstree/js/jstree.min.js"></script>
+        <script src="../assets/js/pages/ac-treeview.js"></script>
+
+        <script src="../assets/js/pages-api/messageContent.js"></script>
 
 </body>
 

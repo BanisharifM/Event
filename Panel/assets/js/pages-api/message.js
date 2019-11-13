@@ -1,600 +1,1080 @@
-/**
- * 
- *  Created by MBD
- *  7/6/1398
- */
-
 $(document).ready(function(){
 
-    let token=localStorage.getItem("token");
-    if(token==""||null)
-        window.location="signin.html"; 
-        
     var baseUrl=localStorage.getItem("baseUrl");
-
-    let recentUser=localStorage.getItem("userId");
-
-    var enabelMessageId;
-    var newPersonId;
-    var mode="first"
-
-    let cahtsArr;
     
-    GetCaht();
-    setInterval(function(){ GetCaht(); }, 60000);
-    let sections;
-    GetSection();
+    let token = localStorage.getItem("token");
 
-    let staffs;
-    GetAllStaff();
+    var isManager=localStorage.getItem("isManager");
+    isManager=JSON.parse(isManager); 
+    
+    if(isManager==false){
+        $(".main-body").empty();
+        token="";
+        setTimeout(() => {
+            alert("دسترسی برای شما وجود ندارد .")
+            window.location="index.html"
+        }, 100); 
+    }
 
-    let grades;
-    let classes;
+   
 
-    let Students;
+    let allClass;
+    GetALlClass();
+
+    let allCourse;
+    // GetALlCourse();
+
+    let allExam;
+    // GetExam();
+
+    let allNemuneSoal;
+    // GetNemuneSoal();
+
+    let allOnlineExam;
+    // GetOnlineExam();
+
+    let allExamGrade;
+    // GetExamGrade();
+    
+    let recentExamGrade={
+        id:0
+    };
+
+    let allExamGradeList;
+    // GetExamGradeList();
+
+
+    const states={
+        "TestDate" :{
+            DEFUALT : 'defualt',
+            EDIT : 'edit'
+        },
+        "TestNomre" :{
+            DEFUALT : 'defualt',
+            EDIT : 'edit'
+        },
+        "TestNomreList" :{
+            DEFUALT : 'defualt',
+            EDIT : 'edit'
+        },
+        "Azmoon":{
+            DEFUALT : 'defualt',
+            EDIT : 'edit'
+        },
+    }
+    let pageStatus={
+        "TestDate" : states["TestDate"].DEFUALT,
+        "TestNomreList" : states["TestNomreList"].DEFUALT,
+        "Azmoon":states["Azmoon"].DEFUALT,
+    }
 
     const rawEditItem={
-        status:false,
-        imageUrl : false,
-        imageDef:false,
-        firstName : "",
-        text : "",
-        nationalId : "",
-        title : "",
-        phoneNumber : ""
+        "TestDateTemp" :{
+            "title": false,
+            "examDate":false,
+            "fullMark": false,
+            "text": false,
+            "status": false,
+            "needsEnable": false
+        },
+        "TestDateResult" :{
+
+        },
+        "TestNomreListTemp":{
+            "id": 0,
+            "studentId": 0,
+            "studentName": "",
+            "examId": 0,
+            "grade": 0,
+            "enable": false,
+            "creationDate": "",
+            "enableDate": ""
+        },
+        "AzmoonTemp":{
+            "id": 0,
+            "name": "",
+            "duration": 0,
+            "needsEnable": true,
+            "enable": true,
+            "classId": 0,
+            "courseId": 0,
+            "examDate": "",
+            "creationDate": "",
+            "endDate": "",
+            "description": ""
+        },
+        "Azmoon":{
+
+        },
+        
+
     }
     const editItems={};
-
-    const filterNav={
-        temp :{
-            status : false,
-            sectionName : false,
-            sectionId : false,
-            gradeName : false ,
-            gradeId : false,
-            className : false,
-            classId : false,
-            isFilter: false
+    const exampRes=[
+        {
+            id:1,
+            name : 'ریاضی',
+            grade : 'دبیرستان',
+            date : "1397/12/12",
+            detail : "توضیحات",
+            isValidat : false,
+            isRead : false
+        },{
+            id:2,
+            name : 'فیزیک',
+            grade : 'دبیرستان',
+            date : "22/11/1397",
+            detail : "توضیحات",
+            isValidat : false,
+            isRead : true
+        },{
+            id:3,
+            name : 'عربی',
+            grade : 'دبیرستان',
+            date : "1397/12/12",
+            detail : "توضیحات",
+            isValidat : true,
+            isRead : true
         },
-        "Classes" : {
-            status : false,
-            sectionName : false,
-            sectionId : false,
-            gradeName : false ,
-            gradeId : false,
-            className : false,
-            classId : false,
-            isFilter: false
-        },
-        "Course" : {
-            status : false,
-            sectionName : false,
-            sectionId : false,
-            gradeName : false ,
-            gradeId : false,
-            className : false,
-            classId : false,
-            isFilter: false
-        },
-        "Students" : {
-            status : false,
-            sectionName : false,
-            sectionId : false,
-            gradeName : false ,
-            gradeId : false,
-            className : false,
-            classId : false,
-            isFilter: false
-        }
-    }
+    ]
 
-    function createMaghtaOpt(id,name,type){
-        return(
-            '<option id="maghta'+type+id+'" value="'+type+id+'" objectId="'+type+id+'" sectionName="'+name+'" >'+name+'</option>'
-        );
-    }
-    function maghtaOptClick(){
-        let objectId=$(this).val();
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        filterNav[type].sectionId=id;
-        filterNav[type].sectionName=$("#maghta"+type+id).attr('sectionName');
-        
-        $("#classStudentsList").empty().prop("disabled", true); 
-        $("#classStudentsList").append('<option value="یبس" disabled selected style="display:none;"></option>');
-        GetGrade(id,type);
-    }
 
-    function createPayeOpt(id,name,type,sectionId){
-        return(
-            '<option id="paye'+type+id+'" value="'+type+id+'" objectId="'+type+id+'" gradeName="'+name+'">'+name+'</option>'            
-        );
-    }
-    function payeOptClick(){
-        let objectId=$(this).val();
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        filterNav[type].gradeId=id;
-        filterNav[type].gradeName=$("#paye"+type+id).attr('gradeName');
-        if(type=="Students"){
-            GetClass(id,type);
-        }
-        else
-        filterNav[type].status=true;
-    }
+    // تایید تاریخ امتحان
 
-    function createClassOpt(id,name,type,sectionId){
-        return(
-            '<option id="class'+type+id+'" value="'+type+id+'" objectId="'+type+id+'" className="'+name+'">'+name+'</option>'            
-        );
-    }
-    function classOptClick(){
-        let objectId=$(this).val();
-        let id=objectId.match(/\d+/)[0];
-        let type=objectId.replace(id, "");
-        filterNav[type].classId=id;
-        filterNav[type].className=$("#class"+type+id).attr('className');
-        filterNav[type].status=true;
-    }
+    function AddTestDate(exampRes){
+        $('#TestDateList').empty();
+        for(i in exampRes){
+            let id=exampRes[i].id;
+            let isRead=exampRes[i].status==0 ? false : true;
+            let isValidat=exampRes[i].enable;
+            let name=exampRes[i].title;
+            let date=exampRes[i].examDate.substring(0,10);
+            let fullmark=exampRes[i].fullMark;
+            let text=exampRes[i].text;
+
+            let classname=allClass.find(x => x.id==exampRes[i].classId).name;
+            let coursename=allCourse.find(x => x.id==exampRes[i].courseId).name;
+            let ClassCourse=classname+"/ "+coursename;
+            // let ClassCourse=classname;
     
-    $("#StudentsListFilter").click(function(){
-        if(filterNav["Students"].status==false)
-           return;
-        filterNav["Students"].isFilter=true;
-        GetAllStudent();
-    });
-
-    function createStaffTr(person,type,tit){
-        return(
-            '<tr id="tr'+type+person.id+'"  objectId="'+type+person.id+'" >'+
-                '<td>'+imageUrl(person.id,type,person.avatarUrl)+'</td>'+
-                information(person.id,type,person.firstName,person.lastName)+
-                '<td>'+title(person.id,type,type == "Staff" ? person.title : person.major)+'</td>'+
-            '</tr>'
-        );
+            let tr=createTestDateTr(id,"TestDate",isRead,isValidat,name,date,fullmark,text,ClassCourse);
+            editItems["TestDate"+id]= JSON.parse(JSON.stringify(rawEditItem["TestDateTemp"]));
+            $('#TestDateList').append(tr);
+            addActionTestDate('TestDate'+id);
+        }
     }
-    function createStudentTr(person,type,){
+    function createTestDateTr(id,type,isRead,isValidat,name,date,fullmark,text,ClassCourse){
         return(
-            '<tr id="tr'+type+person.id+'" objectId="'+type+person.id+'"  >'+
-                '<td>'+imageUrl(person.id,type,person.avatarUrl)+'</td>'+
-                information(person.id,type,person.firstName,person.lastName)+
+            '<tr id="tr'+type+id+'" >'+
+                '<td>'+testDateCheckContent(id,type,isRead,isValidat)+'</td>'+
+                '<td>'+testDateName(id,type,name)+'</td>'+
+                '<td>'+testDateSection(id,type,ClassCourse)+'</td>'+
+                '<td>'+testDateDate(id,type,date)+'</td>'+
+                '<td>'+testDateFullmark(id,type,fullmark)+'</td>'+
+                '<td>'+testDateDetail(id,type,text)+'</td>'+
+                '<td>'+toolbar(id,type)+'</td>'+
             '</tr>'
         );
     }
 
-    function imageUrl(id,type,src){
+    function testDateCheckContent(id,type,isRead,isValidat){
+        let a=(isValidat ? "checked" : "");
+        let b=(!isRead ? '<span class="badge badge-danger">جدید</span></label>' : '');
         return(
-            '<div id="imageUrl'+type+id+'" >'+
-                '<input id="imageUrlInp'+type+id+'" type="file" key="'+id+'" objectId="'+type+id+'" accept="image/*" style="display: none" />'+
-                '<img id="imageUrlImg'+type+id+'" class="rounded-circle" key="'+id+'" objectId="'+type+id+'" style="width:40px;" src="'+src+'" alt="تصویر">'+
+            '<div class="form-group">'+
+                '<div class="checkbox checkbox-fill d-inline">'+
+                    '<input type="checkbox" name="checkbox-fill-'+type+id+'" id="checkbox-fill-'+type+id+'" objectId="'+type+id+'" '+a+'>'+
+                    '<label for="checkbox-fill-'+type+id+'"  objectId="'+type+id+'" class="cr"></label>'+b+
+                '</div>'+
             '</div>'
         );
     }
-
-    function information(id,type,firstName,lastName){
-        return(
-            '<td><h6 id="informationFirstName'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+firstName+'</h6></td>'+
-            '<td><h6 id="informationLastName'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+lastName+'</h6></td>'
-        );
-    }
-
-    function title(id,type,title){
-        return(
-            '<h6 id="title'+type+id+'" class="m-0" objectId="'+type+id+'" > '+title+'</h6>'
-        );
-    }
-    function GetSection(){
-        $.ajax(`${baseUrl}/Section`, {
-            type: "GET",
-            processData: false,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
-            success: function(res) {
-                sections=res;
-                AddSection();
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function AddSection(){
-        for(i in sections){
-            let id=sections[i].id;
-            
-            let StudentsOpt=createMaghtaOpt(id,sections[i].name,"Students");
-            $("#maghtaStudentsList").append(StudentsOpt);
-            document.getElementById('maghtaStudentsList').onchange = maghtaOptClick;
-        }
-    }
-    function GetGrade(sectionId,type){
-        $.ajax(`${baseUrl}/Section/${sectionId}/Grade`, {
-            type: "GET",
-            processData: false,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
-            success: function(res) {
-                if(type!="payeha"){
-                    grades=res;
-                    AddGrade(type);
-                }
-                else{
-                    payeha=res;
-                    AddPayeha();
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function AddGrade(type){
-        $("#paye"+type+"List").empty().prop("disabled", false); 
-        $("#paye"+type+"List").append('<option value="یبس" disabled selected style="display:none;"></option>');
-        for(i in grades){
-            const paye=grades[i];
-            let opt=createPayeOpt(paye.id,paye.name,type,paye.sectionId);
-            $("#paye"+type+"List").append(opt);
-            document.getElementById('paye'+type+'List').onchange = payeOptClick;
-            //FIXME:
-            // document.getElementById("select-paye"+type+"List-container").onclick = payeOptClicked;
-        }
-    }
-    function GetClass(gradeId,type){
-        $.ajax({
-            url: `${baseUrl}/Class`,
-            data:{"gradeId":gradeId},
-            type: "GET",
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
-            success: function(res) {
-                if(type=="Students"){
-                    classes=res;
-                    AddClass(type);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function AddClass(type){
-        $("#class"+type+"List").empty().prop("disabled", false); 
-        $("#class"+type+"List").append('<option value="یبس" disabled selected style="display:none;"></option>');
-        for(i in classes){
-            const kelas=classes[i];
-            const opt=createClassOpt(kelas.id,kelas.name,type,kelas.sectionId);
-            $("#class"+type+"List").append(opt);
-            document.getElementById('class'+type+'List').onchange = classOptClick;
-        }
-    }
-    function GetAllStudent(){
-        let classId=filterNav["Students"].classId
-        $.ajax(`${baseUrl}/user/student?classId=${classId}`, {
-            // data: JSON.stringify({"classId":classId}),
-            type: "GET",
-            processData: true,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
-            success: function(res) {
-                Students=res;
-                AddAllStudents();
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function AddAllStudents(){
-        $('#StudentsList').empty();
-        for(i in Students){
-            let title=filterNav["Students"].className;
-            let tr=createStudentTr(Students[i],"Students", title);
-            let id=Students[i].id;
-            editItems["Students"+id]= JSON.parse(JSON.stringify(rawEditItem));
-            $('#StudentsList').append(tr);
-            addAction('Students'+id);
-        }
-    }
-    function addAction(objectId){
-        document.getElementById('tr'+objectId).onclick = startChat;
-    }
-  
-    function GetAllStaff(){
-        $.ajax(`${baseUrl}/user/staff?teacher=true&staff=true`, {
-            // data: JSON.stringify({"teacher":true,"staff":true}),
-            type: "GET",
-            processData: false,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
-            success: function(res) {
-                staffs=res;
-                AddStaff();
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function AddStaff(){
-        $('#StaffList').empty();
-        for(i in staffs){
-            let id=staffs[i].id;
-            if(staffs[i].isTeacher===false || recentUser==id)
-               continue;
-            let tr=createStaffTr(staffs[i],"Staff");
-            editItems["Staff"+id]= JSON.parse(JSON.stringify(rawEditItem));
-            $('#StaffList').append(tr);
-            addAction('Staff'+id);
-        }
-    }
-    function startChat(){
+    function testDateCheckChange(){
+        let needsEnable=$(this).prop("checked")
         let objectId=$(this).attr('objectId');
         let id=objectId.match(/\d+/)[0];
         let type=objectId.replace(id, "");
-        newPersonId=id;
-        PostChat(id);
+        PutExamEnable(id,needsEnable);
     }
-    function GetCaht(){
-        $.ajax(`${baseUrl}/Chat`, {
-            // data: JSON.stringify({"userId": id}),
-            type: "GET",
-            processData: true,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
-            success: function(res) {
-                cahtsArr=res;
-                createPersonList();
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-            $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-    function PostChat(id){
-        $.ajax(`${baseUrl}/Chat`, {
-            data: JSON.stringify({"userId": id}),
-            type: "POST",
-            processData: true,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
-            success: function(res) {
-                $(".closes").trigger('click');
-                mode="newCaht"
-                GetCaht();
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-            $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
-
-    let activeCaht=0
-    function createPersonList(){
-        $("#personList").empty();
-        for(i in cahtsArr){
-            let id=cahtsArr[i].id;
-            let name=cahtsArr[i].userName;
-            let image=cahtsArr[i].userAvatarUrl;
-            let person=Persons(id,name,image);
-            $("#personList").append(person);
-            document.getElementById(id).onclick=ShowCaht;
-        }
-        if(mode=="first"){
-            enabelMessageId=cahtsArr[0].id;
-            activeChat(enabelMessageId);
-            GetUserChats();
-            mode="defualt"
-        }
-        else if(mode=="newCaht"){
-            let x=cahtsArr.find(x => x.userId==newPersonId);
-            enabelMessageId=x.id ;
-            activeChat(newPersonId);
-            GetUserChats();
-            mode="default"
-        }
-        else {
-            activeChat(enabelMessageId);
-            GetUserChats();
-        }
-    }
-    function Persons(id,name,src){
+    function testDateName(id,type,name){
         return(
-            '<div class="media userlist-box " id="'+id+'" data-id="2" data-status="online" data-username="Lary Doe"> <a class="media-left" href="#!"><img class="media-object img-radius" src="'+src+'" alt=" "> </a> <div class="media-body"> <h6 class="chat-header">'+name+' </h6> </div> </div>'
+            '<h6 id="Name'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+name+'</h6>'
         );
     }
-    function activeChat(id){
-        $("#"+activeCaht).removeClass("active");
-        $("#"+id).addClass("active");
-        activeCaht=id;
+    function testDateSection(id,type,title){
+        return(
+            '<span id="section'+type+id+'" objectId="'+type+id+'" class="pie_1">'+title+'</span>'
+        );
     }
-    function ShowCaht(){
-        enabelMessageId=$(this).attr('id');
-        activeChat(enabelMessageId);
-        GetUserChats();
+    
+    function testDateFullmark(id,type,name){
+        return(
+            '<h6 id="fullmark'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+name+'</h6>'+
+            '<input id="fullmarkInp'+type+id+'" type="text" value="'+name+'" objectId="'+type+id+'" style="display:none" > '
+        );
     }
-    function GetUserChats(){
-        $.ajax(`${baseUrl}/Chat/${enabelMessageId}/Message`, {
-            // data: JSON.stringify({"teacher":true,"staff":true}),
-            type: "GET",
-            processData: false,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
-            success: function(res) {
-                UserCahtList=res;
-                addCahtToBox("default");
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
+    function testDateFullmarkChange(){
+        let fullmark=$(this).val();
+        let objectId=$(this).attr('objectId');
+        editItems[objectId].fullmark=fullmark;
     }
-    function GetUserOtherChats(lastMessageId){
-        $.ajax(`${baseUrl}/Chat/${enabelMessageId}/Message?lastMessageId=${lastMessageId}`, {
-            type: "GET",
-            processData: false,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
-            success: function(res) {
-                res.reverse();
-                UserCahtList=[...res,...UserCahtList];
-                UserCahtList.reverse();
-                addCahtToBox("update");
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
-        // alert("get user chat complete")
-        // GetUserNewChate()
-        // setInterval(GetUserNewChate(UserCahtList[0].id),10000);
+    function testDateDate(id,type,date){
+        return(
+            '<div class="col-sm-6 col-md-6" style="margin:0 auto;">'+
+                '<input  id="DateInp'+type+id+'" objectId="'+type+id+'" dir="ltr" type="text" class="form-control date" data-mask="99/99/9999" value="'+date+'" disabled style="background-color:inherit;">'+
+                '<input  id="DateInpHide'+type+id+'" objectId="'+type+id+'" dir="ltr" type="text" class="form-control date" data-mask="99/99/9999" value="'+date+'" style="display:none;background-color:white;">'+
+            '</div>'
+        );
     }
-    function GetUserNewChate(firtMessageId){
-        // alert(firtMessageId)
-        $.ajax(`${baseUrl}/Chat/${enabelMessageId}/Message?firstMessageId=${firtMessageId}`, {
-            type: "GET",
-            processData: false,
-            contentType: "application/json",
-            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
-            success: function(res) {
-                res.splice(-1,1)
-                res.reverse();
-                UserCahtList=[...UserCahtList,...res];
-                UserCahtList.reverse();
-                addCahtToBox("refresh");
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.Message;
-                 $("#errorNotification").trigger( "click" );
-            }
-        });
+    function testDateDateChange(){
+        let date=$(this).val();
+        let objectId=$(this).attr('objectId');
+        editItems[objectId].date=date;
     }
-    function addCahtToBox(mode){
-        $("#chatBox").empty();
-        let mess;
-        let recentMessage={
-            isFromStaff :"",
-            messId:0,
-            time: 10000000000000000000000000000,
-            day:1397-10-11,
-            messages:[],
+    function testDateDetail(id,type,name){
+        return(
+            '<h6 id="detail'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+name+'</h6>'+
+            '<input id="detailInp'+type+id+'" type="text" value="'+name+'" objectId="'+type+id+'" style="display:none" > '
+        );
+    }
+    function testDateDetailChange(){
+        let detail=$(this).val();
+        let objectId=$(this).attr('objectId');
+        editItems[objectId].detail=detail;
+    }
+    function toolbar(id,type){
+        return(
+            '<i id="toolbarEdit'+type+id+'" class="fas fa-edit btn-primary label text-white user-list-style" objectId="'+type+id+'"></i>'+
+            '<i id="toolbarDelete'+type+id+'" class="fas fa-trash-alt btn-danger label text-white user-list-style" objectId="'+type+id+'"></i>'+
+            '<i id="toolbarSave'+type+id+'" class="fas fa-check-circle theme-bg btn- label text-white user-list-style" objectId="'+type+id+'" style="display:none"></i>'+
+            '<i id="toolbarCancel'+type+id+'" class="fas fa-times-circle btn-danger label text-white user-list-style" objectId="'+type+id+'" style="display:none"></i>'
+        );
+    }
 
+    function testDateEditClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        if(pageStatus[type]==states[type].DEFUALT){
+            pageStatus[type]=states[type].EDIT;
+            editItems[objectId].status=true; 
+            enableEditTestDate(objectId);
         }
-        UserCahtList.reverse();
-        for(i in UserCahtList){
-            let id=UserCahtList[i].id
-            let text=UserCahtList[i].text;
-            let date=UserCahtList[i].sendDate;
-            let isFromStaff=UserCahtList[i].isFromStaff;
-            let time=date.substr(11);
-            // alert(time)
-            // alert(time)
-            let day=date.substr(0,10);
-            // alert(day)
-            time = time.split(/:/);
-            let xdTime=time[0] * 3600 + time[1] * 60 + time[2];
-            // alert(xdTime-recentMessage.time)
-            if(isFromStaff===recentMessage.isFromStaff&&day==recentMessage.day && xdTime-recentMessage.time<300 ){
-                recentMessage.messages.push(text);
-            }
-            else{
-                if(recentMessage.messages.length!=0){
-                    for(j in recentMessage.messages){
-                        let cont=messageCont(recentMessage.messages[j]);
-                        $("#mess"+recentMessage.messId).append(cont);
-                    }
-                }
+        if(pageStatus[type]==states[type].ADD){
+            pageStatus[type]=states[type].ADDED;
+            editItems[objectId].status=true; 
+            enableEditTestDate(objectId);
+        }
+    }
+    function testDateDeleteClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        if(pageStatus[type]==states[type].DEFUALT){
+            if(!confirm("آیا مطمئن  هستید حذف شود؟"))
+                return;
+            DeleteExam(id);
+        }
+    }
+    function testDateSaveClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        let exam=allExam.find(x =>x.id==id);
+        if(pageStatus[type]==states[type].EDIT){
+            let cc=editItems[objectId].date+exam.examDate.substr(10);
 
-                if(UserCahtList[i].isFromStaff)
-                    mess=message(text,date.substr(11),id);
-                else
-                    mess=messageReply(text,date.substr(11),id);
-                $("#chatBox").append(mess);
-                recentMessage={
-                    "isFromStaff" :isFromStaff,
-                    "messId":id,
-                    "time": xdTime,
-                    "messages":[text],
-                    "day":day
-                }
+            datas={
+                "title": exam.title,
+                "examDate": editItems[objectId].date==false? exam.examDate :cc,
+                "fullMark": exam.fullMark,
+                "text": exam.text ,
+                "status": exam.status,
+                "needsEnable": exam.needsEnable
             }
+            PutExam(id,datas,objectId);
+            editItems[objectId]=JSON.parse(JSON.stringify(rawEditItem["TestDateTemp"]));
+        }      
+    }
+    function testDateCancelClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        if(pageStatus[type]==states[type].EDIT){
+            pageStatus[type]=states[type].DEFUALT;
+            disableEditTestDate(objectId);
+            $("#imageUrlImg"+objectId).attr('src',editItems[objectId].imageDef);
+            editItems[objectId]=JSON.parse(JSON.stringify(rawEditItem["TestDateTemp"]));;
         }
-        for(j in recentMessage.messages){
-            let cont=messageCont(recentMessage.messages[j]);
-            $("#mess"+recentMessage.messId).append(cont);
+        if(pageStatus[type]==states[type].ADDED){
+            pageStatus[type]=states[type].DEFUALT;
+            $('#tr'+objectId).remove();
+            editItems[objectId]=JSON.parse(JSON.stringify(rawEditItem["TestDateTemp"]));;
         }
-        if(mode=="default"){
-            var objDiv = document.getElementById("chatBox");
-            let x=objDiv.scrollHeight
-            $('.msg-user-chat.scroll-div').scrollTop(x);
+    }
+
+    function addActionTestDate(objectId){
+
+        document.getElementById('checkbox-fill-'+objectId).onchange = testDateCheckChange;
+        document.getElementById('DateInpHide'+objectId).onchange = testDateDateChange;
+        document.getElementById('detailInp'+objectId).onchange = testDateDetailChange;
+        document.getElementById('fullmarkInp'+objectId).onchange = testDateFullmarkChange;
+
+        document.getElementById('toolbarEdit'+objectId).onclick = testDateEditClick;
+        document.getElementById('toolbarDelete'+objectId).onclick = testDateDeleteClick;
+        document.getElementById('toolbarSave'+objectId).onclick = testDateSaveClick;
+        document.getElementById('toolbarCancel'+objectId).onclick = testDateCancelClick;
+    }
+    function enableEditTestDate(objectId){
+
+        $('#toolbarEdit'+objectId).hide();
+        $('#toolbarSave'+objectId).show();
+
+        $('#toolbarDelete'+objectId).hide();
+        $('#toolbarCancel'+objectId).show();
+
+        let curentDate=$("#DateInp"+objectId).hide().val();
+        $("#DateInpHide"+objectId).val(curentDate).show();
+
+        // $('#detail'+objectId).hide();
+        // $('#detailInp'+objectId).show();
+    }
+    function disableEditTestDate(objectId){
+
+        $('#toolbarEdit'+objectId).show();
+        $('#toolbarSave'+objectId).hide();
+
+        $('#toolbarDelete'+objectId).show();
+        $('#toolbarCancel'+objectId).hide();
+
+        $("#DateInp"+objectId).show();
+        $("#DateInpHide"+objectId).hide();
+
+        // $('#detail'+objectId).show();
+        // $('#detailInp'+objectId).hide();
+    }
+
+
+    //تایید نمونه سوال
+    
+    const tests=[
+        {
+            id:1,
+            name : "فیزیک",
+            fileName: "ali.pdf",
+            url : "google.com",
+            isValidat : false,
+            isRead: false
+        },
+        {
+            id:2,
+            name : "ریاضی",
+            fileName: "hoo.pdf",
+            url : "google.com",
+            isValidat : false,
+            isRead: true
+        },
+        {
+            id:3,
+            name : "عربی",
+            fileName: "ali.pdf",
+            url : "google.com",
+            isValidat : true,
+            isRead: true
+        },
+    ]
+    function addNemuneSoal(tests){
+        $('#NemuneSoalList').empty();
+        for(i in tests){
+            let id=tests[i].id;
+            let isRead=tests[i].isRead;
+            let isValidat=tests[i].enable;
+            let url=tests[i].fileUrl;
+            let fileName=GetFilename(url);
+            let name=tests[i].title;
+
+            let tr=createNemuneSoalTr(id,"NemuneSoal",false,isValidat,name,fileName,url);
+            $('#NemuneSoalList').append(tr);
+            addActionNemuneSoal('NemuneSoal'+id);
         }
-        else if(mode=="update"){
-            if(Math.ceil(UserCahtList.length/20)==Math.floor(UserCahtList.length/20)){
-                var objDiv = document.getElementById("chatBox");
-                let x=objDiv.scrollHeight
-                $('.msg-user-chat.scroll-div').scrollTop(x/Math.ceil(UserCahtList.length/20));
-            }
-        }
-        else if(mode=="refresh"){
+    }
+    function createNemuneSoalTr(id,type,isRead,isValidat,name,fileName,url){
+        return(
+            '<tr id="tr'+type+id+'" >'+
+                '<td>'+testDateCheckContent(id,type,isRead,isValidat)+'</td>'+
+                '<td>'+testDateName(id,type,name)+'</td>'+
+                '<td>'+nemuneSoalFile(id,type,fileName,url)+'</td>'+
+                '<td>'+nemuneSoalToolbar(id,type)+'</td>'+
+            '</tr>'
+        );
+    }
+
+    function nemuneSoalCheckChange(){
+        let needsEnable=$(this).prop("checked");
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+
+        // if(needsEnable)
+        //     errorMessage="الکی مثلا نمونه سوال رد شد :))";
+        // else
+        //     errorMessage="الکی مثلا نمونه سوال تایید شد :))";
+        // $("#successNotification").trigger( "click" );
+        EnableNemuneSoal(id,needsEnable)
+    }
+    function nemuneSoalFile(id,type,fileName,url){
+        return(
+            '<div id="filrUrl'+type+id+'" >'+
+                '<input id="fileUrlInp'+type+id+'" type="file" key="'+id+'" objectId="'+type+id+'" accept="image/*" style="display: none" />'+
+                '<span id="fileUrlText'+type+id+'" objectId="'+type+id+'" class="pie_1">'+
+                    '<a id="fileUrlA'+type+id+'" objectId="'+type+id+'"  href="'+url+'"  target="_blank"> '+fileName+'</a>'+
+                '</span>'+
+            '</div>'
+        );
+    }
+    function fileUrlChange(){
+        // alert("file changed");
+        let uploadedFile=event.target.files[0];
+        let objectId=$(this).attr('objectId');
+        $("#fileUrlA"+objectId).attr('href', URL.createObjectURL(uploadedFile));
+        /**
+         * FIXME:
+         *  after selsect filr requested
+         */
+    }
+    function nemuneSoalToolbar(id,type){
+        return(
+            '<i id="toolbarEdit'+type+id+'" class="fas fa-edit btn-primary label text-white user-list-style" style="display:none"objectId="'+type+id+'"></i>'+
+            '<i id="toolbarDelete'+type+id+'" class="fas fa-trash-alt btn-danger label text-white user-list-style" objectId="'+type+id+'"></i>'
+        );
+    }
+    function nemuneSoalDeleteClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        if(!confirm("آیا مطمئن  هستید حذف شود؟"))
+            return;
+        DeleteNemuneSoal(id);        
+    }
+    function addActionNemuneSoal(objectId){
+        document.getElementById('toolbarEdit'+objectId).addEventListener('click', () => {
+                document.getElementById('fileUrlInp'+objectId).click()                
+        })
+        document.getElementById('checkbox-fill-'+objectId).onchange = nemuneSoalCheckChange;
+        document.getElementById('fileUrlInp'+objectId).onchange = fileUrlChange;
+        document.getElementById('toolbarDelete'+objectId).onclick = nemuneSoalDeleteClick;
+    }
+
+
+    // تایید نمرات
+    /**
+     * FIXME: FIXME:      TEST NOMRE
+     * 
+     * 
+     */
+
+    const tests1=[
+        {
+            id:1,
+            name : "فیزیک",
+            nomreList:[
+                {
+                    id:1,
+                    name : "علی",
+                    nomre :20,
+                    isValidat : false,
+                    isRead: false
+                },
+                {
+                    id:2,
+                    name : "حسین",
+                    nomre :18,
+                    isValidat : false,
+                    isRead: true
+                },
+                {
+                    id:3,
+                    name : "مهدی",
+                    nomre :17,
+                    isValidat : true,
+                    isRead: true
+                },
+            ]
+        },
+        {
+            id:2,
+            name : "عربی",
+            nomreList:[
+                {
+                    id:1,
+                    name : "علی",
+                    nomre :20,
+                    isValidat : false,
+                    isRead: false
+                },
+                {
+                    id:2,
+                    name : "حسین",
+                    nomre :18,
+                    isValidat : false,
+                    isRead: true
+                },
+                {
+                    id:3,
+                    name : "مهدی",
+                    nomre :17,
+                    isValidat : true,
+                    isRead: true
+                },
+            ]
+        },
+        
+    ]
+
+    function addExamGrade(tests1){
+        $("#collapse4").empty();
+        for(i in tests1){
             
+            let id=tests1[i].id;
+            let classname=allClass.find(x => x.id==tests1[i].classId).name;
+            let coursename=allCourse.find(x => x.id==tests1[i].courseId).name;
+            let ClassCourse=classname+"/ "+coursename;
+
+            let card=creatTestCard(id,"TestNomre",tests1[i].title,ClassCourse);
+            $("#collapse4").append(card);
+            document.getElementById("listNomreTestNomre"+id).onclick=examGradeListClick;
         }
-        //add message
-        //enable sending message
     }
-    setInterval(function(){
-        if(UserCahtList!=undefined || UserCahtList.length!=0){
-            GetUserNewChate(UserCahtList[UserCahtList.length-1].id)
+    function addExamGradeList(list,objectId,nextExamGradeId,mode){
+        if(mode=="click"){
+            $("#ListTestNomre"+recentExamGrade.id).empty();
+            $('#collapseTestNomre'+recentExamGrade.id).collapse('hide');	
+            recentExamGrade=allExamGrade.find(x => x.id==nextExamGradeId);
         }
-    },5000);
-    $('.msg-user-chat.scroll-div').scroll(function() {
-        var wS = $(this).scrollTop();
-        if (wS ==0){
-            GetUserOtherChats(UserCahtList[0].id);
+        $('#List'+objectId).empty();
+        for(i in list){
+            let nomrelistdd=list[i];
+            let id=nomrelistdd.studentId;
+            let name=nomrelistdd.studentName;
+            let nomre=nomrelistdd.grade!=null ? nomrelistdd.grade : "-" ;
+            let isRead=nomrelistdd.isRead;
+            let isValidat=nomrelistdd.enable;
+            let checkVisibility=nomrelistdd.grade!=null ? true :false;
+            let tr=createTestNomreTr(id,"TestNomreList",isRead,isValidat,name,nomre,checkVisibility);
+            editItems["TestNomreList"+id]= JSON.parse(JSON.stringify(rawEditItem["TestNomreListTemp"]));
+            $('#List'+objectId).append(tr);
+            addActionTestNomre("TestNomreList"+id);
         }
-     });
-    function postMessage(text){
-        $.ajax(`${baseUrl}/Chat/${enabelMessageId}/Message`, {
-            data: JSON.stringify({"text": text}),
-            type: "POST",
-            processData: true,
+    }
+    function creatTestCard(id,type,testName,section){
+        return(
+            '<div class="card">'+
+                '<div class="card-header" id="listNomre'+type+id+'" objectId="'+type+id+'">'+
+                    '<h5 class="mb-0">'+
+                        '<a href="#!" data-toggle="collapse" data-target="#collapse'+type+id+'" aria-expanded="true" aria-controls="collapse'+type+id+'">'+testName+'</a>'+
+                    '</h5>'+
+                    '<span>'+section+'</span>'+
+                '</div>'+
+                '<div id="collapse'+type+id+'" class=" card-body collapse "aria-labelledby="headingOne" >'+ 
+                '<div class="table-responsive"> <table class="table table-hover"> <thead> <tr> <th class="border-top-0">وضعیت</th> <th class="border-top-0">اسم</th> <th class="border-top-0" >نمره</th> <th class="border-top-0"></th> </tr> </thead> <tbody id="List'+type+id+'"> </tbody> </table></div>'+
+                '</div>'+
+            '</div>'
+        );
+    }
+    function createTestNomreTr(id,type,isRead,isValidat,name,nomre,checkVisibility){
+        return(
+            '<tr id="tr'+type+id+'" >'+
+                '<td>'+testNomreCheckContent(id,type,isRead,isValidat,checkVisibility)+'</td>'+
+                '<td>'+testNomreName(id,type,name)+'</td>'+
+                '<td>'+testNomreDetail(id,type,nomre)+'</td>'+
+                '<td>'+testNomretoolbar(id,type,isValidat)+'</td>'+
+            '</tr>'
+        );
+    }
+    function testNomreCheckContent(id,type,isRead,isValidat,checkVisibility){
+        let a=(isValidat ? "checked" : "");
+        return(
+            '<div class="form-group" '+(!checkVisibility ? 'style="display:none"' : '')+'>'+
+                '<div class="checkbox checkbox-fill d-inline">'+
+                    '<input type="checkbox" name="checkbox-fill-'+type+id+'" id="checkbox-fill-'+type+id+'" objectId="'+type+id+'" '+a+'>'+
+                    '<label for="checkbox-fill-'+type+id+'"  objectId="'+type+id+'" class="cr"></label>'+
+                '</div>'+
+            '</div>'
+        );
+    }
+    function testNomreCheckChange(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        let needsEnable=$(this).prop("checked");
+        let gradId=allExamGradeList.find(x => x.studentId==id);
+        if(pageStatus[type]==states[type].DEFUALT){
+            if(!confirm("آیا مطمئن  هستید تایید شود؟"))
+                return;
+            EnableExamGradeList(gradId.id,needsEnable)
+        }
+    }
+    function testNomreName(id,type,name){
+        return(
+            '<h6 id="Name'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+name+'</h6>'
+        );
+    }
+    function testNomreDetail(id,type,name){
+        return(
+            '<h6 id="detail'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+name+'</h6>'+
+            '<input id="detailInp'+type+id+'" type="text" value="'+name+'" objectId="'+type+id+'" style="display:none" > '
+        );
+    }
+    function testNomreDetailChange(){
+        let detail=$(this).val();
+        let objectId=$(this).attr('objectId');
+        editItems[objectId].detail=detail;
+    }
+    function testNomretoolbar(id,type,isValidat){
+        return(
+            '<i id="toolbarEdit'+type+id+'" '+(isValidat ? 'style="display:none"' : '')+' class="fas fa-edit btn-primary label text-white user-list-style" objectId="'+type+id+'"></i>'+
+            '<i id="toolbarDelete'+type+id+'" '+(isValidat ? 'style="display:none"' : '')+' class="fas fa-trash-alt btn-danger label text-white user-list-style" objectId="'+type+id+'"></i>'+
+            '<i id="toolbarSave'+type+id+'" class="fas fa-check-circle theme-bg btn- label text-white user-list-style" objectId="'+type+id+'" style="display:none"></i>'+
+            '<i id="toolbarCancel'+type+id+'" class="fas fa-times-circle btn-danger label text-white user-list-style" objectId="'+type+id+'" style="display:none"></i>'
+        );
+    }
+
+    function testNomreEditClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        type="TestNomreList";
+        if(pageStatus[type]==states[type].DEFUALT){
+            pageStatus[type]=states[type].EDIT;
+            editItems[objectId].status=true; 
+            enableEditTestNomre(objectId);
+        }
+    }
+    function testNomreDeleteClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        type="TestNomreList";
+        if(pageStatus[type]==states[type].DEFUALT){
+            if(!confirm("آیا مطمئن  هستید حذف شود؟"))
+                return;
+            let gradId=allExamGradeList.find(x => x.studentId==id);
+            DeleteExamGradeList(gradId.id)
+        }
+    }
+    function testNomreSaveClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        type="TestNomreList";
+        let exam=allExamGradeList.find(x =>x.studentId==id);
+        if(pageStatus[type]==states[type].EDIT){
+
+            // let cc=editItems[objectId].date+exam.examDate.substr(10);
+
+            datas=[ {
+                "studentId": exam.studentId,
+                "grade": $("#detailInp"+objectId).val()
+            }]
+            PutExamGradeList(recentExamGrade.id,datas,objectId);
+        }       
+    }
+    function testNomreCancelClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        type="TestNomreList";
+        if(pageStatus[type]==states[type].EDIT){
+            pageStatus[type]=states[type].DEFUALT;
+            disableEditTestNomre(objectId);
+            // editItems[objectId]=JSON.parse(JSON.stringify(rawEditItem["TestDateTemp"]));;
+        }
+    }
+
+    function addActionTestNomre(objectId){
+
+        document.getElementById('checkbox-fill-'+objectId).onchange = testNomreCheckChange;
+        document.getElementById('detailInp'+objectId).onchange = testNomreDetailChange;
+
+        document.getElementById('toolbarEdit'+objectId).onclick = testNomreEditClick;
+        document.getElementById('toolbarDelete'+objectId).onclick = testNomreDeleteClick;
+        document.getElementById('toolbarSave'+objectId).onclick = testNomreSaveClick;
+        document.getElementById('toolbarCancel'+objectId).onclick = testNomreCancelClick;
+    }
+    function enableEditTestNomre(objectId){
+
+        $('#toolbarEdit'+objectId).hide();
+        $('#toolbarSave'+objectId).show();
+
+        $('#toolbarDelete'+objectId).hide();
+        $('#toolbarCancel'+objectId).show();
+
+        $('#detail'+objectId).hide();
+        $('#detailInp'+objectId).show();
+    }
+    function disableEditTestNomre(objectId){
+
+        $('#toolbarEdit'+objectId).show();
+        $('#toolbarSave'+objectId).hide();
+
+        $('#toolbarDelete'+objectId).show();
+        $('#toolbarCancel'+objectId).hide();
+
+        $('#detail'+objectId).show();
+        $('#detailInp'+objectId).hide();
+    }
+
+    //   ازمون انلاین
+
+    
+    const OnlineExamTest=[
+        {
+            "id": 1,
+            "name": "test 1",
+            "duration": 10,
+            "needsEnable": true,
+            "enable": false,
+            "classId": 1,
+            "courseId": 1,
+            "examDate": "2019-09-13T10:07:51.228Z",
+            "creationDate": "2019-09-13T10:07:51.228Z",
+            "endDate": "2019-09-13T10:07:51.228Z",
+            "description": "توضسحات "
+          },
+          {
+            "id": 2,
+            "name": "test 2",
+            "duration": 20,
+            "needsEnable": true,
+            "enable": false,
+            "classId": 2,
+            "courseId": 2,
+            "examDate": "2019-09-13T10:07:51.228Z",
+            "creationDate": "2019-09-13T10:07:51.228Z",
+            "endDate": "2019-09-13T10:07:51.228Z",
+            "description": "توضیحات "
+          },
+          {
+            "id": 3,
+            "name": "test 3",
+            "duration": 30,
+            "needsEnable": true,
+            "enable": false,
+            "classId": 3,
+            "courseId": 3,
+            "examDate": "2019-09-13T10:07:51.228Z",
+            "creationDate": "2019-09-13T10:07:51.228Z",
+            "endDate": "2019-09-13T10:07:51.228Z",
+            "description": "توضیحات "
+          }
+    ]
+    
+    function AddTestAzmoon(exampRes){
+        $('#AzmoonStatusTable').empty();
+        for(i in exampRes){
+            let id=exampRes[i].id;
+            let isRead=exampRes[i].status==0 ? false : true;
+            let isValidat=exampRes[i].enable;
+            let name=exampRes[i].name;
+            let startDate=exampRes[i].examDate.substring(0,10);
+            let endDate=exampRes[i].endDate.substring(0,10);
+            let duration=exampRes[i].duration;
+            let detail=exampRes[i].description;
+
+            let classname=allClass.find(x => x.id==exampRes[i].classId).name;
+            let coursename=allCourse.find(x => x.id==exampRes[i].courseId).name;
+            let ClassCourse=classname+"/ "+coursename;
+            // let ClassCourse=classname;
+    
+            let tr= createAzmoonTr(id,"Azmoon",isRead,isValidat,name,ClassCourse,startDate,endDate,duration,detail);
+            editItems["Azmoon"+id]= JSON.parse(JSON.stringify(rawEditItem["TestDateTemp"]));
+            $('#AzmoonStatusTable').append(tr);
+            addActionTestAzmoon('Azmoon'+id);
+        }
+    }
+
+    function createAzmoonTr(id,type,isRead,isValidat,name,section,startDate,endDate,duration,detail){
+        return(
+            '<tr id="tr'+type+id+'" >'+
+                '<td>'+testAzmoonCheckContent(id,type,isRead,isValidat)+'</td>'+
+                '<td>'+testAzmoonName(id,type,name)+'</td>'+
+                '<td>'+testAzmoonSection(id,type,section)+'</td>'+
+                '<td>'+testAzmoonStartDate(id,type,startDate)+'</td>'+
+                '<td>'+testAzmoonEndDate(id,type,endDate)+'</td>'+
+                '<td>'+testAzmoonDuration(id,type,duration)+'</td>'+
+                '<td>'+testAzmoonDetail(id,type,detail)+'</td>'+
+                '<td>'+testAzmoontoolbar(id,type)+'</td>'+
+            '</tr>'
+        );
+    }
+    function testAzmoonCheckContent(id,type,isRead,isValidat){
+        let a=(isValidat ? "checked" : "");
+        let b=(!isRead ? '<span class="badge badge-danger">جدید</span></label>' : '');
+        return(
+            '<div class="form-group">'+
+                '<div class="checkbox checkbox-fill d-inline">'+
+                    '<input type="checkbox" name="checkbox-fill-'+type+id+'" id="checkbox-fill-'+type+id+'" objectId="'+type+id+'" '+a+'>'+
+                    '<label for="checkbox-fill-'+type+id+'"  objectId="'+type+id+'" class="cr"></label>'+b+
+                '</div>'+
+            '</div>'
+        );
+    }
+    function testAzmoonCheckChange(){
+        let needsEnable=$(this).prop("checked")
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        let exam=allOnlineExam.find(x =>x.id==id);
+        // if(needsEnable)
+        //     errorMessage="الکی مثلا آزمون آنلاین تایید شد :))";
+        // else
+        //     errorMessage="الکی مثلا آزمون آنلاین رد شد :))";
+        // $("#successNotification").trigger( "click" );
+        EnableOnlineExam(id,needsEnable);
+    }
+    
+    
+    function testAzmoonName(id,type,name){
+        return(
+            '<h6 id="Name'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+name+'</h6>'
+        );
+    }
+    function testAzmoonSection(id,type,title){
+        return(
+            '<span id="section'+type+id+'" objectId="'+type+id+'" class="pie_1" style="font-size:12px;">'+title+'</span>'
+        );
+    }
+
+    function testAzmoonStartDate(id,type,date){
+        return(
+                '<input  id="StartDateInp'+type+id+'" objectId="'+type+id+'"  dir="ltr" type="text" class="form-control date" data-mask="99/99/9999" value="'+date+'" disabled style="background-color:inherit; width:auto;font-size:14px;">'+
+                '<input  id="StartDateInpHide'+type+id+'" objectId="'+type+id+'"  dir="ltr" type="text" class="form-control date" data-mask="99/99/9999" value="'+date+'" style="display:none;background-color:white; width:auto;font-size:14px;">'
+        );
+    }
+    function testAzmoonStartDateChange(){
+        let date=$(this).val();
+        let objectId=$(this).attr('objectId');
+        editItems[objectId].startDate=date;
+    }
+
+    function testAzmoonEndDate(id,type,date){
+        return(
+                '<input  id="EndDateInp'+type+id+'" objectId="'+type+id+'" dir="ltr" type="text" class="form-control date" data-mask="99/99/9999" value="'+date+'" disabled style="background-color:inherit;width:auto;font-size:14px;">'+
+                '<input  id="EndDateInpHide'+type+id+'" objectId="'+type+id+'" dir="ltr" type="text" class="form-control date" data-mask="99/99/9999" value="'+date+'" style="display:none;background-color:white;width:auto;font-size:14px;">'
+        );
+    }
+    function testAzmoonEndDateChange(){
+        let date=$(this).val();
+        let objectId=$(this).attr('objectId');
+        editItems[objectId].endDate=date;
+    }
+
+    function testAzmoonDuration(id,type,name){
+        return(
+            '<h6 id="duration'+type+id+'" class="mb-1" objectId="'+type+id+'" >'+name+'</h6>'+
+            '<input id="durationInp'+type+id+'" type="text" value="'+name+'" objectId="'+type+id+'" style="display:none" > '
+        );
+    }
+    function testAzmoonDurationChange(){
+        let detail=$(this).val();
+        let objectId=$(this).attr('objectId');
+        editItems[objectId].duration=detail;
+    }
+
+    function testAzmoonDetail(id,type,name){
+        return(
+            '<textarea id="detail'+type+id+'" class="mb-1" objectId="'+type+id+'" readonly style="border:none; background-color:inherit; font-size:12px;">'+name+'</textarea>'
+        );
+    }
+    function testAzmoontoolbar(id,type){
+        return(
+            '<i id="toolbarEdit'+type+id+'" class="fas fa-edit btn-primary label text-white user-list-style" objectId="'+type+id+'"></i>'+
+            '<i id="toolbarDelete'+type+id+'" class="fas fa-trash-alt btn-danger label text-white user-list-style" objectId="'+type+id+'"></i>'+
+            '<i id="toolbarSave'+type+id+'" class="fas fa-check-circle theme-bg btn- label text-white user-list-style" objectId="'+type+id+'" style="display:none"></i>'+
+            '<i id="toolbarCancel'+type+id+'" class="fas fa-times-circle btn-danger label text-white user-list-style" objectId="'+type+id+'" style="display:none"></i>'
+        );
+    }
+    function testAzmoonEditClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        if(pageStatus[type]==states[type].DEFUALT){
+            pageStatus[type]=states[type].EDIT;
+            editItems[objectId].status=true; 
+            $("#StartDateInpHide"+objectId).val($("#StartDateInp"+objectId).val());
+            $("#EndDateInpHide"+objectId).val($("#EndDateInp"+objectId).val());
+            enableEditTestAzmoon(objectId);
+        }
+    }
+    function testAzmoonDeleteClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+            if(!confirm("آیا مطمئن  هستید حذف شود؟"))
+                return;
+            DeleteOnlineExam(id);
+    }
+    function testAzmoonSaveClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        
+        let onlineexam=allOnlineExam.find(x => x.id==id);
+        let datas={
+            "name": onlineexam.name ,
+            "duration": onlineexam.duration,
+            "examDate": $("#StartDateInpHide"+objectId).val()+onlineexam.examDate.substr(10),
+            "endDate": $("#EndDateInpHide"+objectId).val()+onlineexam.endDate.substr(10),
+            "description": onlineexam.description
+        }
+        PutOnlineExam(id,datas,objectId)
+    }
+    function testAzmoonCancelClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        type="Azmoon";
+        if(pageStatus[type]==states[type].EDIT){
+            pageStatus[type]=states[type].DEFUALT;
+            disableEditTestAzmoon(objectId);
+            // editItems[objectId]=JSON.parse(JSON.stringify(rawEditItem["TestDateTemp"]));;
+        }
+    }
+
+    function addActionTestAzmoon(objectId){
+
+        document.getElementById('checkbox-fill-'+objectId).onchange = testAzmoonCheckChange;
+        document.getElementById('StartDateInpHide'+objectId).onchange = testAzmoonStartDateChange;
+        document.getElementById('EndDateInpHide'+objectId).onchange = testAzmoonEndDateChange;
+        document.getElementById('durationInp'+objectId).onchange = testAzmoonDurationChange;
+
+        document.getElementById('toolbarEdit'+objectId).onclick = testAzmoonEditClick;
+        document.getElementById('toolbarDelete'+objectId).onclick = testAzmoonDeleteClick;
+        document.getElementById('toolbarSave'+objectId).onclick = testAzmoonSaveClick;
+        document.getElementById('toolbarCancel'+objectId).onclick = testAzmoonCancelClick;
+    }
+    function enableEditTestAzmoon(objectId){
+
+        $('#toolbarEdit'+objectId).hide();
+        $('#toolbarSave'+objectId).show();
+
+        $('#toolbarDelete'+objectId).hide();
+        $('#toolbarCancel'+objectId).show();
+
+        $('#EndDateInp'+objectId).hide();
+        $('#EndDateInpHide'+objectId).show();
+
+        $('#StartDateInp'+objectId).hide();
+        $('#StartDateInpHide'+objectId).show();
+        
+    }
+    function disableEditTestAzmoon(objectId){
+
+        $('#toolbarEdit'+objectId).show();
+        $('#toolbarSave'+objectId).hide();
+
+        $('#toolbarDelete'+objectId).show();
+        $('#toolbarCancel'+objectId).hide();
+
+        $('#EndDateInp'+objectId).show();
+        $('#EndDateInpHide'+objectId).hide();
+
+        $('#StartDateInp'+objectId).show();
+        $('#StartDateInpHide'+objectId).hide();
+    }
+
+
+    // function createAzmoonContent(){
+    //    return('<div id="smartwizard-left" class="sw-vertical-left"><ul id="azmoonSoalatShomare"></ul><div id="azmoonSoalatMatn"></div></div>' );
+    // }
+    // function createSooratSoal(radif,shomareSoal){
+    //     return(
+    //         '<li><a href="#step-l-'+radif+'"><h6>'+shomareSoal+'</h6></a></li>'
+    //     );
+    // }
+    // function createMatneSoal(radif,title,text){
+    //     return(
+    //         '<div id="step-l-'+radif+'"><h5>'+title+'</h5><hr><p>'+text+'</p></div>'
+    //     );
+    // }
+
+
+
+    function GetALlClass(){
+        $.ajax(`${baseUrl}/class`, {
+            type: "GET",
+            processData: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                allClass=res;
+                GetALlCourse();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function GetALlCourse(){
+        $.ajax(`${baseUrl}/course`, {
+            type: "GET",
+            processData: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                allCourse=res;
+                GetExam();
+                GetExamGrade();
+                GetNemuneSoal();
+                GetOnlineExam();
+                // AddTestAzmoon(OnlineExamTest);
+
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+
+    function GetExam(){
+        $.ajax(`${baseUrl}/Exam/WaitingList`, {
+            type: "GET",
+            processData: false,
+            async: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                allExam=res;
+                AddTestDate(allExam);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function PutExam(examId,datas,objectId){
+       
+        $.ajax(`${baseUrl}/Exam/${examId}`, {
+            data: JSON.stringify(datas),
+            type: "PUT",
+            processData: false,
             contentType: "application/json",
             headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
             success: function(res) {
-                let mess=newMessage(text,"now");
-                $("#chatBox").append(mess);
-                $("#messundefined")
-                var objDiv = document.getElementById("chatBox");
-                let x=objDiv.scrollHeight
-                $('.msg-user-chat.scroll-div').scrollTop(x);
+                errorMessage="تاریخ امتحان تغییر کرد .";
+                $("#successNotification").trigger( "click" );
+                GetExam();
+                pageStatus["TestDate"]=states["TestDate"].DEFUALT;
+                disableEditTestDate(objectId);
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
@@ -604,32 +1084,343 @@ $(document).ready(function(){
             }
         });
     }
-    function message(text,date,id){
-        return (
-            '<div id="c'+id+'" class="media chat-messages"> <div class="media-body chat-menu-content"> <div class="" id="mess'+id+'">  </div> <p class="chat-time">'+date+'</p> </div> </div>'
-        );
+    function PutExamEnable(examId,needsEnable){
+        $.ajax(`${baseUrl}/Exam/${examId}/Enable`, {
+            data: JSON.stringify({"enable": needsEnable}),
+            type: "PUT",
+            processData: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            success: function(res) {
+                if(needsEnable)
+                    errorMessage="تاریخ آزمون تایید شد .";
+                else
+                    errorMessage="تاریخ آزمون رد شد.";
+                $("#successNotification").trigger( "click" );
+                GetExam();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+            $("#errorNotification").trigger( "click" );
+            }
+        });
     }
-    function messageReply(text,date,id){
-        return (
-            '<div id="c'+id+'" class="media chat-messages"> <div class="media-body chat-menu-reply"> <div class="" id="mess'+id+'">  </div> <p class="chat-time">'+date+'</p> </div> </div>'
-        );
+    function DeleteExam(examId){
+        $.ajax(`${baseUrl}/Exam/${examId}`, {
+            type: "DELETE",
+            processData: true,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                errorMessage="امتحان حذف شد .";
+                $("#successNotification").trigger( "click" );  
+                GetExam();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
     }
-    function messageCont(text){
-        return '<p class="chat-cont">'+text+'</p>';
-    }
-    function newMessage(text,date,id){
-        return (
-            '<div id="c'+id+'" class="media chat-messages"> <div class="media-body chat-menu-content"> <div class="" id="mess'+id+'"> <p class="chat-cont">'+text+'</p> </div> <p class="chat-time">'+date+'</p> </div> </div>'
-        );
-    }
-    $('.btn-msg-send').click(function(){
-        let text=$("#cahtContent").val();
-        if(text=="")
-            return;
-        $("#cahtContent").val("");
-        postMessage(text);
-    });
 
+
+    function GetExamGrade(){
+        $.ajax(`${baseUrl}/Exam/Grade/WaitingList`, {
+            type: "GET",
+            processData: false,
+            async: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                allExamGrade=res;
+                addExamGrade(allExamGrade)
+                // AddTestDate(allExam);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+
+    function examGradeListClick(){
+        let objectId=$(this).attr('objectId');
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        GetExamGradeList(objectId,"click");
+    }
+    function GetExamGradeList(objectId,mode){
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        $.ajax(`${baseUrl}/Exam/${id}/Grade`, {
+            type: "GET",
+            processData: false,
+            async: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                allExamGradeList=res;
+                addExamGradeList(allExamGradeList,objectId,id,mode);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function PutExamGradeList(examId,datas,objectId){
+        $.ajax(`${baseUrl}/Exam/${examId}/Grade`, {
+            data: JSON.stringify(datas),
+            type: "PUT",
+            processData: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            success: function(res) {
+                errorMessage=`نمره دانش آموز ویرایش شد .`;
+                $("#successNotification").trigger( "click" );
+                GetExamGradeList("TestNomre"+examId,"update");
+                pageStatus["TestNomreList"]=states["TestNomreList"].DEFUALT;
+                disableEditTestNomre(objectId);
+                editItems[objectId]=JSON.parse(JSON.stringify(rawEditItem["TestDateTemp"]));
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+            $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function EnableExamGradeList(gradeId,needsEnable){
+        $.ajax(`${baseUrl}/Exam/Grade/${gradeId}/Enable`, {
+            data: JSON.stringify({"enable": needsEnable}),
+            type: "PUT",
+            processData: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            success: function(res) {
+                if(needsEnable)
+                    errorMessage="نمره دانش آموز تایید شد";
+                else
+                    errorMessage="نمره دانش آموز رد شد.";
+                $("#successNotification").trigger( "click" );
+                setTimeout(GetExamGradeList("TestNomre"+recentExamGrade.id,"update"),1000);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+            $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function DeleteExamGradeList(gradeId){
+        $.ajax(`${baseUrl}/Exam/Grade/${gradeId}`, {
+            type: "DELETE",
+            processData: true,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                errorMessage="نمره دانش آموز حذف شد .";
+                $("#successNotification").trigger( "click" );  
+                GetExamGradeList("TestNomre"+recentExamGrade.id,"update");
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+
+
+    function GetNemuneSoal(){
+        $.ajax(`${baseUrl}/SampleQuestion/WaitingList`, {
+            type: "GET",
+            processData: false,
+            async: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                allNemuneSoal=res;
+
+                addNemuneSoal(allNemuneSoal);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function PutNemuneSoal(examId,datas,mode,needsEnable,objectId){
+       
+        $.ajax(`${baseUrl}/Exam/${examId}`, {
+            data: JSON.stringify(datas),
+            type: "PUT",
+            processData: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            success: function(res) {
+                if(mode=="check"){
+                    if(needsEnable)
+                        errorMessage="نمونه سوال رد شد .";
+                    else
+                        errorMessage="نمونه سوال تایید شد";
+                }
+                // else if(mode=="edit")
+                //     errorMessage="نمونه سوال تغییر کرد .";
+                $("#successNotification").trigger( "click" );
+                GetNemuneSoal();
+                pageStatus["TestDate"]=states["TestDate"].DEFUALT;
+                // disableEditTestDate(objectId);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+            $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function DeleteNemuneSoal(examId){
+        $.ajax(`${baseUrl}/SampleQuestion/${examId}`, {
+            type: "DELETE",
+            processData: true,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                errorMessage="نمونه سوال حذف شد .";
+                $("#successNotification").trigger( "click" );  
+                GetNemuneSoal();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function EnableNemuneSoal(examId,needsEnable){
+        $.ajax(`${baseUrl}/SampleQuestion/${examId}/Enable`, {
+            data: JSON.stringify({"enable": needsEnable}),
+            type: "PUT",
+            processData: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            success: function(res) {
+                if(needsEnable)
+                    errorMessage="نمونه سوال تایید شد .";
+                else
+                    errorMessage="نمونه سوال رد شد.";
+                $("#successNotification").trigger( "click" );
+                GetNemuneSoal();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+            $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+
+    function GetOnlineExam(){
+        $.ajax(`${baseUrl}/OnlineExam/WaitingList`, {
+            type: "GET",
+            processData: false,
+            async: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                allOnlineExam=res;
+                AddTestAzmoon(allOnlineExam);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function PutOnlineExam(examId,datas,objectId){
+        $.ajax(`${baseUrl}/OnlineExam/${examId}`, {
+            data: JSON.stringify(datas),
+            type: "PUT",
+            processData: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            success: function(res) {
+                errorMessage="آزمون آنلاین ویرایش شد .";
+                $("#successNotification").trigger( "click" );
+                GetOnlineExam();
+                pageStatus["Azmoon"]=states["Azmoon"].DEFUALT;
+                disableEditTestAzmoon(objectId);
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+            $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function DeleteOnlineExam(examId){
+        $.ajax(`${baseUrl}/OnlineExam/${examId}`, {
+            type: "DELETE",
+            processData: true,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`},            
+            success: function(res) {
+                errorMessage="آزمون آنلاینن حذف شد .";
+                $("#successNotification").trigger( "click" );  
+                GetOnlineExam();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+                 $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    function EnableOnlineExam(examId,needsEnable){
+        $.ajax(`${baseUrl}/OnlineExam/${examId}/Enable`, {
+            data: JSON.stringify({"enable": needsEnable}),
+            type: "PUT",
+            processData: false,
+            contentType: "application/json",
+            headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
+            success: function(res) {
+                if(needsEnable)
+                    errorMessage="آزمون آنلاین تایید شد .";
+                else
+                    errorMessage="آزمون آنلاین رد شد.";
+                $("#successNotification").trigger( "click" );
+                GetOnlineExam();
+            },
+            error: function(jqXHR, textStatus, errorThrown,error) {
+                // set errorMessage
+                var err = eval("(" + jqXHR.responseText + ")");
+                errorMessage=err.Message;
+            $("#errorNotification").trigger( "click" );
+            }
+        });
+    }
+    
+    
 
     //notification
     let errorMessage;
@@ -679,4 +1470,19 @@ $(document).ready(function(){
       var nAnimOut = $(this).attr("data-animation-out");
       notify(nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
     });
+    function GetFilename(url)
+    {
+        if (url)
+        {
+            var m = url.toString().match(/.*\/(.+?)\./);
+            if (m && m.length > 1)
+            {
+                return m[1];
+            }
+        }
+        return "";
+    }
 });
+
+
+//enable true  delete it
