@@ -11,6 +11,7 @@ $(document).ready(function() {
     function tokenValidate(){
         $.ajax(`${baseUrl}/auth/token/check`, {
             type: "GET",
+            async:false,
             processData: true,
             contentType: "application/json",
             headers: {'token': token},            
@@ -87,7 +88,8 @@ $(document).ready(function() {
             headers: {'token':token}, 
             success: function(res) {
                 recentNews=res
-                console.log(res);
+                newsImagesArr=res.images;
+                newsFile=res.file;
                 preparePage();                
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
@@ -100,8 +102,8 @@ $(document).ready(function() {
     }
     function preparePage(){
         GetNewsTag();
-        AddImages(recentNews.images);
-        AddFiles(recentNews.file);
+        AddImages(newsImagesArr);
+        AddFiles(newsFile);
         AddBody();
         if(pageStatus==status.SHOW){
             disableEdit();
@@ -113,15 +115,35 @@ $(document).ready(function() {
     }
 
     function AddNewsTag(){
-        // $("#tagsList").empty();
-        for(i in recentNews.newsCategoryId){
-            let id=recentNews.newsCategoryId[i];
-            let name=newsTag.find(x => x.id==id).name
+        for(i in recentNews.category){
+            let name=recentNews.category[i];
+            let id=newsTag.find(x => x.name==name).id
+            console.log(name);
+            console.log(id);
             let StudentsOpt=createMaghtaOpt(id,name,"NewsTags");
             $("#tagsList").append(StudentsOpt);    
             $("#maghtaNewsTags"+id).prop("selected",true);
         }
     }
+    function createMaghtaOpt(id,name,type){
+        return(
+            '<option id="maghta'+type+id+'" value="'+type+id+'" objectId="'+type+id+'" sectionName="'+name+'" >'+name+'</option>'
+        );
+    }
+    function maghtaOptClick(){
+        let objectId=$(this).val();
+        let id=objectId.match(/\d+/)[0];
+        let type=objectId.replace(id, "");
+        filterNav[type].sectionId=id;
+        filterNav[type].sectionName=$("#maghta"+type+id).attr('sectionName');
+        
+        $("#classStudentsList").empty().prop("disabled", true); 
+        $("#classStudentsList").append('<option value="یبس" disabled selected style="display:none;"></option>');
+        filterNav[type].status1=true;        
+        GetGrade(id,type);
+        sectionOptChange=true;
+    }
+
     function AddImages(imageArr){
         let isActiveImg=true;
         $("#carouselBody").empty();
@@ -147,8 +169,10 @@ $(document).ready(function() {
     }
     function AddFiles(file){
         $(".new-file").empty();
-        let src=file;
-        addFileList(src,`فیلم`);
+        if(file!=null){
+            let src=file;
+            addFileList(src,`فیلم`);
+        }
     }
     function AddBody(){
         let body=createNewsBody(recentNews,"News")
@@ -169,15 +193,17 @@ $(document).ready(function() {
         $("#selectImageNav").show();
         $("#ImageLable").hide();
         
-        $("#selectFileNav").show();
-        $("#FileLable").hide();
+        if(newsFile==null){
+            $("#selectFileNav").show();
+            $("#FileLable").hide();
+        }
 
         $(".deleteIcon").show();
 
         $('#newsTitle').attr('readonly', false); 
         $('#newsText').attr('readonly', false); 
         
-        $("#classTagsList").prop("disabled", false); 
+        // $("#classTagsList").prop("disabled", false); 
         $("#tagsList").prop("disabled", false); 
 
     }
@@ -202,7 +228,7 @@ $(document).ready(function() {
         $('#newsTitle').attr('readonly', true); 
         $('#newsText').attr('readonly', true); 
         
-        $("#classTagsList").prop("disabled", true); 
+        // $("#classTagsList").prop("disabled", true); 
         $("#tagsList").prop("disabled", true); 
         
     }
@@ -245,25 +271,24 @@ $(document).ready(function() {
             headers: {'token':token}, 
             success: function(res) {
                 newsTag=res;
-                if(pageStatus==status.NEW)
-                    AddTags();
-                else if(pageStatus==status.SHOW)
-                    AddNewsTag();                
+                // if(pageStatus==status.NEW)
+                //     AddTags();
+                // else if(pageStatus==status.SHOW)
+                //     AddNewsTag();                
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
                 var err = eval("(" + jqXHR.responseText + ")");
                 errorMessage=err.msg;
-                 $("#errorNotification").trigger( "click" );
+                $("#errorNotification").trigger( "click" );
             }
         });
     }
     function AddTags(){
-            for(i in newsTag){
-            if(newsTag[i].isEnabled==true)
-                continue;
-            let id=newsTag[i].id;
-            if(recentNews.newsCategoryId.find(x => x==id))
+        for(i in newsTag){
+            let name=newsTag[i].name;
+            let id=newsTag.find(x => x.name==name).id
+            if(recentNews.category.find(x => x==name))
                 continue;
             let StudentsOpt=createMaghtaOpt(id,newsTag[i].name,"NewsTags");
             $("#tagsList").append(StudentsOpt);
@@ -410,26 +435,29 @@ $(document).ready(function() {
     $("#addImage-btn").click(function(){
         if(!addImageMode)
             return;
-        PutImage(recentNews.id);
+        let imageType=uploadedImage.type;
+        let suffix=imageType.substring(imageType.indexOf("/") + 1);
+        PutImage(suffix);
         $("#selectImage").text("انتخاب تصویر ...")  
         addImageMode=false;     
     });
-    function PutImage(newsId){
+    function PutImage(suffix){
         const datas = new FormData();
         datas.append("file",uploadedImage)
         $.ajax({
-            type: 'PUT',
-            url: `${baseUrl}/News/${newsId}/Image`,
+            type: 'POST',
+            url: `${baseUrl}/file/${suffix}`,
             data : datas,
             enctype: 'multipart/form-data',
             processData: false,       
             contentType: false,   
             headers: {'token':token}, 
             success: function(res) {
-                recentNews.imageUrl.push(res)
-                AddImages(recentNews.imageUrl);
-                errorMessage="تصویر افزوده شد.";
+                newsImagesArr.push(res.url);
+                AddImages(newsImagesArr);
+                errorMessage="تصویر آپلود شد!";
                 $("#successNotification").trigger( "click" );
+
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 var err = eval("(" + jqXHR.responseText + ")");
@@ -457,25 +485,27 @@ $(document).ready(function() {
             return;
         let fileType=uploadedFile.type;
         let suffix=fileType.substring(fileType.indexOf("/") + 1);
-        PutFile(recentNews.id,suffix);
+        PutFile(suffix);
         $("#selectFile").text("انتخاب فایل ...")  
         addFileMode=false;     
     });
-    function PutFile(newsId,suffix){
+    function PutFile(suffix){
         const datas = new FormData();
         datas.append("file",uploadedFile)
         $.ajax({
-            type: 'PUT',
-            url: `${baseUrl}/News/${newsId}/File/Suffix/${suffix}`,
+            type: 'POST',
+            url: `${baseUrl}/file/${suffix}`,
             data : datas,
             enctype: 'multipart/form-data',
             processData: false,       
             contentType: false,   
             headers: {'token':token}, 
             success: function(res) {
-                recentNews.fileUrl.push(res)
-                AddFiles(recentNews.fileUrl);
-                errorMessage="فایل افزوده شد.";
+                newsFile=res.url;
+                AddFiles(newsFile);
+                errorMessage="فایل آپلود شد!";
+                $("#selectFileNav").hide();
+                $("#FileLable").show();
                 $("#successNotification").trigger( "click" );
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
@@ -501,7 +531,7 @@ $(document).ready(function() {
           i +
           '">' +
           task +
-          '</span></a></label></div><div class="float-right"><a id="deleteImage'+i+'" href="#!" class="delete_imagelist"><i class="far fa-trash-alt deleteIcon"></i></a></div></div>'
+          '</span></a></label></div><div class="float-right"><a id="deleteImage'+i+'" url='+url+' href="#!" class="delete_imagelist"><i class="far fa-trash-alt deleteIcon"></i></a></div></div>'
       );
     
     $(add_todo)
@@ -527,7 +557,7 @@ $(document).ready(function() {
         i +
         '">' +
         task +
-        '</span></a></label></div><div class="float-right"><a id="deleteFile'+i+'"  href="#!" class="delete_filelist"><i class="far fa-trash-alt deleteIcon"></i></a></div></div>'
+        '</span></a></label></div><div class="float-right"><a id="deleteFile'+i+'" url='+url+' href="#!" class="delete_filelist"><i class="far fa-trash-alt deleteIcon"></i></a></div></div>'
     );
     $(add_todo)
       .appendTo(".new-file")
@@ -591,60 +621,27 @@ $(document).ready(function() {
     notify(nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
   });
   var errorMessage;
+  var newsImagesArr,newsFile=null;
   function delete_image(e) {
+    if(!confirm("آیا مطمئن  هستید؟"))
+        return;
     let objectId=$(this).attr('id');
+    let url=$(this).attr('url');
+    newsImagesArr.splice( newsImagesArr.indexOf(url), 1 );
     let id=objectId.match(/\d+/)[0];
     let type=objectId.replace(id, "");
-    $.ajax(`${baseUrl}/Image/${id}`, {
-            type: "DELETE",
-            processData: true,
-            contentType: "application/json",
-            headers: {'token':token}, 
-            success: function(res) {
-                for(i in recentNews.imageUrl){
-                    if(recentNews.imageUrl[i].id==id)
-                        recentNews.imageUrl.splice(i, 1);
-                }
-                AddImages(recentNews.imageUrl);
-                $("#Image" + id).fadeOut();
-                errorMessage="تصویر حذف شد.";
-                $("#successNotification").trigger( "click" );
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.msg;
-            $("#errorNotification").trigger( "click" );
-            }
-        });
+    AddImages(newsImagesArr);
+    $("#Image" + id).fadeOut();
   }
   function delete_file(e) {
     let objectId=$(this).attr('id');
     let id=objectId.match(/\d+/)[0];
-    let type=objectId.replace(id, "");
-    $.ajax(`${baseUrl}/File/${id}`, {
-            type: "DELETE",
-            processData: true,
-            contentType: "application/json",
-            headers: {'token':token}, 
-            success: function(res) {
-                for(i in recentNews.fileUrl){
-                    if(recentNews.fileUrl[i].id==id)
-                        recentNews.fileUrl.splice(i, 1);
-                }
-                AddFiles(recentNews.fileUrl);
-                $("#File" + id).fadeOut();
-                errorMessage="فایل حذف شد .";
-                $("#successNotification").trigger( "click" );
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                // set errorMessage
-                var err = eval("(" + jqXHR.responseText + ")");
-                errorMessage=err.msg;
-            $("#errorNotification").trigger( "click" );
-            }
-        });
-    }
+    newsFile=null;
+    AddFiles(recentNews.fileUrl);
+    $("#File" + id).fadeOut();
+    $("#selectFileNav").show();
+    $("#FileLable").hide();
+}
 
 });
 
