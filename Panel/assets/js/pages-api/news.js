@@ -145,7 +145,7 @@ $(document).ready(function() {
 
     function createStaffTr(id,title,text,src){
         return(
-            '<div class="col-md-6 " id="news'+id+'"> <div class="card table-card"> <div class="row-table"> <div class="col-auto theme-bg text-white" style="width:200px; height: 200px;padding-left: 0 !important;padding-right: 0 !important"> <img class="img-fluid" style="width:100%; height: 100%;;" src="'+src+'" alt="تصویر خبر"> </div> <div class="col text-center"> <h4 class="f-w-300">'+title+'</h4><span class="text-uppercase d-block m-b-10">'+text+'</span>  </div> </div> </div> </div>'
+            '<div class="col-md-6 " id="news'+id+'" style="cursor:pointer"> <div class="card table-card"> <div class="row-table"> <div class="col-auto theme-bg text-white" style="width:200px; height: 200px;padding-left: 0 !important;padding-right: 0 !important"> <img class="img-fluid" style="width:100%; height: 100%;;" src="'+src+'" alt="تصویر خبر"> </div> <div class="col text-center"> <h4 class="f-w-300">'+title+'</h4><span class="text-uppercase d-block m-b-10">'+text+'</span>  </div> </div> </div> </div>'
         );
     }
 
