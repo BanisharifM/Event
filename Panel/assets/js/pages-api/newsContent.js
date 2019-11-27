@@ -116,10 +116,8 @@ $(document).ready(function() {
 
     function AddNewsTag(){
         for(i in recentNews.category){
-            let name=recentNews.category[i];
+            let name=recentNews.category[i].name;
             let id=newsTag.find(x => x.name==name).id
-            console.log(name);
-            console.log(id);
             let StudentsOpt=createMaghtaOpt(id,name,"NewsTags");
             $("#tagsList").append(StudentsOpt);    
             $("#maghtaNewsTags"+id).prop("selected",true);
@@ -271,10 +269,10 @@ $(document).ready(function() {
             headers: {'token':token}, 
             success: function(res) {
                 newsTag=res;
-                // if(pageStatus==status.NEW)
-                //     AddTags();
-                // else if(pageStatus==status.SHOW)
-                //     AddNewsTag();                
+                if(pageStatus==status.NEW)
+                    AddTags();
+                else if(pageStatus==status.SHOW)
+                    AddNewsTag();                
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
@@ -288,7 +286,7 @@ $(document).ready(function() {
         for(i in newsTag){
             let name=newsTag[i].name;
             let id=newsTag.find(x => x.name==name).id
-            if(recentNews.category.find(x => x==name))
+            if(recentNews.category.find(x => x.name==name))
                 continue;
             let StudentsOpt=createMaghtaOpt(id,newsTag[i].name,"NewsTags");
             $("#tagsList").append(StudentsOpt);
@@ -310,43 +308,21 @@ $(document).ready(function() {
     $("#saveIcon").click(function(){
         if(!confirm("آیا مطمئن  هستید؟"))
             return;
-        $.each($("#classTagsList"), function(){            
-            SchoolTagList.push($(this).val());
-        });
         $.each($("#tagsList"), function(){            
             newsTagList.push($(this).val());
         });
-        console.log(newsTagList);
-        let arr1=SchoolTagList[SchoolTagList.length-1];
-
-        let arr2=newsTagList[newsTagList.length-1];
-        if(arr2===undefined)
-            arr2=[]
-        for(i in arr2){
-            arr2[i]=parseInt(arr2[i].replace("NewsTags",""));
-        }
-        let sectionTag=[];
-        let gradeTag=[];
-        let classTag=[];
-        for(i in arr1){
-            let objectId=arr1[i];
-            let id=objectId.match(/\d+/)[0];
-            id=parseInt(id);
-            let type=objectId.replace(id, "");
-            if(type=="SectionTags")
-                sectionTag.push(id);
-            else if(type=="GradeTags")
-                gradeTag.push(id);
-            else if(type=="ClassTags")
-                classTag.push(id);
+        let arr2=[];
+        for(i in newsTagList[0]){
+            let id=newsTagList[0][i].replace("NewsTags","");
+            arr2.push({"name":newsTag.find(x => x.id==id).name});
+            
         }
         let data={
             "title": $("#newsTitle").val(),
             "text":$("#newsText").val() ,
-            "newsCategory":arr2,
-            "classId":classTag,
-            "gradeId":gradeTag,
-            "sectionId": sectionTag
+            "category":arr2,
+            "images":newsImagesArr,
+            "file":newsFile
         }
         console.log(data)
         PutNews(data);
@@ -361,7 +337,7 @@ $(document).ready(function() {
     });
     
     function PutNews(data){
-        $.ajax(`${baseUrl}/News/${recentNews.id}`, {
+        $.ajax(`${baseUrl}/news/${recentNews.id}`, {
             data: JSON.stringify(data),
             type: "PUT",
             processData: false,
@@ -634,6 +610,8 @@ $(document).ready(function() {
     $("#Image" + id).fadeOut();
   }
   function delete_file(e) {
+    if(!confirm("آیا مطمئن  هستید؟"))
+        return;
     let objectId=$(this).attr('id');
     let id=objectId.match(/\d+/)[0];
     newsFile=null;
