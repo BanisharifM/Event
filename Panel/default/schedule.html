@@ -371,10 +371,16 @@
                                         <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
                                             <nav class="navbar m-b-30  border border-info">
 
-                                                <div class="col-sm-4">
-                                                    <label>زمان های رویداد:</label>
-                                                    <select id="maghtaStudentsList"
-                                                        class="browser-default custom-select">
+                                                <div class="col-sm-3">
+                                                    <label>تاریخ:</label>
+                                                    <select id="roidadDateList" class="browser-default custom-select">
+                                                        <option value="یس" disabled selected style="display:none;">
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label>ساعت:</label>
+                                                    <select id="roidadTimeList" class="browser-default custom-select">
                                                         <option value="یس" disabled selected style="display:none;">
                                                         </option>
                                                     </select>
@@ -382,7 +388,7 @@
 
                                                 <div class="col-sm-4">
                                                     <label> </label>
-                                                    <button id="StudentsListFilter" type="button"
+                                                    <button id="ScheduleListFilter" type="button"
                                                         class="btn btn-primary btn-icon m-0" data-toggle="tooltip"
                                                         data-placement="top" title="اعمال فیلتر" style="float: left;">
                                                         <i class="fas fa-list-ul"></i>
@@ -404,7 +410,7 @@
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="StudentsList">
+                                                <tbody id="ProgramsList">
 
                                                 </tbody>
                                             </table>
