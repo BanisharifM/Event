@@ -23,7 +23,8 @@
 
     <link rel="stylesheet" href="../assets/plugins/notification/css/notification.min.css">
 
-    <link href="https://cdn.rawgit.com/rastikerdar/vazir-font/v21.0.1/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.rawgit.com/rastikerdar/vazir-font/v21.0.1/dist/font-face.css" rel="stylesheet"
+        type="text/css" />
     <link rel="stylesheet" href="../assets/css/style.css">
 
     <link rel="stylesheet" href="../assets/css/layouts/rtl.css">
@@ -48,10 +49,11 @@
             <br>
             <div class="navbar-brand header-logo">
                 <a href="index.html" class="b-brand">
-                    <div class="b-bg">
+                    <img src="../assets/images/widget/event9.png" style="width:200px;height:50px;">
+                    <!-- <div class="b-bg">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <span class="b-title">پنل مدیریت</span>
+                    <span class="b-title">پنل مدیریت</span> -->
                 </a>
                 <!-- <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a> -->
             </div>
@@ -70,7 +72,7 @@
                     <li data-username="message" class="nav-item "><a href="schedule.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="fas fa-list-ul fa-rotate-180"></i></span><span
                                 class="pcoded-mtext">برنامه</span></a></li>
-                    <li data-username="message" class="nav-item"><a href="news.html" class="nav-link"><span
+                    <li data-username="message" class="nav-item "><a href="news.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="far fa-newspaper"></i></span><span
                                 class="pcoded-mtext"></span>اخبار</span></a></li>
                     <li data-username="message" class="nav-item active"><a href="message.html" class="nav-link"><span
@@ -92,10 +94,7 @@
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="#!" dideo-checked="true"><span></span></a>
             <a href="index.html" class="b-brand" dideo-checked="true">
-                <div class="b-bg">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <span class="b-title">پنل مدیریت</span>
+                <img src="../assets/images/widget/event8.png" style="width:200px;height:50px;">
             </a>
         </div>
     </header>
@@ -350,33 +349,39 @@
 
                     <div class="main-body">
                         <div class="page-wrapper row">
-                            
+
                             <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
-                               
+
                                 <div class="row">
 
                                     <div class="col-sm-12 mx-auto">
                                         <div class="card" id="newsBody">
                                             <div class="card-body text-center">
-                                                <label style="float: right !important; margin-bottom:10px">عنوان :</label>
-                                                <input id="ticketTitle" autocomplete="off" class="form-control mb-4" type="text" readonly style="border: 1px solid #ced4da !important;" >
-                                                <label style="float: right !important; margin-bottom:10px">سوال :</label>
-                                                <textarea id="ticketQuestion" class="form-control mb-4" readonly rows="6" type="text" objectId="'+type+id+'"  >detail</textarea>
-                                                <label style="float: right !important; margin-bottom:10px">پاسخ :</label>
-                                                <textarea id="ticketAnswer" class="form-control mb-4" rows="9" type="text" objectId="'+type+id+'" placeholder="پاسخ دهید ..."  ></textarea>
-                                                <button id="ticketAnswering"class="btn btn-primary shadow-2 mb-3">ارسال</button>
+                                                <label style="float: right !important; margin-bottom:10px">عنوان
+                                                    :</label>
+                                                <input id="ticketTitle" autocomplete="off" class="form-control mb-4"
+                                                    type="text" readonly style="border: 1px solid #ced4da !important;">
+                                                <label style="float: right !important; margin-bottom:10px">سوال
+                                                    :</label>
+                                                <textarea id="ticketQuestion" class="form-control mb-4" readonly
+                                                    rows="6" type="text" objectId="'+type+id+'">detail</textarea>
+                                                <label style="float: right !important; margin-bottom:10px">پاسخ
+                                                    :</label>
+                                                <textarea id="ticketAnswer" class="form-control mb-4" rows="9"
+                                                    type="text" objectId="'+type+id+'"
+                                                    placeholder="پاسخ دهید ..."></textarea>
+                                                <button id="ticketAnswering"
+                                                    class="btn btn-primary shadow-2 mb-3">ارسال</button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button id="errorNotification"
-                                    class="btn notifications btn-danger" style="display: none;"
-                                    data-type="danger" data-from="top"
-                                    data-align="right">Danger</button>
-                                <button id="successNotification"
-                                    class="btn notifications btn-success" data-type="success"
-                                    style="display: none;" data-from="top"
-                                    data-align="right">success</button>
+                                    <button id="errorNotification" class="btn notifications btn-danger"
+                                        style="display: none;" data-type="danger" data-from="top"
+                                        data-align="right">Danger</button>
+                                    <button id="successNotification" class="btn notifications btn-success"
+                                        data-type="success" style="display: none;" data-from="top"
+                                        data-align="right">success</button>
                                 </div>
 
                             </div>

@@ -23,7 +23,8 @@
 
     <link rel="stylesheet" href="../assets/plugins/notification/css/notification.min.css">
 
-    <link href="https://cdn.rawgit.com/rastikerdar/vazir-font/v21.0.1/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.rawgit.com/rastikerdar/vazir-font/v21.0.1/dist/font-face.css" rel="stylesheet"
+        type="text/css" />
     <link rel="stylesheet" href="../assets/css/style.css">
 
     <link rel="stylesheet" href="../assets/css/layouts/rtl.css">
@@ -48,10 +49,7 @@
             <br>
             <div class="navbar-brand header-logo">
                 <a href="index.html" class="b-brand">
-                    <div class="b-bg">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <span class="b-title">پنل مدیریت</span>
+                    <img src="../assets/images/widget/event8.png" style="width:200px;height:50px;">
                 </a>
                 <!-- <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a> -->
             </div>
@@ -92,10 +90,7 @@
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="#!" dideo-checked="true"><span></span></a>
             <a href="index.html" class="b-brand" dideo-checked="true">
-                <div class="b-bg">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <span class="b-title">پنل مدیریت</span>
+                <img src="../assets/images/widget/event8.png" style="width:200px;height:50px;">
             </a>
         </div>
     </header>
@@ -351,22 +346,22 @@
                     <div class="main-body">
                         <div class="page-wrapper row">
                             <div class="col-sm-12" style="margin-bottom:20px;">
-                                <div class=" float-right " id="deleteIcon"> 
-                                    <i class="fas fa-trash " ></i>
+                                <div class=" float-right " id="deleteIcon">
+                                    <i class="fas fa-trash "></i>
                                 </div>
-                                <div class=" float-right " id="editIcon"> 
+                                <div class=" float-right " id="editIcon">
                                     <i class="fas fa-edit "></i>
                                 </div>
-                                <div class="float-right"id="cancelIcon" style="display: none"> 
+                                <div class="float-right" id="cancelIcon" style="display: none">
                                     <i class="fas fa-window-close "></i>
                                 </div>
-                                <div class="float-right "id="saveIcon" style="display: none"> 
-                                    <i class="fas fa-check-square " ></i>
+                                <div class="float-right " id="saveIcon" style="display: none">
+                                    <i class="fas fa-check-square "></i>
                                 </div>
                             </div>
-                            
+
                             <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
-                               
+
                                 <div class="row">
                                     <div class=" col-md-6 mb-5">
                                         <h5>تگ های های اخبار</h5>
@@ -415,7 +410,9 @@
                                                 <div class="card">
 
                                                     <div class="card-block">
-                                                        <div id="ImageLable"><label >تصاویر :</label><hr></div>
+                                                        <div id="ImageLable"><label>تصاویر :</label>
+                                                            <hr>
+                                                        </div>
                                                         <div class="input-group mb-3" id="selectImageNav">
                                                             <input type="file" name="task-insert"
                                                                 class="form-control add_image_todo"
@@ -425,7 +422,8 @@
                                                                 id="selectImage">انتخاب
                                                                 تصویر ...</label>
                                                             <div class="input-group-append">
-                                                                <button class="btn btn-secondary btn-icon" id="addImage-btn">
+                                                                <button class="btn btn-secondary btn-icon"
+                                                                    id="addImage-btn">
                                                                     <i class="fa fa-plus"></i>
                                                                 </button>
                                                             </div>
@@ -445,38 +443,41 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
-                                                    <div class="card">
-    
-                                                        <div class="card-block">
-                                                        <div id="FileLable"><label >فایل:</label><hr></div>
-                                                            <div class="input-group mb-3" id="selectFileNav">
-                                                                <input type="file" name="task-insert"
-                                                                    class="form-control add_file_todo"
-                                                                    placeholder="ساخت تگ جدید" required=""
-                                                                    id="selectFileInp" style="display: none">
-                                                                <label class="form-control add_file_todo"
-                                                                    id="selectFile">انتخاب
-                                                                    فایل ...</label>
-                                                                <div class="input-group-append">
-                                                                    <button class="btn btn-secondary btnFile-icon" id="addFile-btn">
-                                                                        <i class="fa fa-plus"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                            <div class="new-file">
-    
-                                                            </div>
-                                                            <button id="errorNotification"
-                                                                class="btn notifications btn-danger" style="display: none;"
-                                                                data-type="danger" data-from="top"
-                                                                data-align="right">Danger</button>
-                                                            <button id="successNotification"
-                                                                class="btn notifications btn-success" data-type="success"
-                                                                style="display: none;" data-from="top"
-                                                                data-align="right">success</button>
+                                                <div class="card">
+
+                                                    <div class="card-block">
+                                                        <div id="FileLable"><label>فایل:</label>
+                                                            <hr>
                                                         </div>
+                                                        <div class="input-group mb-3" id="selectFileNav">
+                                                            <input type="file" name="task-insert"
+                                                                class="form-control add_file_todo"
+                                                                placeholder="ساخت تگ جدید" required=""
+                                                                id="selectFileInp" style="display: none">
+                                                            <label class="form-control add_file_todo"
+                                                                id="selectFile">انتخاب
+                                                                فایل ...</label>
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-secondary btnFile-icon"
+                                                                    id="addFile-btn">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="new-file">
+
+                                                        </div>
+                                                        <button id="errorNotification"
+                                                            class="btn notifications btn-danger" style="display: none;"
+                                                            data-type="danger" data-from="top"
+                                                            data-align="right">Danger</button>
+                                                        <button id="successNotification"
+                                                            class="btn notifications btn-success" data-type="success"
+                                                            style="display: none;" data-from="top"
+                                                            data-align="right">success</button>
                                                     </div>
                                                 </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

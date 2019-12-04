@@ -99,10 +99,7 @@
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="#!" dideo-checked="true"><span></span></a>
             <a href="index.html" class="b-brand" dideo-checked="true">
-                <div class="b-bg">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <span class="b-title">پنل مدیریت</span>
+                <img src="../assets/images/widget/event8.png" style="width:200px;height:50px;">
             </a>
         </div>
     </header>
@@ -347,245 +344,245 @@
         </div>
     </section>
 
-    
+
     <div class="pcoded-main-container">
-            <div class="pcoded-wrapper">
-                <div class="pcoded-content">
-                    <div class="pcoded-inner-content">
-    
-                        <div class="main-body">
-                            <div class="page-wrapper">
-    
-                                <div class="col-xl-12 col-md-12 m-b-30">
-                                    <ul class="nav nav-tabs" id="myTab1" role="tablist">
-    
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="Developer-tab" data-toggle="tab" href="#toggleDarsha"
-                                                role="tab">زمان های رویداد</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="Developer-tab" data-toggle="tab"
-                                                href="#toggleStudents" role="tab">برنامه های رویداد</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content User-Lists" id="myTabContent1">
-    
-                                        <div class="tab-pane fade row active show" id="toggleStudents" role="tabpanel">
-                                            <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
-                                                <nav class="navbar m-b-30  border border-info">
-    
-                                                    <div class="col-sm-4">
-                                                        <label>زمان های رویداد:</label>
-                                                        <select id="maghtaStudentsList"
-                                                            class="browser-default custom-select">
-                                                            <option value="یس" disabled selected style="display:none;">
-                                                            </option>
-                                                        </select>
-                                                    </div>
-    
-                                                    <div class="col-sm-4">
-                                                        <label> </label>
-                                                        <button id="StudentsListFilter" type="button"
-                                                            class="btn btn-primary btn-icon m-0" data-toggle="tooltip"
-                                                            data-placement="top" title="اعمال فیلتر" style="float: left;">
-                                                            <i class="fas fa-list-ul"></i>
-                                                        </button>
-                                                    </div>
-                                                </nav>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="border-top-0"></th>
-                                                            <th class="border-top-0">عنوان</th>
-                                                            <th class="border-top-0">مکان</th>
-                                                            <th class="border-top-0">سخنرانان</th>
-                                                            <th class="border-top-0">
-                                                                <i id="addStudents"
-                                                                    class="fas fa-plus-square btn-success label text-white"></i>
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="StudentsList">
-                                        
-                                                    </tbody>
-                                                </table>
-                                                <button id="showStudentsDetail" style="display:none" type="button"
-                                                    data-toggle="modal" data-target="#exampleModalLong"></button>
-                                                <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog"
-                                                    aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg" role="document">
-                                                        <div class="modal-content">
-                                                            
-                                                            <div class="modal-body ">
-                                                                <div class="row">
-                                                                    <div class="col-xl-8 col-md-8 mx-auto">
-                                                                        <div class="card">
-                                                                            <div class="card-block">
-    
-                                                                                <div class="text-center m-b-30">
-                                                                                    <img class="img-fluid rounded-circle"
-                                                                                        id="modalAvatar"
-                                                                                        src="../assets/images/user/avatar-2.jpg"
-                                                                                        alt="dashboard-user">
-                                                                                    <h4 class="mb-2 d-block"
-                                                                                        id="modalStudentName">
-    
-                                                                                    </h4>
-                                                                                    <span class="pie_1 mt-3 mb-3 d-block"
-                                                                                        id="modalStudentNationalId"></span>
-                                                                                    <h6 class="mb-3 d-block"
-                                                                                        id="modalStudentSection">
-    
-                                                                                    </h6>
-                                                                                    <h6 class="mb-3 d-block"
-                                                                                        id="modalStudentPhoneNumber">
-    
-                                                                                    </h6>
-                                                                                </div>
-                                                                                <div class="row">
-    
-                                                                                    <div class="col-sm-3">
-                                                                                        <span class="float-left"
-                                                                                            id="modalStudentTitution">
-                                                                                        </span>
-                                                                                        <input id="modalStudentTitutionInp"
-                                                                                            type="number"
-                                                                                            style="display:none">
-                                                                                    </div>
-                                                                                    <div class="col-sm-6 mx-auto">
-                                                                                        <div class="progress m-t-10"
-                                                                                            style="height: 7px;">
-                                                                                            <div class="progress-bar progress-c-theme"
-                                                                                                id="titutionProgress"
-                                                                                                role="progressbar"
-                                                                                                aria-valuenow="70"
-                                                                                                aria-valuemin="0"
-                                                                                                aria-valuemax="100">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-sm-3">
-                                                                                        <span class="float-right"
-                                                                                            id="modalStudentTotalTitution">
-                                                                                        </span>
-                                                                                        <input
-                                                                                            id="modalStudentTotalTitutionInp"
-                                                                                            type="number"
-                                                                                            style="display:none">
-                                                                                    </div>
-    
-                                                                                </div>
-    
-                                                                            </div>
-    
-                                                                            <button id="editTitution" type="button"
-                                                                                class="btn btn-outline-primary mx-auto m-t-30">تغییر</button>
-                                                                            <button id="saveTitution" type="button"
-                                                                                class="btn btn-outline-success mx-auto m-t-30"
-                                                                                style="display: none;">ذخیره
-                                                                                تغییرات</button>
-    
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-12 col-md-6">
-                                                                    <h5 class="mb-3">پیام های انضباطی</h5>
-                                                                    <hr>
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+
+                    <div class="main-body">
+                        <div class="page-wrapper">
+
+                            <div class="col-xl-12 col-md-12 m-b-30">
+                                <ul class="nav nav-tabs" id="myTab1" role="tablist">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="Developer-tab" data-toggle="tab" href="#toggleDarsha"
+                                            role="tab">زمان های رویداد</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="Developer-tab" data-toggle="tab"
+                                            href="#toggleStudents" role="tab">برنامه های رویداد</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content User-Lists" id="myTabContent1">
+
+                                    <div class="tab-pane fade row active show" id="toggleStudents" role="tabpanel">
+                                        <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
+                                            <nav class="navbar m-b-30  border border-info">
+
+                                                <div class="col-sm-4">
+                                                    <label>زمان های رویداد:</label>
+                                                    <select id="maghtaStudentsList"
+                                                        class="browser-default custom-select">
+                                                        <option value="یس" disabled selected style="display:none;">
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <label> </label>
+                                                    <button id="StudentsListFilter" type="button"
+                                                        class="btn btn-primary btn-icon m-0" data-toggle="tooltip"
+                                                        data-placement="top" title="اعمال فیلتر" style="float: left;">
+                                                        <i class="fas fa-list-ul"></i>
+                                                    </button>
+                                                </div>
+                                            </nav>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="border-top-0"></th>
+                                                        <th class="border-top-0">عنوان</th>
+                                                        <th class="border-top-0">مکان</th>
+                                                        <th class="border-top-0">سخنرانان</th>
+                                                        <th class="border-top-0">
+                                                            <i id="addStudents"
+                                                                class="fas fa-plus-square btn-success label text-white"></i>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="StudentsList">
+
+                                                </tbody>
+                                            </table>
+                                            <button id="showStudentsDetail" style="display:none" type="button"
+                                                data-toggle="modal" data-target="#exampleModalLong"></button>
+                                            <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+
+                                                        <div class="modal-body ">
+                                                            <div class="row">
+                                                                <div class="col-xl-8 col-md-8 mx-auto">
                                                                     <div class="card">
                                                                         <div class="card-block">
-                                                                            <nav class="navbar  border border-info">
-                                                                                <div class="col-sm-9" id="AlertSelect">
-                                                                                    <!-- <input id="alertText" type="text"> -->
-                                                                                    <select id="StudentAlertSelect"
-                                                                                        class="browser-default custom-select form-control "
-                                                                                        disabled>
-                                                                                        <option value="یس" disabled selected
-                                                                                            style="display:none;">
-                                                                                        </option>
-    
-                                                                                    </select>
+
+                                                                            <div class="text-center m-b-30">
+                                                                                <img class="img-fluid rounded-circle"
+                                                                                    id="modalAvatar"
+                                                                                    src="../assets/images/user/avatar-2.jpg"
+                                                                                    alt="dashboard-user">
+                                                                                <h4 class="mb-2 d-block"
+                                                                                    id="modalStudentName">
+
+                                                                                </h4>
+                                                                                <span class="pie_1 mt-3 mb-3 d-block"
+                                                                                    id="modalStudentNationalId"></span>
+                                                                                <h6 class="mb-3 d-block"
+                                                                                    id="modalStudentSection">
+
+                                                                                </h6>
+                                                                                <h6 class="mb-3 d-block"
+                                                                                    id="modalStudentPhoneNumber">
+
+                                                                                </h6>
+                                                                            </div>
+                                                                            <div class="row">
+
+                                                                                <div class="col-sm-3">
+                                                                                    <span class="float-left"
+                                                                                        id="modalStudentTitution">
+                                                                                    </span>
+                                                                                    <input id="modalStudentTitutionInp"
+                                                                                        type="number"
+                                                                                        style="display:none">
+                                                                                </div>
+                                                                                <div class="col-sm-6 mx-auto">
+                                                                                    <div class="progress m-t-10"
+                                                                                        style="height: 7px;">
+                                                                                        <div class="progress-bar progress-c-theme"
+                                                                                            id="titutionProgress"
+                                                                                            role="progressbar"
+                                                                                            aria-valuenow="70"
+                                                                                            aria-valuemin="0"
+                                                                                            aria-valuemax="100">
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                                 <div class="col-sm-3">
-                                                                                    <button id="addStudentAlert"
-                                                                                        type="button"
-                                                                                        style="float: left;height: calc(2.25rem);"
-                                                                                        class="btn btn-success btn-icon m-0"
-                                                                                        data-toggle="tooltip"
-                                                                                        data-placement="top" title="افزودن">
-                                                                                        <i class="fas fa-plus"></i>
-                                                                                    </button>
+                                                                                    <span class="float-right"
+                                                                                        id="modalStudentTotalTitution">
+                                                                                    </span>
+                                                                                    <input
+                                                                                        id="modalStudentTotalTitutionInp"
+                                                                                        type="number"
+                                                                                        style="display:none">
                                                                                 </div>
-                                                                            </nav>
-                                                                            <div class="table-responsive">
-                                                                                <table class="table table-hover">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th class="border-top-0">
-                                                                                                تاریخ</th>
-                                                                                            <th class="border-top-0">
-                                                                                                پیام انضباطی</th>
-                                                                                            <th class="border-top-0">
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody id="StudentAlertList">
-    
-                                                                                    </tbody>
-                                                                                </table>
+
                                                                             </div>
-    
+
                                                                         </div>
+
+                                                                        <button id="editTitution" type="button"
+                                                                            class="btn btn-outline-primary mx-auto m-t-30">تغییر</button>
+                                                                        <button id="saveTitution" type="button"
+                                                                            class="btn btn-outline-success mx-auto m-t-30"
+                                                                            style="display: none;">ذخیره
+                                                                            تغییرات</button>
+
                                                                     </div>
                                                                 </div>
-    
                                                             </div>
-    
-                                                            <button type="button" class="btn btn-outline-danger"
-                                                                data-dismiss="modal">بستن</button>
-    
+                                                            <div class="col-xl-12 col-md-6">
+                                                                <h5 class="mb-3">پیام های انضباطی</h5>
+                                                                <hr>
+                                                                <div class="card">
+                                                                    <div class="card-block">
+                                                                        <nav class="navbar  border border-info">
+                                                                            <div class="col-sm-9" id="AlertSelect">
+                                                                                <!-- <input id="alertText" type="text"> -->
+                                                                                <select id="StudentAlertSelect"
+                                                                                    class="browser-default custom-select form-control "
+                                                                                    disabled>
+                                                                                    <option value="یس" disabled selected
+                                                                                        style="display:none;">
+                                                                                    </option>
+
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-sm-3">
+                                                                                <button id="addStudentAlert"
+                                                                                    type="button"
+                                                                                    style="float: left;height: calc(2.25rem);"
+                                                                                    class="btn btn-success btn-icon m-0"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="top" title="افزودن">
+                                                                                    <i class="fas fa-plus"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </nav>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-hover">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th class="border-top-0">
+                                                                                            تاریخ</th>
+                                                                                        <th class="border-top-0">
+                                                                                            پیام انضباطی</th>
+                                                                                        <th class="border-top-0">
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody id="StudentAlertList">
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                         </div>
+
+                                                        <button type="button" class="btn btn-outline-danger"
+                                                            data-dismiss="modal">بستن</button>
+
                                                     </div>
                                                 </div>
-    
-                                                <button id="errorNotification" class="btn notifications btn-danger"
-                                                    style="display: none;" data-type="danger" data-from="top"
-                                                    data-align="right">Danger</button>
-                                                <button id="successNotification" class="btn notifications btn-success"
-                                                    data-type="success" style="display: none;" data-from="top"
-                                                    data-align="right">success</button>
                                             </div>
+
+                                            <button id="errorNotification" class="btn notifications btn-danger"
+                                                style="display: none;" data-type="danger" data-from="top"
+                                                data-align="right">Danger</button>
+                                            <button id="successNotification" class="btn notifications btn-success"
+                                                data-type="success" style="display: none;" data-from="top"
+                                                data-align="right">success</button>
                                         </div>
-                                        
-                                        <div class="tab-pane fade " id="toggleDarsha" role="tabpanel">
-                                            
-                                            <div class="table-responsive">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="border-top-0">تاریخ</th>
-                                                            <th class="border-top-0">از ساعت</th>
-                                                            <th class="border-top-0">تا ساعت</th>
-                                                            <th class="border-top-0">
-                                                                <i id="addCourse"
-                                                                    class="fas fa-plus-square btn-success label text-white"></i>
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="CourseList">
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                    </div>
+
+                                    <div class="tab-pane fade " id="toggleDarsha" role="tabpanel">
+
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="border-top-0">تاریخ</th>
+                                                        <th class="border-top-0">از ساعت</th>
+                                                        <th class="border-top-0">تا ساعت</th>
+                                                        <th class="border-top-0">
+                                                            <i id="addCourse"
+                                                                class="fas fa-plus-square btn-success label text-white"></i>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="CourseList">
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-    
                         </div>
+
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 
 

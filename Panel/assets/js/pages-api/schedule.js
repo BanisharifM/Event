@@ -6,6 +6,7 @@
 
 $(document).ready(function(){
 
+    var starting=true;
     var token = localStorage.getItem("token");
     var refreshToken = localStorage.getItem("refreshToken");
     if(token==""||token==null||refreshToken==""||refreshToken==null)
@@ -20,6 +21,7 @@ $(document).ready(function(){
             contentType: "application/json",
             headers: {'token': token},            
             success: function(res) {
+                starting=false;
                 if(res.expire<20)        
                     refreshingToken();
             },
@@ -37,6 +39,7 @@ $(document).ready(function(){
             success: function(res) {
                 token=res.access_token;
                 localStorage.setItem('token',token);
+                starting=false;
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 window.location="signin.html";                 
@@ -46,9 +49,9 @@ $(document).ready(function(){
 
     let industry;
     // GetIndustry();
-    GetCourse();
+    GetSchedule();
 
-    let Students,darsha;
+    let Students,roidadTime;
 
     let uploadedFile=false;
 
@@ -606,15 +609,14 @@ $(document).ready(function(){
             document.getElementById('industyStudentsList').onchange = industryOptClick;
         }
     }
-    function GetCourse(gradeId){
+    function GetSchedule(){
         $.ajax({
             url: `${baseUrl}/schedule`,
-            data:{"gradeId":gradeId},
             type: "GET",
             contentType: "application/json",
             headers: {'token':token}, 
             success: function(res) {
-                darsha=res;
+                roidadTime=res;
                 AddCourse();
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
@@ -627,14 +629,20 @@ $(document).ready(function(){
     }
     function AddCourse(){
         $('#CourseList').empty();
-        for(i in darsha){
-            if(darsha[i].enable==true)
-                continue;
-            let tr=createCalcoTr(darsha[i],"Course");
-            let id=darsha[i].id;
+        for(i in roidadTime){
+
+            //first tab -> زمان های رویداد
+            let tr=createCalcoTr(roidadTime[i],"Course");
+            let id=roidadTime[i].id;
             editCalcoItems["Course"+id]= JSON.parse(JSON.stringify(editCalcoItems.raw));
             $('#CourseList').append(tr);
             addActionCalco('Course'+id);
+
+            //second tab -> برنامه های رویداد
+            
+            let ScheduleOpt=createIndustryOpt(id,industry[i].name,"ScheduleDate");
+            $("#industryStudentsList").append(StudentsOpt);
+            document.getElementById('industyStudentsList').onchange = industryOptClick;
         }
     }
     function DeleteCourse(courseId){
@@ -646,7 +654,7 @@ $(document).ready(function(){
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );  
-                GetCourse();
+                GetSchedule();
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
@@ -666,7 +674,7 @@ $(document).ready(function(){
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
-                GetCourse();
+                GetSchedule();
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
@@ -686,7 +694,7 @@ $(document).ready(function(){
             success: function(res) {
                 errorMessage="با موفقیت انجام شد.";
                 $("#successNotification").trigger( "click" );
-                GetCourse(data.schoolGradeId);
+                GetSchedule(data.schoolGradeId);
             },
             error: function(jqXHR, textStatus, errorThrown,error) {
                 // set errorMessage
