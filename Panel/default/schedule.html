@@ -362,12 +362,12 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link active" id="Developer-tab" data-toggle="tab"
-                                            href="#toggleStudents" role="tab">برنامه های رویداد</a>
+                                            href="#togglePrograms" role="tab">برنامه های رویداد</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content User-Lists" id="myTabContent1">
 
-                                    <div class="tab-pane fade row active show" id="toggleStudents" role="tabpanel">
+                                    <div class="tab-pane fade row active show" id="togglePrograms" role="tabpanel">
                                         <div class="col-xl-12 col-md-12 filter-bar m-b-40 ">
                                             <nav class="navbar m-b-30  border border-info">
 
@@ -405,7 +405,7 @@
                                                         <th class="border-top-0">توضیحات</th>
                                                         <th class="border-top-0">سخنرانان</th>
                                                         <th class="border-top-0">
-                                                            <i id="addStudents"
+                                                            <i id="addPrograms"
                                                                 class="fas fa-plus-square btn-success label text-white"></i>
                                                         </th>
                                                     </tr>
@@ -414,7 +414,7 @@
 
                                                 </tbody>
                                             </table>
-                                            <button id="showStudentsDetail" style="display:none" type="button"
+                                            <button id="showProgramsDetail" style="display:none" type="button"
                                                 data-toggle="modal" data-target="#exampleModalLong"></button>
                                             <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -433,17 +433,17 @@
                                                                                     src="../assets/images/user/avatar-2.jpg"
                                                                                     alt="dashboard-user">
                                                                                 <h4 class="mb-2 d-block"
-                                                                                    id="modalStudentName">
+                                                                                    id="modalProgramName">
 
                                                                                 </h4>
                                                                                 <span class="pie_1 mt-3 mb-3 d-block"
-                                                                                    id="modalStudentNationalId"></span>
+                                                                                    id="modalProgramNationalId"></span>
                                                                                 <h6 class="mb-3 d-block"
-                                                                                    id="modalStudentSection">
+                                                                                    id="modalProgramSection">
 
                                                                                 </h6>
                                                                                 <h6 class="mb-3 d-block"
-                                                                                    id="modalStudentPhoneNumber">
+                                                                                    id="modalProgramPhoneNumber">
 
                                                                                 </h6>
                                                                             </div>
@@ -451,9 +451,9 @@
 
                                                                                 <div class="col-sm-3">
                                                                                     <span class="float-left"
-                                                                                        id="modalStudentTitution">
+                                                                                        id="modalProgramTitution">
                                                                                     </span>
-                                                                                    <input id="modalStudentTitutionInp"
+                                                                                    <input id="modalProgramTitutionInp"
                                                                                         type="number"
                                                                                         style="display:none">
                                                                                 </div>
@@ -471,10 +471,10 @@
                                                                                 </div>
                                                                                 <div class="col-sm-3">
                                                                                     <span class="float-right"
-                                                                                        id="modalStudentTotalTitution">
+                                                                                        id="modalProgramTotalTitution">
                                                                                     </span>
                                                                                     <input
-                                                                                        id="modalStudentTotalTitutionInp"
+                                                                                        id="modalProgramTotalTitutionInp"
                                                                                         type="number"
                                                                                         style="display:none">
                                                                                 </div>
@@ -501,7 +501,7 @@
                                                                         <nav class="navbar  border border-info">
                                                                             <div class="col-sm-9" id="AlertSelect">
                                                                                 <!-- <input id="alertText" type="text"> -->
-                                                                                <select id="StudentAlertSelect"
+                                                                                <select id="ProgramAlertSelect"
                                                                                     class="browser-default custom-select form-control "
                                                                                     disabled>
                                                                                     <option value="یس" disabled selected
@@ -511,7 +511,7 @@
                                                                                 </select>
                                                                             </div>
                                                                             <div class="col-sm-3">
-                                                                                <button id="addStudentAlert"
+                                                                                <button id="addProgramAlert"
                                                                                     type="button"
                                                                                     style="float: left;height: calc(2.25rem);"
                                                                                     class="btn btn-success btn-icon m-0"
@@ -533,7 +533,7 @@
                                                                                         </th>
                                                                                     </tr>
                                                                                 </thead>
-                                                                                <tbody id="StudentAlertList">
+                                                                                <tbody id="ProgramAlertList">
 
                                                                                 </tbody>
                                                                             </table>

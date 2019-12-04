@@ -96,7 +96,6 @@ $(document).ready(function() {
     title: "",
     phoneNumber: ""
   };
-  const editItems = {};
 
   const rawCourse = {
     id: 0,
@@ -124,6 +123,7 @@ $(document).ready(function() {
     id: 0,
     title: "",
     location: "",
+    text: "",
     isActive: true
   };
 
@@ -347,27 +347,28 @@ $(document).ready(function() {
     let id = objectId.match(/\d+/)[0];
     let type = objectId.replace(id, "");
     data = {
-      date: $("#dateInp" + objectId).val(),
-      start: $("#timeStartInp" + objectId).val(),
-      end: $("#timeEndInp" + objectId).val(),
+      title: $("#titleInp" + objectId).val(),
+      location: $("#locationInp" + objectId).val(),
+      text: $("#textInp" + objectId).val(),
       programs: []
     };
 
-    if (pageStatus[type] == states[type].EDIT) {
-      pageStatus[type] = states[type].DEFUALT;
-      if (type == "Course") {
-        PutCourse(data, id);
-      }
+    console.log(object);
+    // if (pageStatus[type] == states[type].EDIT) {
+    //   pageStatus[type] = states[type].DEFUALT;
+    //   if (type == "Course") {
+    //     PutCourse(data, id);
+    //   }
 
-      editCalcoItems[objectId] = JSON.parse(JSON.stringify(editCalcoItems.raw));
-    }
-    if (pageStatus[type] == states[type].ADDED) {
-      pageStatus[type] = states[type].DEFUALT;
-      if (type == "Course") {
-        PostCourse(data);
-      }
-      editCalcoItems[objectId] = JSON.parse(JSON.stringify(editCalcoItems.raw));
-    }
+    //   editCalcoItems[objectId] = JSON.parse(JSON.stringify(editCalcoItems.raw));
+    // }
+    // if (pageStatus[type] == states[type].ADDED) {
+    //   pageStatus[type] = states[type].DEFUALT;
+    //   if (type == "Course") {
+    //     PostCourse(data);
+    //   }
+    //   editCalcoItems[objectId] = JSON.parse(JSON.stringify(editCalcoItems.raw));
+    // }
   }
   function calcoCancelClick() {
     let objectId = $(this).attr("objectId");
@@ -457,7 +458,6 @@ $(document).ready(function() {
   });
 
   function createStaffTr(program, type) {
-    console.log(program);
     return (
       '<tr id="tr' +
       type +
@@ -610,7 +610,6 @@ $(document).ready(function() {
     }
     if (pageStatus[type] == states[type].ADD) {
       pageStatus[type] = states[type].ADDED;
-      editItems[objectId].status = true;
       enableEditPerson(objectId, "add");
     }
   }
@@ -644,13 +643,12 @@ $(document).ready(function() {
         phoneNumber: $("#phoneNumberInpPrograms" + id)
           .val()
           .substring(1),
-        firstName: editItems[objectId].firstName,
-        lastName: editItems[objectId].lastName,
-        nationalId: editItems[objectId].nationalId,
+        // firstName: editItems[objectId].firstName,
+        // lastName: editItems[objectId].lastName,
+        // nationalId: editItems[objectId].nationalId,
         birthday: "2019-09-18T04:31:40.375Z"
       };
       PostProgram(Program);
-      editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
     }
   }
   function personCancelClick() {
@@ -660,24 +658,20 @@ $(document).ready(function() {
     if (pageStatus[type] == states[type].EDIT) {
       pageStatus[type] = states[type].DEFUALT;
       disableEditPerson(objectId);
-      $("#imageUrlImg" + objectId).attr("src", editItems[objectId].imageDef);
-      //   editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
     }
     if (pageStatus[type] == states[type].ADDED) {
       pageStatus[type] = states[type].DEFUALT;
       $("#tr" + objectId).remove();
-      //   editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
     }
   }
 
-  $("#addprograms").click(function() {
+  $("#addPrograms").click(function() {
     if (
-      pageStatus["programs"] == states["programs"].DEFUALT &&
-      filterNav["programs"].isFilter
+      pageStatus["Programs"] == states["Programs"].DEFUALT &&
+      filterNav["ScheduleTime"].isFilter
     ) {
-      pageStatus["programs"] = states["programs"].ADD;
+      pageStatus["Programs"] = states["Programs"].ADD;
       let tr = createStaffTr(rawProgram, "Programs");
-      //   editItems["Programs0"] = JSON.parse(JSON.stringify(rawEditItem));
       $("#ProgramsList").append(tr);
       addActionPersons("Programs0");
       $("#toolbarEditPrograms0").trigger("click");
@@ -704,21 +698,16 @@ $(document).ready(function() {
     $("#toolbarDelete" + objectId).hide();
     $("#toolbarCancel" + objectId).show();
 
-    $("#phoneNumber" + objectId).hide();
-    $("#phoneNumberInp" + objectId).show();
+    $("#title" + objectId).hide();
+    $("#titleInp" + objectId).show();
+
+    $("#location" + objectId).hide();
+    $("#locationInp" + objectId).show();
+
+    $("#informationText" + objectId).hide();
+    $("#informationTextInp" + objectId).show();
 
     $("#showSpeaker" + objectId).hide();
-
-    if (mode == "add") {
-      $("#FirstName" + objectId).hide();
-      $("#FirstInp" + objectId).show();
-
-      $("#informationLastName" + objectId).hide();
-      $("#informationLastInp" + objectId).show();
-
-      $("#nationalId" + objectId).hide();
-      $("#nationalIdInp" + objectId).show();
-    }
   }
   function disableEditPerson(objectId) {
     $("#toolbarEdit" + objectId).show();
@@ -727,8 +716,14 @@ $(document).ready(function() {
     $("#toolbarDelete" + objectId).show();
     $("#toolbarCancel" + objectId).hide();
 
-    $("#phoneNumber" + objectId).show();
-    $("#phoneNumberInp" + objectId).hide();
+    $("#title" + objectId).show();
+    $("#titleInp" + objectId).hide();
+
+    $("#location" + objectId).show();
+    $("#locationInp" + objectId).hide();
+
+    $("#informationText" + objectId).show();
+    $("#informationTextInp" + objectId).hide();
   }
 
   function GetIndustry() {
@@ -899,8 +894,6 @@ $(document).ready(function() {
     for (i in barname) {
       let tr = createStaffTr(barname[i], "Program");
       let id = barname[i].id;
-      console.log(tr);
-      //   editItems["Program" + id] = JSON.parse(JSON.stringify(rawEditItem));
       $("#ProgramsList").append(tr);
       //   addActionPersons("Program" + id);
     }
@@ -936,7 +929,6 @@ $(document).ready(function() {
         errorMessage = "با موفقیت انجام شد.";
         $("#successNotification").trigger("click");
         pageStatus[type] = states[type].DEFUALT;
-        editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
         GetAllProgram();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {

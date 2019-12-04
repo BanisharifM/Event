@@ -310,7 +310,7 @@ $(document).ready(function() {
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = "fg";
+        errorMessage = "عکس آپلود نشد!";
         $("#errorNotification").trigger("click");
         return false;
       }
@@ -357,7 +357,7 @@ $(document).ready(function() {
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = "fg";
+        errorMessage = "فیلم آپلود نشد!";
         $("#errorNotification").trigger("click");
         return false;
       }
