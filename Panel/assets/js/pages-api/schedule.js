@@ -100,8 +100,8 @@ $(document).ready(function() {
   const rawCourse = {
     id: 0,
     date: "0000-00-00",
-    start: "00:00:00",
-    end: "00:00:00"
+    start: "00:00",
+    end: "00:00"
   };
 
   const filterNav = {
@@ -347,28 +347,28 @@ $(document).ready(function() {
     let id = objectId.match(/\d+/)[0];
     let type = objectId.replace(id, "");
     data = {
-      title: $("#titleInp" + objectId).val(),
-      location: $("#locationInp" + objectId).val(),
-      text: $("#textInp" + objectId).val(),
+      date: $("#dateInp" + objectId).val(),
+      start: $("#timeStartInp" + objectId)
+        .val()
+        .substring(0, 5),
+      end: $("#timeEndInp" + objectId)
+        .val()
+        .substring(0, 5),
       programs: []
     };
 
-    console.log(object);
-    // if (pageStatus[type] == states[type].EDIT) {
-    //   pageStatus[type] = states[type].DEFUALT;
-    //   if (type == "Course") {
-    //     PutCourse(data, id);
-    //   }
-
-    //   editCalcoItems[objectId] = JSON.parse(JSON.stringify(editCalcoItems.raw));
-    // }
-    // if (pageStatus[type] == states[type].ADDED) {
-    //   pageStatus[type] = states[type].DEFUALT;
-    //   if (type == "Course") {
-    //     PostCourse(data);
-    //   }
-    //   editCalcoItems[objectId] = JSON.parse(JSON.stringify(editCalcoItems.raw));
-    // }
+    if (pageStatus[type] == states[type].EDIT) {
+      pageStatus[type] = states[type].DEFUALT;
+      if (type == "Course") {
+        PutCourse(data, id);
+      }
+    }
+    if (pageStatus[type] == states[type].ADDED) {
+      pageStatus[type] = states[type].DEFUALT;
+      if (type == "Course") {
+        PostCourse(data);
+      }
+    }
   }
   function calcoCancelClick() {
     let objectId = $(this).attr("objectId");
@@ -626,29 +626,21 @@ $(document).ready(function() {
     let objectId = $(this).attr("objectId");
     let id = objectId.match(/\d+/)[0];
     let type = objectId.replace(id, "");
+    let scheduleId = filterNav["ScheduleTime"].industryId;
+    data = {
+      title: $("#titleInpPrograms" + id).val(),
+      location: $("#locationInpPrograms" + id).val(),
+      text: $("#informationTextInpPrograms" + id).val(),
+      speakers: []
+    };
 
     if (pageStatus[type] == states[type].EDIT) {
       recentProgram = barname.find(x => x.id == id);
-      data = {
-        phoneNumber: $("#phoneNumberInpPrograms" + id)
-          .val()
-          .substring(2)
-      };
       PutAllProgram(data, recentProgram.id);
     }
     if (pageStatus[type] == states[type].ADDED) {
       pageStatus[type] = states[type].DEFUALT;
-      Program = {
-        classId: filterNav["Programs"].classId,
-        phoneNumber: $("#phoneNumberInpPrograms" + id)
-          .val()
-          .substring(1),
-        // firstName: editItems[objectId].firstName,
-        // lastName: editItems[objectId].lastName,
-        // nationalId: editItems[objectId].nationalId,
-        birthday: "2019-09-18T04:31:40.375Z"
-      };
-      PostProgram(Program);
+      PostProgram(scheduleId, date);
     }
   }
   function personCancelClick() {
@@ -775,6 +767,7 @@ $(document).ready(function() {
   }
   function AddScheduleDate() {
     $("#CourseList").empty();
+    let roidad2 = [];
     for (i in roidad) {
       //first tab -> زمان های رویداد
       let tr = createCalcoTr(roidad[i], "Course");
@@ -787,6 +780,9 @@ $(document).ready(function() {
 
       //second tab -> برنامه های رویداد
 
+      if (roidad2.includes(roidad[i].date)) {
+        continue;
+      } else roidad2 = [...roidad2, roidad[i].date];
       let ScheduleOpt = createIndustryOpt(id, roidad[i].date, "ScheduleDate");
       $("#roidadDateList").append(ScheduleOpt);
       document.getElementById("roidadDateList").onchange = scheduleDateOptClick;
@@ -939,8 +935,8 @@ $(document).ready(function() {
       }
     });
   }
-  function PostProgram(Program) {
-    $.ajax(`${baseUrl}/user/ProgramSignup`, {
+  function PostProgram(id, Program) {
+    $.ajax(`${baseUrl}/schedule/${id}/program/`, {
       data: JSON.stringify(Program),
       type: "POST",
       processData: false,
@@ -949,9 +945,6 @@ $(document).ready(function() {
       success: function(res) {
         errorMessage = "با موفقیت انجام شد.";
         $("#successNotification").trigger("click");
-        if (uploadedFile != false) {
-          PutAvatar(res.userId);
-        }
         GetAllProgram();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
