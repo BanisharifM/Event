@@ -457,6 +457,7 @@ $(document).ready(function() {
   });
 
   function createStaffTr(program, type) {
+    console.log(program);
     return (
       '<tr id="tr' +
       type +
@@ -465,8 +466,10 @@ $(document).ready(function() {
       "<td>" +
       title(program.id, type, program.title) +
       "</td>" +
+      "<td>" +
       location(program.id, type, program.location) +
       "</td>" +
+      "<td>" +
       showSpeaker(program.id, type) +
       "</td>" +
       "<td>" +
@@ -543,14 +546,14 @@ $(document).ready(function() {
       '<i id="toolbarEdit' +
       type +
       id +
-      '" class="fas fa-user-edit btn-primary label text-white" objectId="' +
+      '" class="fas fa-edit btn-primary label text-white" objectId="' +
       type +
       id +
       '"></i>' +
       '<i id="toolbarDelete' +
       type +
       id +
-      '" class="fas fa-user-times btn-danger label text-white" objectId="' +
+      '" class="fas fa-times btn-danger label text-white" objectId="' +
       type +
       id +
       '"></i>' +
@@ -633,12 +636,12 @@ $(document).ready(function() {
       pageStatus[type] = states[type].DEFUALT;
       disableEditPerson(objectId);
       $("#imageUrlImg" + objectId).attr("src", editItems[objectId].imageDef);
-      editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
+      //   editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
     }
     if (pageStatus[type] == states[type].ADDED) {
       pageStatus[type] = states[type].DEFUALT;
       $("#tr" + objectId).remove();
-      editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
+      //   editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
     }
   }
 
@@ -657,7 +660,9 @@ $(document).ready(function() {
   });
 
   function addActionPersons(objectId) {
-    document.getElementById("showClass" + objectId).onclick = showClasslClick;
+    document.getElementById(
+      "showSpeaker" + objectId
+    ).onclick = showSpeakerlClick;
     document.getElementById("toolbarEdit" + objectId).onclick = personEditClick;
     document.getElementById(
       "toolbarDelete" + objectId
@@ -865,13 +870,14 @@ $(document).ready(function() {
     });
   }
   function AddAllPrograms() {
-    $("#ProgramList").empty();
+    $("#ProgramsList").empty();
     for (i in barname) {
       let tr = createStaffTr(barname[i], "Program");
       let id = barname[i].id;
-      editItems["Program" + id] = JSON.parse(JSON.stringify(rawEditItem));
-      $("#ProgramList").append(tr);
-      addActionPersons("Program" + id);
+      console.log(tr);
+      //   editItems["Program" + id] = JSON.parse(JSON.stringify(rawEditItem));
+      $("#ProgramsList").append(tr);
+      //   addActionPersons("Program" + id);
     }
   }
   function DeleteProgram(userId) {
@@ -937,31 +943,6 @@ $(document).ready(function() {
         errorMessage = err.Message;
         $("#errorNotification").trigger("click");
         GetAllProgram();
-      }
-    });
-  }
-  function PutAvatar(id) {
-    const datas = new FormData();
-    datas.append("file", uploadedFile);
-    $.ajax({
-      type: "PUT",
-      url: `${baseUrl}/User/${id}/Avatar`,
-      data: { file: uploadedFile },
-      data: datas,
-      enctype: "multipart/form-data",
-      processData: false,
-      contentType: false,
-      headers: { token: token },
-      success: function(res) {
-        errorMessage = "تصویر به روز شد.";
-        uploadedFile = false;
-        // $("#successNotification").trigger( "click" );
-        // GetAllStaff();
-      },
-      error: function(jqXHR, textStatus, errorThrown, error) {
-        var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = "fg";
-        $("#errorNotification").trigger("click");
       }
     });
   }
