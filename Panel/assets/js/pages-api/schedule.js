@@ -470,6 +470,9 @@ $(document).ready(function() {
       location(program.id, type, program.location) +
       "</td>" +
       "<td>" +
+      detail(program.id, type, program.text) +
+      "</td>" +
+      "<td>" +
       showSpeaker(program.id, type) +
       "</td>" +
       "<td>" +
@@ -522,6 +525,28 @@ $(document).ready(function() {
       '" style="display:none" >'
     );
   }
+  function detail(id, type, detail) {
+    return (
+      '<span id="informationText' +
+      type +
+      id +
+      '" class="text-c-green" objectId="' +
+      type +
+      id +
+      '" >' +
+      detail +
+      "</span>" +
+      '<textarea id="informationTextInp' +
+      type +
+      id +
+      '" rows="2" cols="20" type="text" objectId="' +
+      type +
+      id +
+      '" style="display:none" >' +
+      detail +
+      "</textarea>"
+    );
+  }
   function showSpeaker(id, type) {
     return (
       '<p id="showSpeaker' +
@@ -553,7 +578,7 @@ $(document).ready(function() {
       '<i id="toolbarDelete' +
       type +
       id +
-      '" class="fas fa-times btn-danger label text-white" objectId="' +
+      '" class="fas fa-trash-alt btn-danger label text-white" objectId="' +
       type +
       id +
       '"></i>' +

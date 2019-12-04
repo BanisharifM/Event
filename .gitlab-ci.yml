@@ -5,7 +5,7 @@ stages:
 deploy:
   stage: deploy
   variables: 
-    target_path: "/var/www/html/envents/"
+    target_path: "/var/www/html/events/"
   script:
     - "pwd"
     - "cp -ruv Panel/* $target_path"
