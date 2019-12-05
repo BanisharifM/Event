@@ -16,6 +16,7 @@ $(document).ready(function() {
   function tokenValidate() {
     $.ajax(`${baseUrl}/auth/token/check`, {
       type: "GET",
+      async: false,
       processData: true,
       contentType: "application/json",
       headers: { token: token },
