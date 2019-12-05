@@ -5,46 +5,47 @@
  */
 
 $(document).ready(function(){
-
-    var starting=true;
     var token = localStorage.getItem("token");
     var refreshToken = localStorage.getItem("refreshToken");
-    if(token==""||token==null||refreshToken==""||refreshToken==null)
-        window.location="signin.html"; 
-    baseUrl=localStorage.getItem("baseUrl");
+    if (
+      token == "" ||
+      token == null ||
+      refreshToken == "" ||
+      refreshToken == null
+    )
+      window.location = "signin.html";
+    baseUrl = localStorage.getItem("baseUrl");
     tokenValidate();
-
-    function tokenValidate(){
-        $.ajax(`${baseUrl}/auth/token/check`, {
-            type: "GET",
-            processData: true,
-            contentType: "application/json",
-            headers: {'token': token},            
-            success: function(res) {
-                starting=false;
-                if(res.expire<20)        
-                    refreshingToken();
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                refreshingToken();
-            }
-        });
+  
+    function tokenValidate() {
+      $.ajax(`${baseUrl}/auth/token/check`, {
+        type: "GET",
+        async: false,
+        processData: true,
+        contentType: "application/json",
+        headers: { token: token },
+        success: function(res) {
+          if (res.expire < 20) refreshingToken();
+        },
+        error: function(jqXHR, textStatus, errorThrown, error) {
+          refreshingToken();
+        }
+      });
     }
-    function refreshingToken(){
-        $.ajax(`${baseUrl}/auth/token/refresh`, {
-            data: JSON.stringify({"refresh_token":refreshToken}),
-            type: "POST",
-            processData: true,
-            contentType: "application/json",           
-            success: function(res) {
-                token=res.access_token;
-                localStorage.setItem('token',token);
-                starting=false;
-            },
-            error: function(jqXHR, textStatus, errorThrown,error) {
-                window.location="signin.html";                 
-            }
-        });
+    function refreshToken() {
+      $.ajax(`${baseUrl}/auth/token/refresh`, {
+        data: JSON.stringify({ refresh_token: refreshToken }),
+        type: "POST",
+        processData: true,
+        contentType: "application/json",
+        success: function(res) {
+          token = res.access_token;
+          localStorage.setItem("token", token);
+        },
+        error: function(jqXHR, textStatus, errorThrown, error) {
+          // window.location="signin.html";
+        }
+      });
     }
 
     let staffs,staff,recentStaff,staffCorses=[];
