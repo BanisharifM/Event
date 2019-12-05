@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  var starting = true;
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
   if (
@@ -14,11 +15,11 @@ $(document).ready(function() {
   function tokenValidate() {
     $.ajax(`${baseUrl}/auth/token/check`, {
       type: "GET",
-      async: false,
       processData: true,
       contentType: "application/json",
       headers: { token: token },
       success: function(res) {
+        starting = false;
         if (res.expire < 20) refreshingToken();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
@@ -26,7 +27,7 @@ $(document).ready(function() {
       }
     });
   }
-  function refreshToken() {
+  function refreshingToken() {
     $.ajax(`${baseUrl}/auth/token/refresh`, {
       data: JSON.stringify({ refresh_token: refreshToken }),
       type: "POST",
@@ -35,9 +36,10 @@ $(document).ready(function() {
       success: function(res) {
         token = res.access_token;
         localStorage.setItem("token", token);
+        starting = false;
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
-        // window.location="signin.html";
+        window.location = "signin.html";
       }
     });
   }
