@@ -52,9 +52,10 @@ $(document).ready(function() {
 
   let industry;
   // GetIndustry();
+  GetSpeakers();
   GetSchedule();
 
-  let barname, roidad;
+  let barname, roidad, Allspeakers, programSpeaker;
 
   let uploadedFile = false;
 
@@ -115,6 +116,11 @@ $(document).ready(function() {
       status: false,
       industryName: false,
       industryId: false,
+      isFilter: false
+    },
+    Speakers: {
+      status: false,
+      programId: 0,
       isFilter: false
     }
   };
@@ -560,11 +566,169 @@ $(document).ready(function() {
     );
   }
   function showSpeakerlClick() {
-    let id = $(this).attr("key");
-    let teacher = staffs.find(teacher => teacher.id == id);
-    GetStaffClass(teacher.id);
-    filterNav["ScheduleTime"].staffId = teacher.id;
+    let objectId = $(this).attr("objectId");
+    let id = objectId.match(/\d+/)[0];
+    programSpeaker = JSON.parse(
+      JSON.stringify(barname.find(x => x.id == id).speakers)
+    );
+    filterNav["Speakers"].programId = id;
+    addSpeakerModal(programSpeaker, true);
   }
+  function addSpeakerModal(speakers, start) {
+    $("#speakerList").empty();
+    if (speakers.length != 0)
+      for (i in speakers) {
+        let speaker = Allspeakers.find(x => x.id == speakers[i]);
+        let tr = createClassTr(speaker, "Speaker", true);
+        $("#speakerList").append(tr);
+        addActionSpeakers("Speaker" + speaker.id);
+      }
+    if (start) $("#showSpeakers").trigger("click");
+  }
+  function createClassTr(speaker, type, isToolbar) {
+    return (
+      '<tr id="tr' +
+      type +
+      speaker.id +
+      '" objectId="' +
+      type +
+      speaker.id +
+      '" >' +
+      "<td>" +
+      imageUrl(speaker.id, type, speaker.imageUrl) +
+      "</td>" +
+      "<td>" +
+      speakerName(speaker.id, type, speaker.name) +
+      "</td>" +
+      "<td>" +
+      speakerLastName(speaker.id, type, speaker.lastname) +
+      "</td>" +
+      (!isToolbar ? "" : "<td>" + classtoolbar(speaker.id, type) + "</td>") +
+      "</tr>"
+    );
+  }
+  function imageUrl(id, type, src) {
+    return (
+      '<div id="imageUrl' +
+      type +
+      id +
+      '" >' +
+      '<input id="imageUrlInp' +
+      type +
+      id +
+      '" type="file" key="' +
+      id +
+      '" objectId="' +
+      type +
+      id +
+      '" accept="image/*" style="display: none" />' +
+      '<img id="imageUrlImg' +
+      type +
+      id +
+      '" class="rounded-circle" key="' +
+      id +
+      '" objectId="' +
+      type +
+      id +
+      '" style="width:40px;" src=' +
+      src +
+      ' alt="تصویر">' +
+      "</div>"
+    );
+  }
+  function speakerName(id, type, name) {
+    return (
+      '<h6 id="speakerName' +
+      type +
+      id +
+      '" class="m-0" objectId="' +
+      type +
+      id +
+      '" > ' +
+      name +
+      "</h6>"
+    );
+  }
+  function speakerLastName(id, type, lastName) {
+    return (
+      '<h6 id="speakerLastName' +
+      type +
+      id +
+      '" class="m-0" objectId="' +
+      type +
+      id +
+      '" > ' +
+      lastName +
+      "</h6>"
+    );
+  }
+  function classtoolbar(id, type) {
+    return (
+      '<i id="toolbarDelete' +
+      type +
+      id +
+      '" class="fas fa-user-times btn-danger label text-white" objectId="' +
+      type +
+      id +
+      '"></i>'
+    );
+  }
+  function speakerDeleteClick() {
+    let objectId = $(this).attr("objectId");
+    let id = objectId.match(/\d+/)[0];
+    let type = objectId.replace(id, "");
+    if (!confirm("آیا مطمئن  هستید حذف شود؟")) return;
+    programSpeaker.splice(
+      programSpeaker.findIndex(x => x == id),
+      1
+    );
+    addSpeakerModal(programSpeaker, false);
+  }
+  function speakerAddClick() {
+    let objectId = $(this).attr("objectId");
+    let id = objectId.match(/\d+/)[0];
+    let type = objectId.replace(id, "");
+    // if (!confirm("آیا مطمئن  هستید حذف شود؟")) return;
+    programSpeaker = [...programSpeaker, id];
+    $("#closeModal2").click();
+    addSpeakerModal(programSpeaker, true);
+  }
+  function addActionSpeakers(objectId) {
+    document.getElementById(
+      "toolbarDelete" + objectId
+    ).onclick = speakerDeleteClick;
+  }
+  function addActionSpeakerSelected(objectId) {
+    document.getElementById("tr" + objectId).onclick = speakerAddClick;
+  }
+  $("#addSpeaker").click(function() {
+    if (programSpeaker.length == Allspeakers.length) {
+      alert("همه سخنران ها انتخاب شده اند.");
+      return;
+    }
+    $("#speakerList").empty();
+    $("#allSpeakerList").empty();
+    for (i in Allspeakers) {
+      if (programSpeaker.find(x => x == Allspeakers[i].id)) continue;
+      let tr = createClassTr(Allspeakers[i], "Speaker", false);
+      $("#allSpeakerList").append(tr);
+      addActionSpeakerSelected("Speaker" + Allspeakers[i].id);
+    }
+    $("#closeModal1").click();
+    $("#showAllSpeakers").trigger("click");
+  });
+  $("#addClassButton").click(function() {
+    if (!confirm("آیا مطمئن  هستید ذخیره شود؟")) return;
+    let program = barname.find(x => x.id == filterNav["Speakers"].programId);
+    data = {
+      title: program.title,
+      location: program.location,
+      text: program.text,
+      speakers: programSpeaker
+    };
+    $("#closeModal1").click();
+    PutProgram(data, program.id);
+  });
   function toolbar(id, type) {
     return (
       '<i id="toolbarEdit' +
@@ -723,6 +887,23 @@ $(document).ready(function() {
     $("#showSpeaker" + objectId).show();
   }
 
+  function GetSpeakers() {
+    $.ajax({
+      url: `${baseUrl}/user/speaker`,
+      type: "GET",
+      contentType: "application/json",
+      headers: { token: token },
+      success: function(res) {
+        Allspeakers = res;
+      },
+      error: function(jqXHR, textStatus, errorThrown, error) {
+        // set errorMessage
+        var err = eval("(" + jqXHR.responseText + ")");
+        errorMessage = err.msg;
+        $("#errorNotification").trigger("click");
+      }
+    });
+  }
   function GetIndustry() {
     $.ajax(`${baseUrl}/industry`, {
       type: "GET",

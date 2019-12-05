@@ -414,140 +414,83 @@
 
                                                 </tbody>
                                             </table>
-                                            <button id="showProgramsDetail" style="display:none" type="button"
+
+                                            <button id="showSpeakers" style="display:none" type="button"
                                                 data-toggle="modal" data-target="#exampleModalLong"></button>
                                             <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <!-- <div class="modal-header">
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal"
+                                                                        aria-label="Close"><span
+                                                                            aria-hidden="true">&times;</span></button>
+                                                                </div> -->
+                                                        <div class="modal-body ">
+                                                            <div class="card">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th class="border-top-0">تصویر</th>
+                                                                                <th class="border-top-0">نام</th>
+                                                                                <th class="border-top-0">نام خانوادگی
+                                                                                </th>
+                                                                                <th class="border-top-0">
+                                                                                    <i id="addSpeaker"
+                                                                                        class="fas fa-plus-square btn-success label text-white"></i>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="speakerList">
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                            </div>
+                                                            <button id="addClassButton" type="button"
+                                                                class="btn btn-outline-success">ذخیره
+                                                            </button>
+                                                            <button id="closeModal1" type="button"
+                                                                class="btn btn-outline-danger"
+                                                                data-dismiss="modal">بستن</button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button id="showAllSpeakers" type="button" data-toggle="modal"
+                                                style="display: none" data-target="#exampleModalLong2"></button>
+                                            <div id="exampleModalLong2" class="modal fade" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
 
                                                         <div class="modal-body ">
-                                                            <div class="row">
-                                                                <div class="col-xl-8 col-md-8 mx-auto">
-                                                                    <div class="card">
-                                                                        <div class="card-block">
-
-                                                                            <div class="text-center m-b-30">
-                                                                                <img class="img-fluid rounded-circle"
-                                                                                    id="modalAvatar"
-                                                                                    src="../assets/images/user/avatar-2.jpg"
-                                                                                    alt="dashboard-user">
-                                                                                <h4 class="mb-2 d-block"
-                                                                                    id="modalProgramName">
-
-                                                                                </h4>
-                                                                                <span class="pie_1 mt-3 mb-3 d-block"
-                                                                                    id="modalProgramNationalId"></span>
-                                                                                <h6 class="mb-3 d-block"
-                                                                                    id="modalProgramSection">
-
-                                                                                </h6>
-                                                                                <h6 class="mb-3 d-block"
-                                                                                    id="modalProgramPhoneNumber">
-
-                                                                                </h6>
-                                                                            </div>
-                                                                            <div class="row">
-
-                                                                                <div class="col-sm-3">
-                                                                                    <span class="float-left"
-                                                                                        id="modalProgramTitution">
-                                                                                    </span>
-                                                                                    <input id="modalProgramTitutionInp"
-                                                                                        type="number"
-                                                                                        style="display:none">
-                                                                                </div>
-                                                                                <div class="col-sm-6 mx-auto">
-                                                                                    <div class="progress m-t-10"
-                                                                                        style="height: 7px;">
-                                                                                        <div class="progress-bar progress-c-theme"
-                                                                                            id="titutionProgress"
-                                                                                            role="progressbar"
-                                                                                            aria-valuenow="70"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-3">
-                                                                                    <span class="float-right"
-                                                                                        id="modalProgramTotalTitution">
-                                                                                    </span>
-                                                                                    <input
-                                                                                        id="modalProgramTotalTitutionInp"
-                                                                                        type="number"
-                                                                                        style="display:none">
-                                                                                </div>
-
-                                                                            </div>
-
-                                                                        </div>
-
-                                                                        <button id="editTitution" type="button"
-                                                                            class="btn btn-outline-primary mx-auto m-t-30">تغییر</button>
-                                                                        <button id="saveTitution" type="button"
-                                                                            class="btn btn-outline-success mx-auto m-t-30"
-                                                                            style="display: none;">ذخیره
-                                                                            تغییرات</button>
-
-                                                                    </div>
+                                                            <div class="card">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th class="border-top-0">تصویر</th>
+                                                                                <th class="border-top-0">نام</th>
+                                                                                <th class="border-top-0">نام خانوادگی
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="allSpeakerList">
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
+
                                                             </div>
-                                                            <div class="col-xl-12 col-md-6">
-                                                                <h5 class="mb-3">پیام های انضباطی</h5>
-                                                                <hr>
-                                                                <div class="card">
-                                                                    <div class="card-block">
-                                                                        <nav class="navbar  border border-info">
-                                                                            <div class="col-sm-9" id="AlertSelect">
-                                                                                <!-- <input id="alertText" type="text"> -->
-                                                                                <select id="ProgramAlertSelect"
-                                                                                    class="browser-default custom-select form-control "
-                                                                                    disabled>
-                                                                                    <option value="یس" disabled selected
-                                                                                        style="display:none;">
-                                                                                    </option>
-
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-sm-3">
-                                                                                <button id="addProgramAlert"
-                                                                                    type="button"
-                                                                                    style="float: left;height: calc(2.25rem);"
-                                                                                    class="btn btn-success btn-icon m-0"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="افزودن">
-                                                                                    <i class="fas fa-plus"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </nav>
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-hover">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th class="border-top-0">
-                                                                                            تاریخ</th>
-                                                                                        <th class="border-top-0">
-                                                                                            پیام انضباطی</th>
-                                                                                        <th class="border-top-0">
-                                                                                        </th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody id="ProgramAlertList">
-
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <button id="closeModal2" type="button"
+                                                                class="btn btn-outline-danger"
+                                                                data-dismiss="modal">بستن</button>
 
                                                         </div>
-
-                                                        <button type="button" class="btn btn-outline-danger"
-                                                            data-dismiss="modal">بستن</button>
-
                                                     </div>
                                                 </div>
                                             </div>
