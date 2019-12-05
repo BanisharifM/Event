@@ -211,7 +211,7 @@ $(document).ready(function() {
       '<input id="dateInp' +
       type +
       id +
-      '" type="text" value="' +
+      '" onClick="this.select();" type="text" value="' +
       detail +
       '" "objectId="' +
       type +
@@ -237,7 +237,7 @@ $(document).ready(function() {
       '<input id="timeStartInp' +
       type +
       id +
-      '" type="text" value="' +
+      '" onClick="this.select();" type="text" value="' +
       detail +
       '" "objectId="' +
       type +
@@ -263,7 +263,7 @@ $(document).ready(function() {
       '<input id="timeEndInp' +
       type +
       id +
-      '" type="text" value="' +
+      '" onClick="this.select();" type="text" value="' +
       detail +
       '" "objectId="' +
       type +
@@ -453,8 +453,7 @@ $(document).ready(function() {
   $("#ScheduleListFilter").click(function() {
     if (filterNav["ScheduleTime"].status == false) return;
     filterNav["ScheduleTime"].isFilter = true;
-    let id = filterNav["ScheduleTime"].industryId;
-    GetAllprograms(id);
+    GetAllProgram();
   });
 
   function createStaffTr(program, type) {
@@ -495,7 +494,7 @@ $(document).ready(function() {
       '<input id="titleInp' +
       type +
       id +
-      '" type="text" value="' +
+      '" onClick="this.select();" type="text" value="' +
       title +
       '" objectId="' +
       type +
@@ -517,7 +516,7 @@ $(document).ready(function() {
       '<input id="locationInp' +
       type +
       id +
-      '" type="text" value="' +
+      '" onClick="this.select();" type="text" value="' +
       location +
       '" objectId="' +
       type +
@@ -539,7 +538,7 @@ $(document).ready(function() {
       '<textarea id="informationTextInp' +
       type +
       id +
-      '" rows="2" cols="20" type="text" objectId="' +
+      '" rows="2" cols="20" onClick="this.select();" type="text" objectId="' +
       type +
       id +
       '" style="display:none" >' +
@@ -598,7 +597,7 @@ $(document).ready(function() {
       '" style="display:none"></i>'
     );
   }
-  function personEditClick() {
+  function programEditClick() {
     let objectId = $(this).attr("objectId");
     let id = objectId.match(/\d+/)[0];
     let type = objectId.replace(id, "");
@@ -606,14 +605,14 @@ $(document).ready(function() {
       pageStatus[type] = states[type].EDIT;
       let recetnTitle = $("#titlePrograms" + id).text();
       $("#titleInpPrograms" + id).val(recetnTitle);
-      enableEditPerson(objectId, "edit");
+      enableEditProgram(objectId, "edit");
     }
     if (pageStatus[type] == states[type].ADD) {
       pageStatus[type] = states[type].ADDED;
-      enableEditPerson(objectId, "add");
+      enableEditProgram(objectId, "add");
     }
   }
-  function personDeleteClick() {
+  function programDeleteClick() {
     let objectId = $(this).attr("objectId");
     let id = objectId.match(/\d+/)[0];
     let type = objectId.replace(id, "");
@@ -622,7 +621,7 @@ $(document).ready(function() {
       DeleteProgram(id);
     }
   }
-  function personSaveClick() {
+  function programSaveClick() {
     let objectId = $(this).attr("objectId");
     let id = objectId.match(/\d+/)[0];
     let type = objectId.replace(id, "");
@@ -636,20 +635,20 @@ $(document).ready(function() {
 
     if (pageStatus[type] == states[type].EDIT) {
       recentProgram = barname.find(x => x.id == id);
-      PutAllProgram(data, recentProgram.id);
+      PutProgram(data, recentProgram.id);
     }
     if (pageStatus[type] == states[type].ADDED) {
       pageStatus[type] = states[type].DEFUALT;
-      PostProgram(scheduleId, date);
+      PostProgram(scheduleId, data);
     }
   }
-  function personCancelClick() {
+  function programCancelClick() {
     let objectId = $(this).attr("objectId");
     let id = objectId.match(/\d+/)[0];
     let type = objectId.replace(id, "");
     if (pageStatus[type] == states[type].EDIT) {
       pageStatus[type] = states[type].DEFUALT;
-      disableEditPerson(objectId);
+      disableEditProgram(objectId);
     }
     if (pageStatus[type] == states[type].ADDED) {
       pageStatus[type] = states[type].DEFUALT;
@@ -665,25 +664,29 @@ $(document).ready(function() {
       pageStatus["Programs"] = states["Programs"].ADD;
       let tr = createStaffTr(rawProgram, "Programs");
       $("#ProgramsList").append(tr);
-      addActionPersons("Programs0");
+      addActionPrograms("Programs0");
       $("#toolbarEditPrograms0").trigger("click");
     }
   });
 
-  function addActionPersons(objectId) {
+  function addActionPrograms(objectId) {
     document.getElementById(
       "showSpeaker" + objectId
     ).onclick = showSpeakerlClick;
-    document.getElementById("toolbarEdit" + objectId).onclick = personEditClick;
+    document.getElementById(
+      "toolbarEdit" + objectId
+    ).onclick = programEditClick;
     document.getElementById(
       "toolbarDelete" + objectId
-    ).onclick = personDeleteClick;
-    document.getElementById("toolbarSave" + objectId).onclick = personSaveClick;
+    ).onclick = programDeleteClick;
+    document.getElementById(
+      "toolbarSave" + objectId
+    ).onclick = programSaveClick;
     document.getElementById(
       "toolbarCancel" + objectId
-    ).onclick = personCancelClick;
+    ).onclick = programCancelClick;
   }
-  function enableEditPerson(objectId, mode) {
+  function enableEditProgram(objectId, mode) {
     $("#toolbarEdit" + objectId).hide();
     $("#toolbarSave" + objectId).show();
 
@@ -701,7 +704,7 @@ $(document).ready(function() {
 
     $("#showSpeaker" + objectId).hide();
   }
-  function disableEditPerson(objectId) {
+  function disableEditProgram(objectId) {
     $("#toolbarEdit" + objectId).show();
     $("#toolbarSave" + objectId).hide();
 
@@ -716,6 +719,8 @@ $(document).ready(function() {
 
     $("#informationText" + objectId).show();
     $("#informationTextInp" + objectId).hide();
+
+    $("#showSpeaker" + objectId).show();
   }
 
   function GetIndustry() {
@@ -731,7 +736,7 @@ $(document).ready(function() {
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.Message;
+        errorMessage = err.msg;
         $("#errorNotification").trigger("click");
       }
     });
@@ -760,7 +765,7 @@ $(document).ready(function() {
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.Message;
+        errorMessage = err.msg;
         $("#errorNotification").trigger("click");
       }
     });
@@ -799,9 +804,9 @@ $(document).ready(function() {
       if (roidad[i].date != roidadDate) continue;
       let opt = createIndustryOpt(
         roidad[i].id,
-        roidad[i].end.substring(0, 5) +
+        roidad[i].start.substring(0, 5) +
           " تا " +
-          roidad[i].start.substring(0, 5),
+          roidad[i].end.substring(0, 5),
         "ScheduleTime"
       );
       $("#roidadTimeList").append(opt);
@@ -822,7 +827,7 @@ $(document).ready(function() {
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.Message;
+        errorMessage = err.msg;
         $("#errorNotification").trigger("click");
       }
     });
@@ -842,7 +847,7 @@ $(document).ready(function() {
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.Message;
+        errorMessage = err.msg;
         $("#errorNotification").trigger("click");
       }
     });
@@ -862,12 +867,13 @@ $(document).ready(function() {
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.Message;
+        errorMessage = err.msg;
         $("#errorNotification").trigger("click");
       }
     });
   }
-  function GetAllprograms(id) {
+  function GetAllProgram() {
+    let id = filterNav["ScheduleTime"].industryId;
     $.ajax(`${baseUrl}/schedule/${id}/program`, {
       type: "GET",
       processData: true,
@@ -880,7 +886,7 @@ $(document).ready(function() {
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.Message;
+        errorMessage = err.msg;
         $("#errorNotification").trigger("click");
       }
     });
@@ -888,34 +894,38 @@ $(document).ready(function() {
   function AddAllPrograms() {
     $("#ProgramsList").empty();
     for (i in barname) {
-      let tr = createStaffTr(barname[i], "Program");
+      let tr = createStaffTr(barname[i], "Programs");
       let id = barname[i].id;
       $("#ProgramsList").append(tr);
-      //   addActionPersons("Program" + id);
+      addActionPrograms("Programs" + id);
     }
   }
-  function DeleteProgram(userId) {
-    $.ajax(`${baseUrl}/User/${userId}`, {
-      data: JSON.stringify({ enable: true }),
+  function DeleteProgram(programId) {
+    let scheduleId = filterNav["ScheduleTime"].industryId;
+    $.ajax(`${baseUrl}/schedule/${scheduleId}/program/${programId}`, {
       type: "DELETE",
-      processData: true,
+      processData: false,
       contentType: "application/json",
       headers: { token: token },
       success: function(res) {
         errorMessage = "با موفقیت انجام شد.";
         $("#successNotification").trigger("click");
+        barname.splice(
+          barname.findIndex(x => x.id == programId),
+          1
+        );
         AddAllPrograms();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
-        // set errorMessage
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.Message;
+        errorMessage = err.msg;
         $("#errorNotification").trigger("click");
       }
     });
   }
-  function PutAllProgram(data, id) {
-    $.ajax(`${baseUrl}/user/Program/` + id, {
+  function PutProgram(data, programId) {
+    let scheduleId = filterNav["ScheduleTime"].industryId;
+    $.ajax(`${baseUrl}/schedule/${scheduleId}/program/${programId}`, {
       data: JSON.stringify(data),
       type: "PUT",
       processData: false,
@@ -924,19 +934,19 @@ $(document).ready(function() {
       success: function(res) {
         errorMessage = "با موفقیت انجام شد.";
         $("#successNotification").trigger("click");
-        pageStatus[type] = states[type].DEFUALT;
+        pageStatus["Programs"] = states["Programs"].DEFUALT;
         GetAllProgram();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.Message;
+        errorMessage = err.msg;
         $("#errorNotification").trigger("click");
       }
     });
   }
   function PostProgram(id, Program) {
-    $.ajax(`${baseUrl}/schedule/${id}/program/`, {
+    $.ajax(`${baseUrl}/schedule/${id}/program`, {
       data: JSON.stringify(Program),
       type: "POST",
       processData: false,
@@ -950,7 +960,7 @@ $(document).ready(function() {
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.Message;
+        errorMessage = err.msg;
         $("#errorNotification").trigger("click");
         GetAllProgram();
       }
