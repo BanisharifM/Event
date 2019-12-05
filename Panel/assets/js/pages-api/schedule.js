@@ -953,6 +953,17 @@ $(document).ready(function() {
   }
   function AddScheduleDate() {
     $("#CourseList").empty();
+
+    $("#roidadDateList").empty();
+    $("#roidadDateList").append(
+      '<option value="یبس" disabled selected style="display:none;"></option>'
+    );
+    $("#roidadTimeList")
+      .empty()
+      .prop("disabled", true);
+    $("#roidadTimeList").append(
+      '<option value="یبس" disabled selected style="display:none;"></option>'
+    );
     let roidad2 = [];
     for (i in roidad) {
       //first tab -> زمان های رویداد
@@ -1062,6 +1073,10 @@ $(document).ready(function() {
       headers: { token: token },
       success: function(res) {
         barname = res;
+        if (barname.length == 0) {
+          errorMessage = "درحال حاضر برنامه ای در این محدوده وجود ندارد!";
+          $("#warningNotification").trigger("click");
+        }
         AddAllPrograms();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
