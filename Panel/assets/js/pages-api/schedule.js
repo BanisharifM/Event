@@ -889,7 +889,7 @@ $(document).ready(function() {
 
   function GetSpeakers() {
     $.ajax({
-      url: `${baseUrl}/user/speaker`,
+      url: `${baseUrl}/user/speakers`,
       type: "GET",
       contentType: "application/json",
       headers: { token: token },

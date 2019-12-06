@@ -59,7 +59,8 @@ $(document).ready(function() {
     userObj,
     speakerObj,
     modalType,
-    recentUser;
+    recentUser,
+    recentIndustry;
 
   let uploadedFile = false;
 
@@ -488,7 +489,9 @@ $(document).ready(function() {
 
   $("#StudentsListFilter").click(function() {
     if (filterNav["Students"].status == false) return;
+    recentIndustry = filterNav["Students"].industryId;
     filterNav["Students"].isFilter = true;
+    recentPageStudents = 1;
     GetAllStudent();
   });
 
@@ -516,43 +519,8 @@ $(document).ready(function() {
       "<td>" +
       showSpeaker(person.id, type) +
       "</td>" +
-      "<td>" +
-      (!person.editable ? "" : toolbar(person.id, type)) +
-      "</td>" +
       "</tr>"
     );
-  }
-  function testNomreCheckContent(id, type, isValidat) {
-    let a = isValidat ? "checked" : "";
-    return (
-      '<div class="form-group">' +
-      '<div class="checkbox checkbox-fill d-inline">' +
-      '<input type="checkbox" name="checkbox-fill-' +
-      type +
-      id +
-      '" id="checkbox-fill-' +
-      type +
-      id +
-      '" objectId="' +
-      type +
-      id +
-      '" ' +
-      a +
-      ">" +
-      "</div>" +
-      "</div>"
-    );
-  }
-  function testNomreCheckChange() {
-    let objectId = $(this).attr("objectId");
-    let id = objectId.match(/\d+/)[0];
-    let type = objectId.replace(id, "");
-    let needsEnable = $(this).prop("checked");
-    let gradId = allExamGradeList.find(x => x.studentId == id);
-    if (pageStatus[type] == states[type].DEFUALT) {
-      if (!confirm("آیا مطمئن  هستید تایید شود؟")) return;
-      EnableExamGradeList(gradId.id, needsEnable);
-    }
   }
   function imageUrl(id, type, src) {
     return (
@@ -573,12 +541,6 @@ $(document).ready(function() {
       '" alt="تصویر">' +
       "</div>"
     );
-  }
-  function imageUrlChange() {
-    uploadedFile = event.target.files[0];
-    let objectId = $(this).attr("objectId");
-    editItems[objectId].imageUrl = uploadedFile;
-    $("#imageUrlImg" + objectId).attr("src", URL.createObjectURL(uploadedFile));
   }
   function information(id, type, firstName, lastName) {
     return (
@@ -620,29 +582,6 @@ $(document).ready(function() {
       '" style="display:none" > '
     );
   }
-  function firstNameChange() {
-    let firstName = $(this).val();
-    let objectId = $(this).attr("objectId");
-    editItems[objectId].firstName = firstName;
-  }
-  function LastNameChange() {
-    let lastName = $(this).val();
-    let objectId = $(this).attr("objectId");
-    editItems[objectId].lastName = lastName;
-  }
-  function title(id, type, tit) {
-    return (
-      '<h6 id="title' +
-      type +
-      id +
-      '" class="m-0" objectId="' +
-      type +
-      id +
-      '" > ' +
-      tit +
-      "</h6>"
-    );
-  }
   function phoneNumber(id, type, phoneNumber) {
     return (
       '<h6 id="phoneNumber' +
@@ -664,11 +603,6 @@ $(document).ready(function() {
       id +
       '" style="display:none" >'
     );
-  }
-  function phoneNumberChange() {
-    let phoneNumber = $(this).val();
-    let objectId = $(this).attr("objectId");
-    editItems[objectId].phoneNumber = phoneNumber;
   }
   function showSpeaker(id, type) {
     return (
@@ -728,34 +662,8 @@ $(document).ready(function() {
       .val("Modal" + indust)
       .prop("disabled", true);
 
+    people.editable ? $("#deleteTitution").show() : null;
     $("#showStudentsDetail").trigger("click");
-  }
-  function detail(id, type, detail) {
-    return (
-      '<span id="informationText' +
-      type +
-      id +
-      '" class="text-c-green" objectId="' +
-      type +
-      id +
-      '" >' +
-      detail +
-      "</span>" +
-      '<textarea id="informationTextInp' +
-      type +
-      id +
-      '" rows="2" cols="20" type="text" objectId="' +
-      type +
-      id +
-      '" style="display:none" >' +
-      detail +
-      "</textarea>"
-    );
-  }
-  function detailChange() {
-    let detail = $(this).val();
-    let objectId = $(this).attr("objectId");
-    editItems[objectId].text = detail;
   }
   function imageStatus(id, type, valid, speaker) {
     return (
@@ -790,38 +698,22 @@ $(document).ready(function() {
       "</div>"
     );
   }
-  function toolbar(id, type) {
-    return (
-      '<i id="toolbarDelete' +
-      type +
-      id +
-      '" class="fas fa-user-times btn-danger label text-white" objectId="' +
-      type +
-      id +
-      '"></i>' +
-      '<i id="toolbarSave' +
-      type +
-      id +
-      '" class="fas fa-check-circle theme-bg btn- label text-white" objectId="' +
-      type +
-      id +
-      '" style="display:none"></i>' +
-      '<i id="toolbarCancel' +
-      type +
-      id +
-      '" class="fas fa-times-circle btn-danger label text-white" objectId="' +
-      type +
-      id +
-      '" style="display:none"></i>'
-    );
-  }
   $("#editTitution").click(function() {
     pageStatus["Students"] = states["Students"].EDIT;
     enableEditPerson();
   });
+  $("#deleteTitution").click(function() {
+    let valid = filterNav[modalType].people.valid;
+    let speaker = filterNav[modalType].people.speaker;
+    let id = filterNav[modalType].people.id;
+
+    if (!confirm("آیا مطمئن  هستید حذف شود؟")) return;
+    if (modalType == "Students") DeleteStudent(id, Students, "Students");
+    if (modalType == "Speakrs") DeleteStudent(id, allSpeaker, "Speakers");
+  });
   $("#closeModal").click(function() {
     pageStatus["Students"] = states["Students"].DEFUALT;
-    filterNav[type] = JSON.parse(JSON.stringify(rawStudent));
+    filterNav["Students"] = JSON.parse(JSON.stringify(rawStudent));
     disableEditPerson();
   });
   $("#saveTitution").click(function() {
@@ -834,10 +726,6 @@ $(document).ready(function() {
 
     if (recentUser.valid != valid) PutSetValid(id, valid);
     if (recentUser.speaker != speaker) PutSetSpeaker(id, speaker);
-    console.log("recent valid :", recentUser.valid);
-    console.log("valid :", valid);
-    console.log("recent speaker :", recentUser.speaker);
-    console.log("speaker :", speaker);
     data = {
       name: recentUser.editable
         ? $("#userFirstNameInp").val()
@@ -898,68 +786,12 @@ $(document).ready(function() {
     $("#userImage").attr("src", URL.createObjectURL(uploadedImage));
     addImageMode = true;
   }
-  function personDeleteClick() {
-    let objectId = $(this).attr("objectId");
-    let id = objectId.match(/\d+/)[0];
-    let type = objectId.replace(id, "");
-    if (pageStatus[type] == states[type].DEFUALT) {
-      if (!confirm("آیا مطمئن  هستید حذف شود؟")) return;
-      if (type == "Students") DeleteStudent(id, Students, "Students");
-      if (type == "Speakrs") DeleteStudent(id, allSpeaker, "Speakers");
-    }
-  }
-  function personSaveClick() {
-    let objectId = $(this).attr("objectId");
-    let id = objectId.match(/\d+/)[0];
-    let type = objectId.replace(id, "");
-
-    if (pageStatus[type] == states[type].EDIT) {
-      if (editItems[objectId].imageUrl != false) PutAvatar(id);
-      recentStudent = Students.find(x => x.id == id);
-      data = {
-        phoneNumber: $("#phoneNumberInpStudents" + id)
-          .val()
-          .substring(2)
-      };
-      PutAllStudent(data, recentStudent.id);
-    }
-    if (pageStatus[type] == states[type].ADDED) {
-      pageStatus[type] = states[type].DEFUALT;
-      student = {
-        classId: filterNav["Students"].classId,
-        phoneNumber: $("#phoneNumberInpStudents" + id)
-          .val()
-          .substring(1),
-        firstName: editItems[objectId].firstName,
-        lastName: editItems[objectId].lastName,
-        nationalId: editItems[objectId].nationalId,
-        birthday: "2019-09-18T04:31:40.375Z"
-      };
-      PostStudent(student);
-      editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
-    }
-  }
-  function personCancelClick() {
-    let objectId = $(this).attr("objectId");
-    let id = objectId.match(/\d+/)[0];
-    let type = objectId.replace(id, "");
-    if (pageStatus[type] == states[type].EDIT) {
-      pageStatus[type] = states[type].DEFUALT;
-      disableEditPerson(objectId);
-      $("#imageUrlImg" + objectId).attr("src", editItems[objectId].imageDef);
-      editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
-    }
-    if (pageStatus[type] == states[type].ADDED) {
-      pageStatus[type] = states[type].DEFUALT;
-      $("#tr" + objectId).remove();
-      editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
-    }
-  }
 
   function PutSetValid(id, valid) {
-    $.ajax(`${baseUrl}/user/${id}/valid`, {
-      data: { value: valid },
+    $.ajax(`${baseUrl}/user/${id}/valid?value=${valid}`, {
+      // data: JSON.stringify({ value: speaker }),
       type: "PUT",
+      async: false,
       processData: false,
       contentType: "application/json",
       headers: { token: token },
@@ -977,8 +809,9 @@ $(document).ready(function() {
   }
   function PutSetSpeaker(id, speaker) {
     alert("msg");
-    $.ajax(`${baseUrl}/user/${id}/speaker`, {
-      data: { value: speaker },
+    $.ajax(`${baseUrl}/user/${id}/speaker?value=${speaker}`, {
+      // data: JSON.stringify({ value: speaker }),
+      async: false,
       type: "PUT",
       processData: false,
       contentType: "application/json",
@@ -996,6 +829,8 @@ $(document).ready(function() {
     });
   }
   function PutImage(data, id) {
+    errorMessage = "تا آپلود شدن تصویر منتظر بمانید !";
+    $("#warningNotification").trigger("click");
     let fileType = uploadedImage.type;
     let suffix = fileType.substring(fileType.indexOf("/") + 1);
     const datas = new FormData();
@@ -1009,6 +844,8 @@ $(document).ready(function() {
       contentType: false,
       headers: { token: token },
       success: function(res) {
+        addImageMode = false;
+        uploadedImage = null;
         data.imageUrl = res.url;
         PutAllStudent(data, id);
       },
@@ -1105,10 +942,6 @@ $(document).ready(function() {
   }
   function addActionPersons(objectId, editable) {
     document.getElementById("show" + objectId).onclick = showSpeakerlClick;
-    if (editable)
-      document.getElementById(
-        "toolbarDelete" + objectId
-      ).onclick = personDeleteClick;
   }
   function enableEditPerson(objectId, mode) {
     if (filterNav[modalType].people.editable) {
@@ -1176,6 +1009,8 @@ $(document).ready(function() {
 
     $("#saveTitution").hide();
     $("#editTitution").show();
+
+    $("#deleteTitution").hide();
   }
   function GetIndustry() {
     $.ajax(`${baseUrl}/industry`, {
@@ -1332,7 +1167,7 @@ $(document).ready(function() {
   function GetAllStudent() {
     let classId = filterNav["Students"].industryId;
     $.ajax(`${baseUrl}/user/`, {
-      data: { industry: classId, page: recentPageStudents },
+      data: { industry: recentIndustry, page: recentPageStudents },
       type: "GET",
       processData: true,
       contentType: "application/json",
@@ -1367,6 +1202,7 @@ $(document).ready(function() {
         allSpeaker = res.values;
         checkIconVisiblility("Speakers");
         AddAllStudents(allSpeaker, "Speakers");
+        $("#closeModal").trigger("click");
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
@@ -1419,6 +1255,7 @@ $(document).ready(function() {
       success: function(res) {
         errorMessage = "با موفقیت انجام شد.";
         $("#successNotification").trigger("click");
+        $("#closeModal").trigger("click");
         type == "Students" ? GetAllStudent() : GetAllSpeaker();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
@@ -1439,6 +1276,7 @@ $(document).ready(function() {
       success: function(res) {
         errorMessage = "با موفقیت انجام شد.";
         $("#successNotification").trigger("click");
+        $("#closeModal").trigger("click");
         modalType == "Students" ? GetAllStudent() : GetAllSpeaker();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {

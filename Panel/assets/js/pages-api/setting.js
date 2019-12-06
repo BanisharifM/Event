@@ -47,7 +47,7 @@ $(document).ready(function() {
 
   let user;
   let userId = localStorage.getItem("userId");
-  Getuser(userId);
+  // Getuser(userId);
   function Getuser(userId) {
     $.ajax(`${baseUrl}/user/staff/${userId}`, {
       type: "GET",
@@ -87,7 +87,7 @@ $(document).ready(function() {
       lastName: user.lastName,
       nationalId: user.nationalId
     };
-    PutPhone(newuser);
+    // PutPhone(newuser);
   });
   function PutPhone(newuser) {
     $.ajax(`${baseUrl}/user/staff/` + user.id, {

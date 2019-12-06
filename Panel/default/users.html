@@ -395,7 +395,6 @@
                                                         <th class="border-top-0">مشخصات</th>
                                                         <th class="border-top-0">شماره تماس</th>
                                                         <th class="border-top-0">وضعیت</th>
-                                                        <th class="border-top-0">جزئیات</th>
                                                         <th class="border-top-0">
                                                             <i id="addStudents"
                                                                 class="fas fa-user-plus btn-success label text-white"></i>
@@ -456,7 +455,6 @@
                                                         <th class="border-top-0">مشخصات</th>
                                                         <th class="border-top-0">شماره تماس</th>
                                                         <th class="border-top-0">وضعیت</th>
-                                                        <th class="border-top-0">جزئیات</th>
                                                         <th class="border-top-0"><i id="addSpeaker"
                                                                 class="fas fa-user-plus btn-success label text-white"></i>
                                                         </th>
@@ -502,6 +500,13 @@
 
                                                 <div class="modal-body ">
                                                     <div class="card m-b-10">
+                                                        <button id="closeModal" type="button"
+                                                            class="btn btn-outline-danger"
+                                                            style="float: right;padding: 5px;width: 35px; margin: 10px;z-index: 20; margin-bottom: -30px; height: 30px;"
+                                                            data-dismiss="modal"><i id="addStudents"
+                                                                style="margin: 0; padding: 0;"
+                                                                class="fas fa-window-close "
+                                                                style="color: #f44236;"></i></button>
                                                         <div class="card-block">
 
                                                             <div class="text-center m-b-0"
@@ -542,12 +547,14 @@
                                                                         style="float: right;">
                                                                         &nbsp;</h6>
                                                                     <input id="userFirstNameInp" type="text"
-                                                                        onClick="this.select();" style="display:none;border: 1px solid #ced4da;">
+                                                                        onClick="this.select();"
+                                                                        style="display:none;border: 1px solid #ced4da;">
                                                                     <h6 id="userLastName" class="mb-1"
                                                                         style="float: right;">
                                                                     </h6>
                                                                     <input id="userLastNameInp" type="text" value=""
-                                                                        onClick="this.select();" style="display:none;border: 1px solid #ced4da;">
+                                                                        onClick="this.select();"
+                                                                        style="display:none;border: 1px solid #ced4da;">
 
                                                                 </div>
 
@@ -560,7 +567,8 @@
 
                                                                     </h6>
                                                                     <input id="userMobileInp" type="text"
-                                                                        onClick="this.select();" style="display:none;border: 1px solid #ced4da;">
+                                                                        onClick="this.select();"
+                                                                        style="display:none;border: 1px solid #ced4da;">
                                                                 </div>
 
                                                                 <div class="mx-auto m-b-10">
@@ -614,9 +622,9 @@
                                                     </div>
 
                                                     <div class=" mx-auto">
-                                                        <button id="closeModal" type="button"
-                                                            class="btn btn-outline-danger" style="float: left;"
-                                                            data-dismiss="modal">بستن</button>
+                                                        <button id="deleteTitution" type="button"
+                                                            style="float: left; display: none;"
+                                                            class="btn btn-outline-danger ">حذف</button>
                                                         <button id="editTitution" type="button" style="float: left;"
                                                             class="btn btn-outline-primary ">ویرایش</button>
                                                         <button id="saveTitution" type="button"
