@@ -350,7 +350,7 @@
                     <div class="main-body">
                         <div class="page-wrapper">
 
-                            <div class="col-xl-12 col-md-12 m-b-30">
+                            <div class="col-xl-12 col-md-12 m-b-20">
                                 <ul class="nav nav-tabs" id="myTab1" role="tablist">
 
                                     <li class="nav-item">
@@ -400,6 +400,8 @@
                                                             <i id="addStudents"
                                                                 class="fas fa-user-plus btn-success label text-white"></i>
                                                         </th>
+                                                        <!-- <th class="border-top-0">
+                                                        </th> -->
                                                     </tr>
                                                 </thead>
                                                 <tbody id="StudentsList">
@@ -550,6 +552,30 @@
                                             <button id="successNotification" class="btn notifications btn-success"
                                                 data-type="success" style="display: none;" data-from="top"
                                                 data-align="right">success</button>
+
+                                            <button id="warningNotification" class="btn notifications btn-warning"
+                                                data-type="warning" data-from="top" data-align="right"
+                                                style="display: none;">Warning</button>
+                                        </div>
+
+                                        <div id="StudentsPageHandelerIcon" class=" col-md-3 mx-auto"
+                                            style="display: none; margin-top: 30px;">
+                                            <i id="firstPageStudents"
+                                                class="fas fa-angle-double-right btn-war label text-white"
+                                                style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
+                                                title="صفحه اول"></i>
+                                            <i id="previosPageStudents"
+                                                class="fas fa-angle-right btn-warning label text-white"
+                                                style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
+                                                title="صفحه قبل"></i>
+                                            <i id="nextPageStudents"
+                                                class="fas fa-angle-left btn-warning label text-white"
+                                                style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
+                                                title="صفحه بعد"></i>
+                                            <i id="lastPageStudents"
+                                                class="fas fa-angle-double-left btn-war label text-white"
+                                                style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
+                                                title="صفحه آخر"></i>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade " id="toggleDarsha" role="tabpanel">
@@ -563,8 +589,7 @@
                                                         <th class="border-top-0">شماره تماس</th>
                                                         <th class="border-top-0">جزئیات</th>
                                                         <th class="border-top-0">وضعیت</th>
-                                                        <th class="border-top-0">
-                                                            <i id="addStudents"
+                                                        <th class="border-top-0"><i id="addSpeaker"
                                                                 class="fas fa-user-plus btn-success label text-white"></i>
                                                         </th>
                                                     </tr>
@@ -573,10 +598,32 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <div id="SpeakersPageHandelerIcon" class=" col-md-3 mx-auto"
+                                            style="display:none; margin-top: 30px;">
+
+                                            <i id="firstPageSpeakers"
+                                                class="fas fa-angle-double-right btn-war label text-white"
+                                                style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
+                                                title="صفحه اول"></i>
+                                            <i id="previosPageSpeakers"
+                                                class="fas fa-angle-right btn-warning label text-white"
+                                                style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
+                                                title="صفحه قبل"></i>
+                                            <i id="nextPageSpeakers"
+                                                class="fas fa-angle-left btn-warning label text-white"
+                                                style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
+                                                title="صفحه بعد"></i>
+                                            <i id="lastPageSpeakers"
+                                                class="fas fa-angle-double-left btn-war label text-white"
+                                                style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
+                                                title="صفحه آخر"></i>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                     </div>
                 </div>

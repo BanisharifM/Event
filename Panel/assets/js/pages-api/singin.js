@@ -27,7 +27,7 @@ $(document).ready(function() {
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.Message;
+        errorMessage = err.msg;
         $("#errorNotification").trigger("click");
       }
     });

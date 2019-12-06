@@ -1,7 +1,7 @@
 /**
  *
  *  Created by MBD
- *  24/7/1398
+ *  14/9/1398
  */
 
 $(document).ready(function() {
@@ -51,7 +51,13 @@ $(document).ready(function() {
     });
   }
 
-  let Students, darsha, allSpeaker;
+  let Students,
+    darsha,
+    allSpeaker,
+    recentPageStudents = 1,
+    recentPageSpeakers = 1,
+    userObj,
+    speakerObj;
 
   let uploadedFile = false;
 
@@ -490,10 +496,7 @@ $(document).ready(function() {
       "<td>" +
       imageStatus(person.id, type, person.valid, person.speaker) +
       "</td>" +
-    //   (person.editable)
-      "<td>" +
-      toolbar(person.id, type) +
-      "</td>" +
+      (!person.editable ? "" : "<td>" + toolbar(person.id, type) + "</td>") +
       "</tr>"
     );
   }
@@ -842,7 +845,50 @@ $(document).ready(function() {
       $("#toolbarEditStudents0").trigger("click");
     }
   });
+  $("#firstPageStudents").click(function() {
+    recentPageStudents = 1;
+    checkIconVisiblility("Students");
+    GetAllStudent();
+  });
+  $("#previosPageStudents").click(function() {
+    recentPageStudents--;
+    checkIconVisiblility("Students");
+    GetAllStudent();
+  });
+  $("#nextPageStudents").click(function() {
+    recentPageStudents++;
+    checkIconVisiblility("Students");
+    GetAllStudent();
+  });
+  $("#lastPageStudents").click(function() {
+    recentPageStudents = userObj.totalPage;
+    checkIconVisiblility("Students");
+    GetAllStudent();
+  });
+  function checkIconVisiblility(type) {
+    let obj;
+    if (type == "Students") obj = userObj;
+    else obj = speakerObj;
 
+    if (obj.pageNumber > 1) {
+      $("#firstPage" + type).show();
+      $("#previosPage" + type).show();
+    } else {
+      $("#firstPage" + type).hide();
+      $("#previosPage" + type).hide();
+    }
+
+    if (obj.pageNumber - 1 <= 1) $("#previosPage" + type).hide();
+
+    if (obj.pageNumber < obj.totalPage) {
+      $("#lastPage" + type).show();
+      $("#nextPage" + type).show();
+    } else {
+      $("#lastPage" + type).hide();
+      $("#nextPage" + type).hide();
+    }
+    if (obj.pageNumber + 1 >= obj.totalPage) $("#nextPage" + type).hide();
+  }
   function addActionPersons(objectId) {
     // document.getElementById('phoneNumberInp'+objectId).onkeyup = phoneNumberValidate;
 
@@ -1062,13 +1108,18 @@ $(document).ready(function() {
   function GetAllStudent() {
     let classId = filterNav["Students"].industryId;
     $.ajax(`${baseUrl}/user/`, {
-      data: { industry: classId },
+      data: { industry: classId, page: recentPageStudents },
       type: "GET",
       processData: true,
       contentType: "application/json",
       headers: { token: token },
       success: function(res) {
+        userObj = res;
         Students = res.values;
+        if (Students.length == 0) {
+          errorMessage = "درحال حاضر برنامه ای در این محدوده وجود ندارد!";
+          $("#warningNotification").trigger("click");
+        }
         AddAllStudents(Students, "Students");
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
@@ -1081,13 +1132,15 @@ $(document).ready(function() {
   }
   function GetAllSpeaker() {
     $.ajax(`${baseUrl}/user/speaker`, {
-      //   data: { industry: classId },
+      data: { page: recentPageSpeakers },
       type: "GET",
       processData: true,
       contentType: "application/json",
       headers: { token: token },
       success: function(res) {
+        speakerObj = res;
         allSpeaker = res.values;
+        checkIconVisiblility("Speakers");
         AddAllStudents(allSpeaker, "Speakers");
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
@@ -1106,6 +1159,8 @@ $(document).ready(function() {
       $("#" + type + "List").append(tr);
       //   addActionPersons(type + id);
     }
+    $("#" + type + "PageHandelerIcon").show();
+    checkIconVisiblility(type);
   }
   function DeleteStudent(userId) {
     $.ajax(`${baseUrl}/User/${userId}`, {

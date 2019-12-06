@@ -9362,6 +9362,12 @@ select {
      border-color: #17a3d1
  }
 
+ .btn-war{
+    background-color: #d5940f;
+ }
+ .btn-war:hover{
+    background-color: #b97e06;
+ }
  .btn-warning {
      color: #fff;
      background-color: #f4c22b;
