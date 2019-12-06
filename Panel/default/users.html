@@ -394,8 +394,8 @@
                                                         <th class="border-top-0">تصویر</th>
                                                         <th class="border-top-0">مشخصات</th>
                                                         <th class="border-top-0">شماره تماس</th>
-                                                        <th class="border-top-0">جزئیات</th>
                                                         <th class="border-top-0">وضعیت</th>
+                                                        <th class="border-top-0">جزئیات</th>
                                                         <th class="border-top-0">
                                                             <i id="addStudents"
                                                                 class="fas fa-user-plus btn-success label text-white"></i>
@@ -412,135 +412,131 @@
                                                 data-toggle="modal" data-target="#exampleModalLong"></button>
                                             <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-dialog " role="document">
                                                     <div class="modal-content">
 
                                                         <div class="modal-body ">
-                                                            <div class="row">
-                                                                <div class="col-xl-8 col-md-8 mx-auto">
-                                                                    <div class="card">
-                                                                        <div class="card-block">
+                                                            <div class="card m-b-10">
+                                                                <div class="card-block">
 
-                                                                            <div class="text-center m-b-30">
-                                                                                <img class="img-fluid rounded-circle"
-                                                                                    id="modalAvatar"
-                                                                                    src="../assets/images/user/avatar-2.jpg"
-                                                                                    alt="dashboard-user">
-                                                                                <h4 class="mb-2 d-block"
-                                                                                    id="modalStudentName">
+                                                                    <div class="text-center m-b-0"
+                                                                        style="display: flex;flex-direction: column;">
+                                                                        <!-- <img class="img-fluid rounded-circle"
+                                                                            id="modalAvatar"
+                                                                            src="../assets/images/user/avatar-2.jpg"
+                                                                            alt="dashboard-user"> -->
+                                                                        <div class="mx-auto m-b-20">
 
-                                                                                </h4>
-                                                                                <span class="pie_1 mt-3 mb-3 d-block"
-                                                                                    id="modalStudentNationalId"></span>
-                                                                                <h6 class="mb-3 d-block"
-                                                                                    id="modalStudentSection">
-
-                                                                                </h6>
-                                                                                <h6 class="mb-3 d-block"
-                                                                                    id="modalStudentPhoneNumber">
-
-                                                                                </h6>
+                                                                            <input id="imageUrlInp" type="file"
+                                                                                accept="image/*"
+                                                                                style="display: none" />
+                                                                            <img id="imageUrlImg" class="rounded-circle"
+                                                                                key="'+id+'"
+                                                                                style="width:90px;height: 90px;"
+                                                                                alt="تصویر"
+                                                                                src="../assets/images/user/avatar-2.jpg">
+                                                                            <div class="">
+                                                                                <img id="imageUrlImg"
+                                                                                    class="rounded-circle" key="'+id+'"
+                                                                                    style="width:20px;height: 20px;"
+                                                                                    alt="تصویر"
+                                                                                    src="../assets/images/user/notValid.png">
+                                                                                <img id="imageUrlImg"
+                                                                                    class="rounded-circle" key="'+id+'"
+                                                                                    style="width:20px;height: 20px;"
+                                                                                    alt="تصویر"
+                                                                                    src="../assets/images/user/notSpeaker.png">
                                                                             </div>
-                                                                            <div class="row">
-
-                                                                                <div class="col-sm-3">
-                                                                                    <span class="float-left"
-                                                                                        id="modalStudentTitution">
-                                                                                    </span>
-                                                                                    <input id="modalStudentTitutionInp"
-                                                                                        type="number"
-                                                                                        style="display:none">
-                                                                                </div>
-                                                                                <div class="col-sm-6 mx-auto">
-                                                                                    <div class="progress m-t-10"
-                                                                                        style="height: 7px;">
-                                                                                        <div class="progress-bar progress-c-theme"
-                                                                                            id="titutionProgress"
-                                                                                            role="progressbar"
-                                                                                            aria-valuenow="70"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-3">
-                                                                                    <span class="float-right"
-                                                                                        id="modalStudentTotalTitution">
-                                                                                    </span>
-                                                                                    <input
-                                                                                        id="modalStudentTotalTitutionInp"
-                                                                                        type="number"
-                                                                                        style="display:none">
-                                                                                </div>
-
-                                                                            </div>
-
                                                                         </div>
 
-                                                                        <button id="editTitution" type="button"
-                                                                            class="btn btn-outline-primary mx-auto m-t-30">تغییر</button>
-                                                                        <button id="saveTitution" type="button"
-                                                                            class="btn btn-outline-success mx-auto m-t-30"
-                                                                            style="display: none;">ذخیره
-                                                                            تغییرات</button>
+                                                                        <div class="mx-auto m-b-5" style="">
+                                                                            <label for="" style="float: right;">نام :
+                                                                                &nbsp;
+                                                                            </label>
+                                                                            <h6 id="informationFirstName" class="mb-1"
+                                                                                style="float: right;">
+                                                                                firstName &nbsp;</h6>
+                                                                            <input id="informationInp" type="text"
+                                                                                value="'+firstName+'"
+                                                                                style="display:none">
+                                                                            <h6 id="informationLastName" class="mb-1"
+                                                                                style="float: right;">
+                                                                                lastName</h6>
+                                                                            <input id="informationLastInp" type="text"
+                                                                                value="" style="display:none">
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-12 col-md-6">
-                                                                <h5 class="mb-3">پیام های انضباطی</h5>
-                                                                <hr>
-                                                                <div class="card">
-                                                                    <div class="card-block">
-                                                                        <nav class="navbar  border border-info">
-                                                                            <div class="col-sm-9" id="AlertSelect">
-                                                                                <!-- <input id="alertText" type="text"> -->
-                                                                                <select id="StudentAlertSelect"
-                                                                                    class="browser-default custom-select form-control "
-                                                                                    disabled>
-                                                                                    <option value="یس" disabled selected
-                                                                                        style="display:none;">
-                                                                                    </option>
-
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-sm-3">
-                                                                                <button id="addStudentAlert"
-                                                                                    type="button"
-                                                                                    style="float: left;height: calc(2.25rem);"
-                                                                                    class="btn btn-success btn-icon m-0"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="افزودن">
-                                                                                    <i class="fas fa-plus"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </nav>
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-hover">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th class="border-top-0">
-                                                                                            تاریخ</th>
-                                                                                        <th class="border-top-0">
-                                                                                            پیام انضباطی</th>
-                                                                                        <th class="border-top-0">
-                                                                                        </th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody id="StudentAlertList">
-
-                                                                                </tbody>
-                                                                            </table>
+                                                                        </div>
+                                                                        <div class="mx-auto">
+                                                                            <label for="" style="float: right;">موبایل :
+                                                                                &nbsp;
+                                                                            </label>
+                                                                            <h6 class="mb-3 d-block"
+                                                                                id="modalStudentPhoneNumber"
+                                                                                style="float: right;">
+                                                                                09140761390
+                                                                            </h6>
                                                                         </div>
 
+                                                                        <div class="mx-auto m-b-10">
+                                                                            <label for="" style="float: right;">جنسیت :
+                                                                                &nbsp;
+                                                                            </label>
+                                                                            <select id="industryStudentsList"
+                                                                                style="height: 1.5rem;width: 2.5rem;padding: 0 5px !important;"
+                                                                                class="browser-default custom-select">
+                                                                                <option value="یس" disabled selected
+                                                                                    style="display:none;">
+                                                                                </option>
+                                                                                <option value="یس">آقا</option>
+                                                                                <option value="یس">خانم</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="mx-auto m-b-10">
+                                                                            <label for="" style="float: right;">حوزه
+                                                                                فعالیت :
+                                                                                &nbsp;
+                                                                            </label>
+                                                                            <select id="industryStudentsList"
+                                                                                style="height: 1.5rem;width: 10.5rem;padding: 0 5px !important;"
+                                                                                class="browser-default custom-select">
+                                                                                <option value="یس" disabled selected
+                                                                                    style="display:none;">
+                                                                                </option>
+                                                                                <option value="یس">هوش مصنوعی</option>
+                                                                                <option value="یس">
+                                                                                    نسببیستخهخیسبتهیستبهیست</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="mx-auto">
+                                                                            <label for="" style="float: right;">توضیحات
+                                                                                :
+                                                                                &nbsp;
+                                                                            </label>
+                                                                            <textarea class="mb-3 d-block"
+                                                                                maxlength="250" rows="3" cols="35"
+                                                                                id="modalStudentPhoneNumber"
+                                                                                style="float: right;    border: 1px solid #ced4da;background: #f4f7fa; padding: 5px; color: rgb(73, 71, 71);">09140761390</textarea>
+                                                                        </div>
                                                                     </div>
+
                                                                 </div>
+
                                                             </div>
 
+                                                            <div class=" mx-auto" style="">
+                                                                <button type="button" class="btn btn-outline-danger"
+                                                                    style="float: left;"
+                                                                    data-dismiss="modal">بستن</button>
+                                                                <button id="editTitution" type="button"
+                                                                    style="float: left;"
+                                                                    class="btn btn-outline-primary ">ویرایش</button>
+                                                                <button id="saveTitution" type="button"
+                                                                    class="btn btn-outline-success "
+                                                                    style="float: left; display: none;">ذخیره
+                                                                    تغییرات</button>
+                                                            </div>
                                                         </div>
 
-                                                        <button type="button" class="btn btn-outline-danger"
-                                                            data-dismiss="modal">بستن</button>
 
                                                     </div>
                                                 </div>
@@ -558,24 +554,29 @@
                                                 style="display: none;">Warning</button>
                                         </div>
 
-                                        <div id="StudentsPageHandelerIcon" class=" col-md-3 mx-auto"
-                                            style="display: none; margin-top: 30px;">
+                                        <div id="StudentsPageHandelerIcon" class=" col-md-3 mx-auto" style="display: none; margin-top: 30px; 
+                                            align-items: center;
+                                            justify-content: center;">
                                             <i id="firstPageStudents"
-                                                class="fas fa-angle-double-right btn-war label text-white"
+                                                class="fas fa-angle-double-right btn-war2 label text-white"
                                                 style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
                                                 title="صفحه اول"></i>
                                             <i id="previosPageStudents"
-                                                class="fas fa-angle-right btn-warning label text-white"
+                                                class="fas fa-angle-right btn-war1 label text-white"
                                                 style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
                                                 title="صفحه قبل"></i>
-                                            <i id="nextPageStudents"
-                                                class="fas fa-angle-left btn-warning label text-white"
+                                            <i id="nextPageStudents" class="fas fa-angle-left btn-war1 label text-white"
                                                 style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
                                                 title="صفحه بعد"></i>
                                             <i id="lastPageStudents"
-                                                class="fas fa-angle-double-left btn-war label text-white"
+                                                class="fas fa-angle-double-left btn-war2 label text-white"
                                                 style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
                                                 title="صفحه آخر"></i>
+                                        </div>
+                                        <div class=" col-md-4 mx-auto">
+
+                                            <p style="text-align: center; "><span id="recentPageStudents"></span><span
+                                                    id="totalPageStudents"></span></p>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade " id="toggleDarsha" role="tabpanel">
@@ -587,8 +588,8 @@
                                                         <th class="border-top-0">تصویر</th>
                                                         <th class="border-top-0">مشخصات</th>
                                                         <th class="border-top-0">شماره تماس</th>
-                                                        <th class="border-top-0">جزئیات</th>
                                                         <th class="border-top-0">وضعیت</th>
+                                                        <th class="border-top-0">جزئیات</th>
                                                         <th class="border-top-0"><i id="addSpeaker"
                                                                 class="fas fa-user-plus btn-success label text-white"></i>
                                                         </th>
@@ -598,33 +599,107 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div id="SpeakersPageHandelerIcon" class=" col-md-3 mx-auto"
-                                            style="display:none; margin-top: 30px;">
+                                        <div id="SpeakersPageHandelerIcon" class=" col-md-3 mx-auto" style="display:none; margin-top: 30px;align-items: center;
+                                            justify-content: center;">
 
                                             <i id="firstPageSpeakers"
-                                                class="fas fa-angle-double-right btn-war label text-white"
+                                                class="fas fa-angle-double-right btn-war2 label text-white"
                                                 style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
                                                 title="صفحه اول"></i>
                                             <i id="previosPageSpeakers"
-                                                class="fas fa-angle-right btn-warning label text-white"
+                                                class="fas fa-angle-right btn-war1 label text-white"
                                                 style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
                                                 title="صفحه قبل"></i>
-                                            <i id="nextPageSpeakers"
-                                                class="fas fa-angle-left btn-warning label text-white"
+                                            <i id="nextPageSpeakers" class="fas fa-angle-left btn-war1 label text-white"
                                                 style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
                                                 title="صفحه بعد"></i>
                                             <i id="lastPageSpeakers"
-                                                class="fas fa-angle-double-left btn-war label text-white"
+                                                class="fas fa-angle-double-left btn-war2 label text-white"
                                                 style="border-radius: 15px;" data-toggle="tooltip" data-placement="top"
                                                 title="صفحه آخر"></i>
+                                        </div>
+                                        <div class=" col-md-4 mx-auto">
+
+                                            <p style="text-align: center; "><span id="recentPageSpeakers"></span><span
+                                                    id="totalPageSpeakers"></span></p>
                                         </div>
 
                                     </div>
                                 </div>
+                                <button id="showStudentsDetail" style="display:block" type="button" data-toggle="modal"
+                                    data-target="#exampleModalLong"></button>
+                                <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+
+                                            <div class="modal-body ">
+                                                <div class="card">
+                                                    <div class="card-block">
+
+                                                        <div class="text-center m-b-30">
+                                                            <img class="img-fluid rounded-circle" id="modalAvatar"
+                                                                src="../assets/images/user/avatar-2.jpg" alt="تصویر">
+                                                            <h4 class="mb-2 d-block" id="modalStudentName">
+
+                                                            </h4>
+                                                            <span class="pie_1 mt-3 mb-3 d-block"
+                                                                id="modalStudentNationalId"></span>
+                                                            <h6 class="mb-3 d-block" id="modalStudentSection">
+
+                                                            </h6>
+                                                            <h6 class="mb-3 d-block" id="modalStudentPhoneNumber">
+
+                                                            </h6>
+                                                        </div>
+                                                        <div class="row">
+
+                                                            <div class="col-sm-3">
+                                                                <span class="float-left" id="modalStudentTitution">
+                                                                </span>
+                                                                <input id="modalStudentTitutionInp" type="number"
+                                                                    style="display:none">
+                                                            </div>
+                                                            <div class="col-sm-6 mx-auto">
+                                                                <div class="progress m-t-10" style="height: 7px;">
+                                                                    <div class="progress-bar progress-c-theme"
+                                                                        id="titutionProgress" role="progressbar"
+                                                                        aria-valuenow="70" aria-valuemin="0"
+                                                                        aria-valuemax="100">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <span class="float-right"
+                                                                    id="modalStudentTotalTitution">
+                                                                </span>
+                                                                <input id="modalStudentTotalTitutionInp" type="number"
+                                                                    style="display:none">
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <button id="editTitution" type="button"
+                                                        class="btn btn-outline-primary mx-auto m-t-30">تغییر</button>
+                                                    <button id="saveTitution" type="button"
+                                                        class="btn btn-outline-success mx-auto m-t-30"
+                                                        style="display: none;">ذخیره
+                                                        تغییرات</button>
+                                                </div>
+
+                                            </div>
+
+                                            <!--FIXME:-->
+                                            <button type="button" class="btn btn-outline-danger"
+                                                data-dismiss="modal">بستن</button>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>

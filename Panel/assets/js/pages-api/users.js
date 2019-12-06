@@ -491,10 +491,10 @@ $(document).ready(function() {
       //   detail(person.id, type, person.valid, person.speaker) +
       //   "</td>" +
       "<td>" +
-      showSpeaker(person.id, type) +
+      imageStatus(person.id, type, person.valid, person.speaker) +
       "</td>" +
       "<td>" +
-      imageStatus(person.id, type, person.valid, person.speaker) +
+      showSpeaker(person.id, type) +
       "</td>" +
       (!person.editable ? "" : "<td>" + toolbar(person.id, type) + "</td>") +
       "</tr>"
@@ -865,29 +865,54 @@ $(document).ready(function() {
     checkIconVisiblility("Students");
     GetAllStudent();
   });
+  $("#firstPageSpeakers").click(function() {
+    recentPageSpeakers = 1;
+    checkIconVisiblility("Speakers");
+    GetAllSpeaker();
+  });
+  $("#previosPageSpeakers").click(function() {
+    recentPageSpeakers--;
+    checkIconVisiblility("Speakers");
+    GetAllSpeaker();
+  });
+  $("#nextPageSpeakers").click(function() {
+    recentPageSpeakers++;
+    checkIconVisiblility("Speakers");
+    GetAllSpeaker();
+  });
+  $("#lastPageSpeakers").click(function() {
+    recentPageSpeakers = speakerObj.totalPage;
+    checkIconVisiblility("Speakers");
+    GetAllSpeaker();
+  });
   function checkIconVisiblility(type) {
     let obj;
     if (type == "Students") obj = userObj;
     else obj = speakerObj;
 
+    $("#recentPage" + type).text(obj.pageNumber + " / ");
+    $("#totalPage" + type).text(obj.totalPage);
+
     if (obj.pageNumber > 1) {
-      $("#firstPage" + type).show();
-      $("#previosPage" + type).show();
+      $("#firstPage" + type).css("visibility", "visible");
+      $("#previosPage" + type).css("visibility", "visible");
     } else {
-      $("#firstPage" + type).hide();
-      $("#previosPage" + type).hide();
+      $("#firstPage" + type).css("visibility", "hidden");
+      $("#previosPage" + type).css("visibility", "hidden");
     }
 
-    if (obj.pageNumber - 1 <= 1) $("#previosPage" + type).hide();
+    if (obj.pageNumber - 1 <= 1)
+      $("#firstPage" + type).css("visibility", "hidden");
 
     if (obj.pageNumber < obj.totalPage) {
-      $("#lastPage" + type).show();
-      $("#nextPage" + type).show();
+      $("#lastPage" + type).css("visibility", "visible");
+      $("#nextPage" + type).css("visibility", "visible");
     } else {
-      $("#lastPage" + type).hide();
-      $("#nextPage" + type).hide();
+      $("#lastPage" + type).css("visibility", "hidden");
+      $("#nextPage" + type).css("visibility", "hidden");
     }
-    if (obj.pageNumber + 1 >= obj.totalPage) $("#nextPage" + type).hide();
+    if (obj.pageNumber + 1 >= obj.totalPage)
+      $("#lastPage" + type).css("visibility", "hidden");
   }
   function addActionPersons(objectId) {
     // document.getElementById('phoneNumberInp'+objectId).onkeyup = phoneNumberValidate;
@@ -1117,8 +1142,9 @@ $(document).ready(function() {
         userObj = res;
         Students = res.values;
         if (Students.length == 0) {
-          errorMessage = "درحال حاضر برنامه ای در این محدوده وجود ندارد!";
+          errorMessage = "درحال حاضر شرکت کننده ای در این حوزه وجود ندارد!";
           $("#warningNotification").trigger("click");
+          return;
         }
         AddAllStudents(Students, "Students");
       },
@@ -1152,14 +1178,14 @@ $(document).ready(function() {
     });
   }
   function AddAllStudents(people, type) {
-    $("#StudentsList").empty();
+    $("#" + type + "List").empty();
     for (i in people) {
       let tr = createStaffTr(people[i], type);
       let id = people[i].id;
       $("#" + type + "List").append(tr);
       //   addActionPersons(type + id);
     }
-    $("#" + type + "PageHandelerIcon").show();
+    $("#" + type + "PageHandelerIcon").css("display", "flex");
     checkIconVisiblility(type);
   }
   function DeleteStudent(userId) {
