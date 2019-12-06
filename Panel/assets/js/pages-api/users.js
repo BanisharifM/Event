@@ -57,7 +57,9 @@ $(document).ready(function() {
     recentPageStudents = 1,
     recentPageSpeakers = 1,
     userObj,
-    speakerObj;
+    speakerObj,
+    modalType,
+    recentUser;
 
   let uploadedFile = false;
 
@@ -123,21 +125,39 @@ $(document).ready(function() {
       status: false,
       industryName: false,
       industryId: 0,
-      isFilter: false
+      isModal: false,
+      isFilter: false,
+      people: {}
+    },
+    Speakers: {
+      status: false,
+      industryName: false,
+      industryId: 0,
+      isModal: false,
+      isFilter: false,
+      people: {}
     }
   };
   const rawStudent = {
-    id: 0,
-    imageUrl: "../assets/images/user/avatar-2.jpg",
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    detail: "",
-    industryName: "",
-    industryId: "",
-    isActive: true
+    status: false,
+    industryName: false,
+    industryId: 0,
+    isModal: false,
+    isFilter: false,
+    people: {}
   };
-
+  const rawUser = {
+    name: "",
+    lastname: "",
+    imageUrl: "http://pghavin-s1.ir/events/files/da1.jpg",
+    industryId: "",
+    valid: false,
+    speaker: false,
+    editable: true,
+    mobile: "",
+    bio: "",
+    gender: male
+  };
   GetAllSpeaker();
   let industry;
   GetIndustry();
@@ -496,7 +516,9 @@ $(document).ready(function() {
       "<td>" +
       showSpeaker(person.id, type) +
       "</td>" +
-      (!person.editable ? "" : "<td>" + toolbar(person.id, type) + "</td>") +
+      "<td>" +
+      (!person.editable ? "" : toolbar(person.id, type)) +
+      "</td>" +
       "</tr>"
     );
   }
@@ -650,7 +672,7 @@ $(document).ready(function() {
   }
   function showSpeaker(id, type) {
     return (
-      '<p id="showSpeaker' +
+      '<p id="show' +
       type +
       id +
       '" objectId="' +
@@ -664,13 +686,50 @@ $(document).ready(function() {
   function showSpeakerlClick() {
     let objectId = $(this).attr("objectId");
     let id = objectId.match(/\d+/)[0];
-    programSpeaker = JSON.parse(
-      JSON.stringify(barname.find(x => x.id == id).speakers)
-    );
-    filterNav["Speakers"].programId = id;
-    addSpeakerModal(programSpeaker, true);
+    let type = objectId.replace(id, "");
+    getUser(id, type);
   }
+  function prepareModal(people, type) {
+    pageStatus["Students"] = states["Students"].DEFUALT;
+    disableEditPerson();
+    $("#userImage").attr("src", people.imageUrl);
+    !people.valid
+      ? $("#validImage")
+          .hide()
+          .attr("src", "../assets/images/user/notValid.png")
+      : $("#validImage")
+          .show()
+          .attr("src", "../assets/images/user/valid.png");
 
+    !people.speaker
+      ? $("#speakerImage")
+          .hide()
+          .attr("src", "../assets/images/user/notSpeaker.png")
+      : $("#speakerImage")
+          .show()
+          .attr("src", "../assets/images/user/speaker.png");
+    $("#userImage").attr("src", people.imageUrl);
+    $("#userFirstName").text(people.name);
+    $("#userLastName").text(people.lastname);
+    $("#userMobile").text(people.mobile);
+    $("#userBio")
+      .val(people.bio)
+      .prop("disabled", true);
+    people.gender
+      ? $("#genderList")
+          .val("male")
+          .prop("disabled", true)
+      : $("#genderList")
+          .val("female")
+          .prop("disabled", true);
+
+    let indust = industry.find(x => x.id == people.industryId).id;
+    $("#industryList")
+      .val("Modal" + indust)
+      .prop("disabled", true);
+
+    $("#showStudentsDetail").trigger("click");
+  }
   function detail(id, type, detail) {
     return (
       '<span id="informationText' +
@@ -756,24 +815,88 @@ $(document).ready(function() {
       '" style="display:none"></i>'
     );
   }
-  function personEditClick() {
-    let objectId = $(this).attr("objectId");
-    let id = objectId.match(/\d+/)[0];
-    let type = objectId.replace(id, "");
-    if (pageStatus[type] == states[type].DEFUALT) {
-      pageStatus[type] = states[type].EDIT;
-      editItems[objectId].status = true;
-      let recetnPhoneNumber = $("#phoneNumberStudents" + id).text();
-      console.log(recetnPhoneNumber);
-      $("#phoneNumberInpStudents" + id).val(recetnPhoneNumber);
-      enableEditPerson(objectId, "edit");
-      editItems[objectId].imageDef = $("#imageUrlImg" + objectId).attr("src");
+  $("#editTitution").click(function() {
+    pageStatus["Students"] = states["Students"].EDIT;
+    enableEditPerson();
+  });
+  $("#closeModal").click(function() {
+    pageStatus["Students"] = states["Students"].DEFUALT;
+    filterNav[type] = JSON.parse(JSON.stringify(rawStudent));
+    disableEditPerson();
+  });
+  $("#saveTitution").click(function() {
+    let valid = filterNav[modalType].people.valid;
+    let speaker = filterNav[modalType].people.speaker;
+    let id = filterNav[modalType].people.id;
+
+    let industryObject = $("#industryList").val();
+    let industryId = industryObject.match(/\d+/)[0];
+
+    if (recentUser.valid != valid) PutSetValid(id, valid);
+    if (recentUser.speaker != speaker) PutSetSpeaker(id, speaker);
+    console.log("recent valid :", recentUser.valid);
+    console.log("valid :", valid);
+    console.log("recent speaker :", recentUser.speaker);
+    console.log("speaker :", speaker);
+    data = {
+      name: recentUser.editable
+        ? $("#userFirstNameInp").val()
+        : recentUser.name,
+      lastname: recentUser.editable
+        ? $("#userLastNameInp").val()
+        : recentUser.lastname,
+      imageUrl: recentUser.imageUrl,
+      industryId: industryId,
+      mobile: recentUser.editable
+        ? $("#userMobileInp").val()
+        : recentUser.mobile,
+      bio: $("#userBio").val(),
+      gender: $("#genderList").val() == "male" ? true : false
+    };
+    if (!recentUser.editable) {
     }
-    if (pageStatus[type] == states[type].ADD) {
-      pageStatus[type] = states[type].ADDED;
-      editItems[objectId].status = true;
-      enableEditPerson(objectId, "add");
+    addImageMode ? PutImage(data, id) : PutAllStudent(data, id);
+  });
+  $("#validImage").click(function() {
+    if (pageStatus["Students"] == states["Students"].DEFUALT) return;
+    let userValid = filterNav[modalType].people.valid;
+    let userSpeaker = filterNav[modalType].people.speaker;
+    if (userValid) {
+      if (!userSpeaker) {
+        filterNav[modalType].people.valid = false;
+        $("#validImage").attr("src", "../assets/images/user/notValid.png");
+      }
+    } else {
+      filterNav[modalType].people.valid = true;
+      $("#validImage").attr("src", "../assets/images/user/valid.png");
     }
+  });
+  $("#speakerImage").click(function() {
+    if (pageStatus["Students"] == states["Students"].DEFUALT) return;
+    let userValid = filterNav[modalType].people.valid;
+    let userSpeaker = filterNav[modalType].people.speaker;
+    if (!userSpeaker) {
+      if (userValid) {
+        filterNav[modalType].people.speaker = true;
+        $("#speakerImage").attr("src", "../assets/images/user/speaker.png");
+      }
+    } else {
+      filterNav[modalType].people.speaker = false;
+      $("#speakerImage").attr("src", "../assets/images/user/notSpeaker.png");
+    }
+  });
+
+  let uploadedImage;
+  let addImageMode = false;
+  document.getElementById("userImage").addEventListener("click", () => {
+    if (pageStatus["Students"] == states["Students"].EDIT)
+      document.getElementById("userImageInp").click();
+  });
+  document.getElementById("userImageInp").onchange = ImageChange;
+  function ImageChange() {
+    uploadedImage = event.target.files[0];
+    $("#userImage").attr("src", URL.createObjectURL(uploadedImage));
+    addImageMode = true;
   }
   function personDeleteClick() {
     let objectId = $(this).attr("objectId");
@@ -781,7 +904,8 @@ $(document).ready(function() {
     let type = objectId.replace(id, "");
     if (pageStatus[type] == states[type].DEFUALT) {
       if (!confirm("آیا مطمئن  هستید حذف شود؟")) return;
-      DeleteStudent(id);
+      if (type == "Students") DeleteStudent(id, Students, "Students");
+      if (type == "Speakrs") DeleteStudent(id, allSpeaker, "Speakers");
     }
   }
   function personSaveClick() {
@@ -830,6 +954,71 @@ $(document).ready(function() {
       $("#tr" + objectId).remove();
       editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
     }
+  }
+
+  function PutSetValid(id, valid) {
+    $.ajax(`${baseUrl}/user/${id}/valid`, {
+      data: { value: valid },
+      type: "PUT",
+      processData: false,
+      contentType: "application/json",
+      headers: { token: token },
+      success: function(res) {
+        errorMessage = "وضعیت عضو تایید شده کاربر تغییر یافت .";
+        $("#successNotification").trigger("click");
+      },
+      error: function(jqXHR, textStatus, errorThrown, error) {
+        // set errorMessage
+        var err = eval("(" + jqXHR.responseText + ")");
+        errorMessage = err.msg;
+        $("#errorNotification").trigger("click");
+      }
+    });
+  }
+  function PutSetSpeaker(id, speaker) {
+    alert("msg");
+    $.ajax(`${baseUrl}/user/${id}/speaker`, {
+      data: { value: speaker },
+      type: "PUT",
+      processData: false,
+      contentType: "application/json",
+      headers: { token: token },
+      success: function(res) {
+        errorMessage = "وضعیت سخنران کاربر تغییر یافت .";
+        $("#successNotification").trigger("click");
+      },
+      error: function(jqXHR, textStatus, errorThrown, error) {
+        // set errorMessage
+        var err = eval("(" + jqXHR.responseText + ")");
+        errorMessage = err.msg;
+        $("#errorNotification").trigger("click");
+      }
+    });
+  }
+  function PutImage(data, id) {
+    let fileType = uploadedImage.type;
+    let suffix = fileType.substring(fileType.indexOf("/") + 1);
+    const datas = new FormData();
+    datas.append("file", uploadedImage);
+    $.ajax({
+      type: "POST",
+      url: `${baseUrl}/file/${suffix}`,
+      data: datas,
+      enctype: "multipart/form-data",
+      processData: false,
+      contentType: false,
+      headers: { token: token },
+      success: function(res) {
+        data.imageUrl = res.url;
+        PutAllStudent(data, id);
+      },
+      error: function(jqXHR, textStatus, errorThrown, error) {
+        var err = eval("(" + jqXHR.responseText + ")");
+        errorMessage = "عکس آپلود نشد!";
+        $("#errorNotification").trigger("click");
+        return false;
+      }
+    });
   }
 
   $("#addStudents").click(function() {
@@ -914,73 +1103,80 @@ $(document).ready(function() {
     if (obj.pageNumber + 1 >= obj.totalPage)
       $("#lastPage" + type).css("visibility", "hidden");
   }
-  function addActionPersons(objectId) {
-    // document.getElementById('phoneNumberInp'+objectId).onkeyup = phoneNumberValidate;
-
-    document
-      .getElementById("imageUrl" + objectId)
-      .addEventListener("click", () => {
-        if (editItems[objectId].status === true) {
-          document.getElementById("imageUrlInp" + objectId).click();
-        }
-      });
-    document.getElementById(
-      "checkbox-fill-" + objectId
-    ).onchange = testNomreCheckChange;
-    document.getElementById("imageUrlInp" + objectId).onchange = imageUrlChange;
-    document.getElementById("FirstInp" + objectId).onchange = firstNameChange;
-    document.getElementById(
-      "informationLastInp" + objectId
-    ).onchange = LastNameChange;
-    document.getElementById(
-      "phoneNumberInp" + objectId
-    ).onchange = phoneNumberChange;
-    document.getElementById(
-      "informationTextInp" + objectId
-    ).onchange = detailChange;
-    document.getElementById("toolbarEdit" + objectId).onclick = personEditClick;
-    document.getElementById(
-      "toolbarDelete" + objectId
-    ).onclick = personDeleteClick;
-    document.getElementById("toolbarSave" + objectId).onclick = personSaveClick;
-    document.getElementById(
-      "toolbarCancel" + objectId
-    ).onclick = personCancelClick;
+  function addActionPersons(objectId, editable) {
+    document.getElementById("show" + objectId).onclick = showSpeakerlClick;
+    if (editable)
+      document.getElementById(
+        "toolbarDelete" + objectId
+      ).onclick = personDeleteClick;
   }
   function enableEditPerson(objectId, mode) {
-    $("#toolbarEdit" + objectId).hide();
-    $("#toolbarSave" + objectId).show();
+    if (filterNav[modalType].people.editable) {
+      $("#userFirstName").hide();
+      $("#userFirstNameInp")
+        .show()
+        .val($("#userFirstName").text());
 
-    $("#toolbarDelete" + objectId).hide();
-    $("#toolbarCancel" + objectId).show();
+      $("#userLastName").hide();
+      $("#userLastNameInp")
+        .show()
+        .val($("#userLastName").text());
 
-    $("#phoneNumber" + objectId).hide();
-    $("#phoneNumberInp" + objectId).show();
-
-    $("#showClass" + objectId).hide();
-
-    if (mode == "add") {
-      $("#FirstName" + objectId).hide();
-      $("#FirstInp" + objectId).show();
-
-      $("#informationLastName" + objectId).hide();
-      $("#informationLastInp" + objectId).show();
-
-      $("#nationalId" + objectId).hide();
-      $("#nationalIdInp" + objectId).show();
+      $("#userMobile").hide();
+      $("#userMobileInp")
+        .show()
+        .val(
+          $("#userMobile")
+            .hide()
+            .text()
+        );
     }
+
+    $("#userBio")
+      .prop("disabled", false)
+      .css("background", "#f4f7fa");
+    $("#genderList").prop("disabled", false);
+    $("#industryList").prop("disabled", false);
+    $("#validImage").show();
+    $("#speakerImage").show();
+
+    $("#saveTitution").show();
+    $("#editTitution").hide();
+
+    // $("#showClass" + objectId).hide();
+
+    // if (mode == "add") {
+    //   $("#FirstName" + objectId).hide();
+    //   $("#FirstInp" + objectId).show();
+
+    //   $("#informationLastName" + objectId).hide();
+    //   $("#informationLastInp" + objectId).show();
+
+    //   $("#nationalId" + objectId).hide();
+    //   $("#nationalIdInp" + objectId).show();
+    // }
   }
   function disableEditPerson(objectId) {
-    $("#toolbarEdit" + objectId).show();
-    $("#toolbarSave" + objectId).hide();
+    $("#userFirstName").show();
+    $("#userFirstNameInp").hide();
 
-    $("#toolbarDelete" + objectId).show();
-    $("#toolbarCancel" + objectId).hide();
+    $("#userLastName").show();
+    $("#userLastNameInp").hide();
 
-    $("#phoneNumber" + objectId).show();
-    $("#phoneNumberInp" + objectId).hide();
+    $("#userMobile").show();
+    $("#userMobileInp").hide();
+
+    $("#userBio")
+      .prop("disabled", true)
+      .css("background", "#e9ecef");
+    $("#genderList").prop("disabled", true);
+    $("#industryList").prop("disabled", true);
+    $("#validImage").show();
+    $("#speakerImage").show();
+
+    $("#saveTitution").hide();
+    $("#editTitution").show();
   }
-
   function GetIndustry() {
     $.ajax(`${baseUrl}/industry`, {
       type: "GET",
@@ -1008,6 +1204,9 @@ $(document).ready(function() {
       document.getElementById(
         "industryStudentsList"
       ).onchange = industryOptClick;
+
+      let modalIndustryOpt = createIndustryOpt(id, industry[i].name, "Modal");
+      $("#industryList").append(modalIndustryOpt);
     }
   }
   function GetCourse(gradeId) {
@@ -1177,20 +1376,42 @@ $(document).ready(function() {
       }
     });
   }
+  function getUser(id, type) {
+    $.ajax(`${baseUrl}/user/${id}`, {
+      type: "GET",
+      processData: true,
+      contentType: "application/json",
+      headers: { token: token },
+      success: function(res) {
+        let people = res;
+        recentUser = JSON.parse(JSON.stringify(res));
+        filterNav[type] = JSON.parse(JSON.stringify(rawStudent));
+        filterNav[type].isModal = true;
+        filterNav[type].people = people;
+        modalType = type;
+        prepareModal(people, type);
+      },
+      error: function(jqXHR, textStatus, errorThrown, error) {
+        // set errorMessage
+        var err = eval("(" + jqXHR.responseText + ")");
+        errorMessage = err.msg;
+        $("#errorNotification").trigger("click");
+      }
+    });
+  }
   function AddAllStudents(people, type) {
     $("#" + type + "List").empty();
     for (i in people) {
       let tr = createStaffTr(people[i], type);
       let id = people[i].id;
       $("#" + type + "List").append(tr);
-      //   addActionPersons(type + id);
+      addActionPersons(type + id, people[i].editable);
     }
     $("#" + type + "PageHandelerIcon").css("display", "flex");
     checkIconVisiblility(type);
   }
-  function DeleteStudent(userId) {
-    $.ajax(`${baseUrl}/User/${userId}`, {
-      data: JSON.stringify({ enable: true }),
+  function DeleteStudent(userId, people, type) {
+    $.ajax(`${baseUrl}/user/${userId}`, {
       type: "DELETE",
       processData: true,
       contentType: "application/json",
@@ -1198,7 +1419,7 @@ $(document).ready(function() {
       success: function(res) {
         errorMessage = "با موفقیت انجام شد.";
         $("#successNotification").trigger("click");
-        AddAllStudents(Students, "Students");
+        type == "Students" ? GetAllStudent() : GetAllSpeaker();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
@@ -1209,8 +1430,7 @@ $(document).ready(function() {
     });
   }
   function PutAllStudent(data, id) {
-    console.log(data);
-    $.ajax(`${baseUrl}/user/Student/` + id, {
+    $.ajax(`${baseUrl}/user/` + id, {
       data: JSON.stringify(data),
       type: "PUT",
       processData: false,
@@ -1219,9 +1439,7 @@ $(document).ready(function() {
       success: function(res) {
         errorMessage = "با موفقیت انجام شد.";
         $("#successNotification").trigger("click");
-        pageStatus[type] = states[type].DEFUALT;
-        editItems[objectId] = JSON.parse(JSON.stringify(rawEditItem));
-        GetAllStudent();
+        modalType == "Students" ? GetAllStudent() : GetAllSpeaker();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
