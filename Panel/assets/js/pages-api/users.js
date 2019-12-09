@@ -1178,7 +1178,6 @@ $(document).ready(function() {
         if (Students.length == 0) {
           errorMessage = "درحال حاضر شرکت کننده ای در این حوزه وجود ندارد!";
           $("#warningNotification").trigger("click");
-          return;
         }
         AddAllStudents(Students, "Students");
       },
