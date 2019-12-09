@@ -12354,7 +12354,9 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px #21272d inset !important;
+    -webkit-background-color: red !important;
     color: white!important;
+    background-color: red !important;
 }
 input::-ms-clear {
     display: none;

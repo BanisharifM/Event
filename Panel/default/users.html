@@ -503,8 +503,7 @@
                                                         <button id="closeModal" type="button"
                                                             class="btn btn-outline-danger"
                                                             style="float: right;padding: 5px;width: 35px; margin: 10px;z-index: 20; margin-bottom: -30px; height: 30px;"
-                                                            data-dismiss="modal"><i id="addStudents"
-                                                                style="margin: 0; padding: 0;"
+                                                            data-dismiss="modal"><i style="margin: 0; padding: 0;"
                                                                 class="fas fa-window-close "
                                                                 style="color: #f44236;"></i></button>
                                                         <div class="card-block">
@@ -547,14 +546,14 @@
                                                                         style="float: right;">
                                                                         &nbsp;</h6>
                                                                     <input id="userFirstNameInp" type="text"
-                                                                        onClick="this.select();"
-                                                                        style="display:none;border: 1px solid #ced4da;">
+                                                                        onClick="this.select();" autocomplete="off"
+                                                                        style="display:none;border: 1px solid #ced4da !important;background: #f4f7fa !important;border-radius: .25rem;">
                                                                     <h6 id="userLastName" class="mb-1"
                                                                         style="float: right;">
                                                                     </h6>
                                                                     <input id="userLastNameInp" type="text" value=""
-                                                                        onClick="this.select();"
-                                                                        style="display:none;border: 1px solid #ced4da;">
+                                                                        autocomplete="off" onClick="this.select();"
+                                                                        style="display:none;border: 1px solid #ced4da !important;background: #f4f7fa !important;border-radius: .25rem;">
 
                                                                 </div>
 
@@ -567,8 +566,8 @@
 
                                                                     </h6>
                                                                     <input id="userMobileInp" type="text"
-                                                                        onClick="this.select();"
-                                                                        style="display:none;border: 1px solid #ced4da;">
+                                                                        autocomplete="off" onClick="this.select();"
+                                                                        style="display:none;border: 1px solid #ced4da !important;background: #f4f7fa !important;border-radius: .25rem;">
                                                                 </div>
 
                                                                 <div class="mx-auto m-b-10">
@@ -611,8 +610,8 @@
                                                                         &nbsp;
                                                                     </label>
                                                                     <textarea class="mb-3 d-block" maxlength="250"
-                                                                        onClick="this.select();" rows="3" cols="35"
-                                                                        id="userBio"
+                                                                        autocomplete="off" onClick="this.select();"
+                                                                        rows="3" cols="35" id="userBio"
                                                                         style="float: right;    border: 1px solid #ced4da;background: #e9ecef; padding: 5px; color: rgb(73, 71, 71);">09140761390</textarea>
                                                                 </div>
                                                             </div>

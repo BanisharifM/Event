@@ -60,7 +60,7 @@ $(document).ready(function() {
     speakerObj,
     modalType,
     recentUser,
-    recentIndustry;
+    recentIndustry = 0;
 
   let uploadedFile = false;
 
@@ -76,12 +76,21 @@ $(document).ready(function() {
       EDIT: "edit",
       ADD: "add",
       ADDED: "added"
+    },
+    Modal: {
+      DEFUALT: "defualt",
+      EDIT: "edit",
+      ADD: "add"
     }
   };
   let pageStatus = {
     Classes: states["Classes"].DEFUALT,
     Students: states["Students"].DEFUALT
   };
+  // let modalStatus = {
+  //   type: false,
+  //   state: state["Modal"].DEFUALT
+  // };
   const editCalcoItems = {
     raw: {
       status: false,
@@ -590,7 +599,7 @@ $(document).ready(function() {
       '" class="m-0" dir="ltr" objectId="' +
       type +
       id +
-      '" > 0' +
+      '" >' +
       phoneNumber +
       "</h6>" +
       '<input id="phoneNumberInp' +
@@ -624,7 +633,6 @@ $(document).ready(function() {
     getUser(id, type);
   }
   function prepareModal(people, type) {
-    pageStatus["Students"] = states["Students"].DEFUALT;
     disableEditPerson();
     $("#userImage").attr("src", people.imageUrl);
     !people.valid
@@ -657,12 +665,22 @@ $(document).ready(function() {
           .val("female")
           .prop("disabled", true);
 
-    let indust = industry.find(x => x.id == people.industryId).id;
-    $("#industryList")
-      .val("Modal" + indust)
-      .prop("disabled", true);
+    let indust;
+    if (pageStatus["Students"] == states["Students"].ADD) {
+      if (modalType == "Students") indust = recentIndustry;
+      else indust = industry[0].id;
+      $("#industryList")
+        .val("Modal" + indust)
+        .prop("disabled", true);
+      enableEditPerson();
+    } else {
+      indust = industry.find(x => x.id == people.industryId).id;
+      $("#industryList")
+        .val("Modal" + indust)
+        .prop("disabled", true);
 
-    people.editable ? $("#deleteTitution").show() : null;
+      people.editable ? $("#deleteTitution").show() : null;
+    }
     $("#showStudentsDetail").trigger("click");
   }
   function imageStatus(id, type, valid, speaker) {
@@ -709,7 +727,7 @@ $(document).ready(function() {
 
     if (!confirm("آیا مطمئن  هستید حذف شود؟")) return;
     if (modalType == "Students") DeleteStudent(id, Students, "Students");
-    if (modalType == "Speakrs") DeleteStudent(id, allSpeaker, "Speakers");
+    if (modalType == "Speakers") DeleteStudent(id, allSpeaker, "Speakers");
   });
   $("#closeModal").click(function() {
     pageStatus["Students"] = states["Students"].DEFUALT;
@@ -719,13 +737,11 @@ $(document).ready(function() {
   $("#saveTitution").click(function() {
     let valid = filterNav[modalType].people.valid;
     let speaker = filterNav[modalType].people.speaker;
+    let gender = $("#genderList").val() == "male" ? true : false;
     let id = filterNav[modalType].people.id;
 
     let industryObject = $("#industryList").val();
     let industryId = industryObject.match(/\d+/)[0];
-
-    if (recentUser.valid != valid) PutSetValid(id, valid);
-    if (recentUser.speaker != speaker) PutSetSpeaker(id, speaker);
     data = {
       name: recentUser.editable
         ? $("#userFirstNameInp").val()
@@ -733,20 +749,31 @@ $(document).ready(function() {
       lastname: recentUser.editable
         ? $("#userLastNameInp").val()
         : recentUser.lastname,
-      imageUrl: recentUser.imageUrl,
+      imageUrl: gender
+        ? "http://pghavin-s1.ir/events/files/da1.jpg"
+        : "http://pghavin-s1.ir/events/files/da2.jpg",
       industryId: industryId,
       mobile: recentUser.editable
         ? $("#userMobileInp").val()
         : recentUser.mobile,
       bio: $("#userBio").val(),
-      gender: $("#genderList").val() == "male" ? true : false
+      gender: gender,
+      valid: valid,
+      speaker: speaker
     };
-    if (!recentUser.editable) {
-    }
-    addImageMode ? PutImage(data, id) : PutAllStudent(data, id);
+    let isPost =
+      pageStatus["Students"] == states["Students"].ADD ? true : false;
+    // console.log(data);
+    if (addImageMode) PutImage(data, id, isPost);
+    else isPost ? PostStudent(data) : PutAllStudent(data, id);
   });
   $("#validImage").click(function() {
-    if (pageStatus["Students"] == states["Students"].DEFUALT) return;
+    if (
+      pageStatus["Students"] == states["Students"].DEFUALT ||
+      (pageStatus["Students"] == states["Students"].ADD &&
+        modalType == "Speaker")
+    )
+      return;
     let userValid = filterNav[modalType].people.valid;
     let userSpeaker = filterNav[modalType].people.speaker;
     if (userValid) {
@@ -760,7 +787,12 @@ $(document).ready(function() {
     }
   });
   $("#speakerImage").click(function() {
-    if (pageStatus["Students"] == states["Students"].DEFUALT) return;
+    if (
+      pageStatus["Students"] == states["Students"].DEFUALT ||
+      (pageStatus["Students"] == states["Students"].ADD &&
+        modalType == "Speaker")
+    )
+      return;
     let userValid = filterNav[modalType].people.valid;
     let userSpeaker = filterNav[modalType].people.speaker;
     if (!userSpeaker) {
@@ -777,7 +809,7 @@ $(document).ready(function() {
   let uploadedImage;
   let addImageMode = false;
   document.getElementById("userImage").addEventListener("click", () => {
-    if (pageStatus["Students"] == states["Students"].EDIT)
+    if (pageStatus["Students"] != states["Students"].DEFUALT)
       document.getElementById("userImageInp").click();
   });
   document.getElementById("userImageInp").onchange = ImageChange;
@@ -808,7 +840,6 @@ $(document).ready(function() {
     });
   }
   function PutSetSpeaker(id, speaker) {
-    alert("msg");
     $.ajax(`${baseUrl}/user/${id}/speaker?value=${speaker}`, {
       // data: JSON.stringify({ value: speaker }),
       async: false,
@@ -828,7 +859,7 @@ $(document).ready(function() {
       }
     });
   }
-  function PutImage(data, id) {
+  function PutImage(data, id, isPost) {
     errorMessage = "تا آپلود شدن تصویر منتظر بمانید !";
     $("#warningNotification").trigger("click");
     let fileType = uploadedImage.type;
@@ -847,7 +878,7 @@ $(document).ready(function() {
         addImageMode = false;
         uploadedImage = null;
         data.imageUrl = res.url;
-        PutAllStudent(data, id);
+        isPost ? PostStudent(data) : PutAllStudent(data, id);
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         var err = eval("(" + jqXHR.responseText + ")");
@@ -859,17 +890,37 @@ $(document).ready(function() {
   }
 
   $("#addStudents").click(function() {
-    if (
-      pageStatus["Students"] == states["Students"].DEFUALT &&
-      filterNav["Students"].isFilter
-    ) {
-      pageStatus["Students"] = states["Students"].ADD;
-      let tr = createStaffTr(rawStudent, "Students");
-      editItems["Students0"] = JSON.parse(JSON.stringify(rawEditItem));
-      $("#StudentsList").append(tr);
-      //   addActionPersons("Students0");
-      $("#toolbarEditStudents0").trigger("click");
+    if (recentIndustry == 0) {
+      errorMessage = "ابتدا حوزه فعالیت مورد نظر را انتخاب کنید !";
+      $("#warningNotification").trigger("click");
+      return;
     }
+    let type = "Students";
+    pageStatus[type] = states[type].ADD;
+    modalType = type;
+
+    let people = JSON.parse(JSON.stringify(rawUser));
+    recentUser = JSON.parse(JSON.stringify(rawUser));
+    filterNav[type] = JSON.parse(JSON.stringify(rawStudent));
+    filterNav[type].isModal = true;
+    filterNav[type].people = people;
+    modalType = type;
+    prepareModal(people, type);
+  });
+  $("#addSpeaker").click(function() {
+    let type = "Speaker";
+    pageStatus["Students"] = states["Students"].ADD;
+    modalType = type;
+
+    let people = JSON.parse(JSON.stringify(rawUser));
+    people.valid = true;
+    people.speaker = true;
+    recentUser = JSON.parse(JSON.stringify(people));
+    filterNav[type] = JSON.parse(JSON.stringify(rawStudent));
+    filterNav[type].isModal = true;
+    filterNav[type].people = people;
+    modalType = type;
+    prepareModal(people, type);
   });
   $("#firstPageStudents").click(function() {
     recentPageStudents = 1;
@@ -969,7 +1020,11 @@ $(document).ready(function() {
       .prop("disabled", false)
       .css("background", "#f4f7fa");
     $("#genderList").prop("disabled", false);
-    $("#industryList").prop("disabled", false);
+    pageStatus["Students"] == states["Students"].EDIT ||
+    (pageStatus["Students"] == states["Students"].ADD && modalType == "Speaker")
+      ? $("#industryList").prop("disabled", false)
+      : null;
+
     $("#validImage").show();
     $("#speakerImage").show();
 
@@ -1224,6 +1279,7 @@ $(document).ready(function() {
         filterNav[type].isModal = true;
         filterNav[type].people = people;
         modalType = type;
+        pageStatus["Students"] = states["Students"].DEFUALT;
         prepareModal(people, type);
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
@@ -1266,7 +1322,7 @@ $(document).ready(function() {
     });
   }
   function PutAllStudent(data, id) {
-    $.ajax(`${baseUrl}/user/` + id, {
+    $.ajax(`${baseUrl}/user/${id}/panel`, {
       data: JSON.stringify(data),
       type: "PUT",
       processData: false,
@@ -1286,9 +1342,9 @@ $(document).ready(function() {
       }
     });
   }
-  function PostStudent(student) {
-    $.ajax(`${baseUrl}/user/StudentSignup`, {
-      data: JSON.stringify(student),
+  function PostStudent(data) {
+    $.ajax(`${baseUrl}/user`, {
+      data: JSON.stringify(data),
       type: "POST",
       processData: false,
       contentType: "application/json",
@@ -1296,10 +1352,8 @@ $(document).ready(function() {
       success: function(res) {
         errorMessage = "با موفقیت انجام شد.";
         $("#successNotification").trigger("click");
-        if (uploadedFile != false) {
-          PutAvatar(res.userId);
-        }
-        GetAllStudent();
+        $("#closeModal").trigger("click");
+        modalType == "Students" ? GetAllStudent() : GetAllSpeaker();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
