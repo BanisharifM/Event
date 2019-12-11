@@ -2,20 +2,18 @@ $(document).ready(function() {
   var baseUrl = localStorage.getItem("baseUrl");
 
   $("#submit").click(function() {
-    let data = { nationalId: $("#nationalId").val() };
+    let data = { username: $("#nationalId").val() };
     Exisst(data);
   });
 
   function Exisst(data) {
-    $.ajax(`${baseUrl}/user/Exist`, {
+    $.ajax(`${baseUrl}/auth/admin/sms`, {
       data: JSON.stringify(data),
       type: "POST",
-      processData: false,
+      processData: true,
       contentType: "application/json",
-      headers: { "api-version": "1.0" },
       success: function(res) {
-        // reset pass word call
-        localStorage.setItem("resetPassNationalId", data.nationalId);
+        localStorage.setItem("username",data.username);
         window.location = "change-password.html";
       },
       error: function(jqXHR, textStatus, errorThrown, error) {

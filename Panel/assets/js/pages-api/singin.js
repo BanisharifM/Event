@@ -1,9 +1,7 @@
 $(document).ready(function() {
-  // localStorage.setItem("token","");
-  // localStorage.setItem("refreshToken","");
-  localStorage.setItem("userId", 0);
+  localStorage.setItem("userId", "0");
 
-  var baseUrl = localStorage.getItem("baseUrl");
+  let baseUrl = localStorage.getItem("baseUrl");
   localStorage.setItem("eventId", "1");
   $("#singin").click(function() {
     let user = {
@@ -33,7 +31,9 @@ $(document).ready(function() {
       }
     });
   }
+
   let errorMessage;
+
   function notify(from, align, icon, type, animIn, animOut) {
     $.growl(
       {
@@ -70,6 +70,7 @@ $(document).ready(function() {
       }
     );
   }
+
   $(".notifications.btn").on("click", function(e) {
     e.preventDefault();
     var nFrom = $(this).attr("data-from");
@@ -128,6 +129,7 @@ $(document).ready(function() {
           (b += d.substr(d.length - 2, 2));
       return b;
     }
+
     var f = [],
       q,
       r,

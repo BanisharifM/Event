@@ -1,11 +1,12 @@
 $(document).ready(function() {
-  var starting = true;
-  var token = localStorage.getItem("token");
-  var refreshToken = localStorage.getItem("refreshToken");
+  let starting = true;
+  let token = localStorage.getItem("token");
+  let refreshToken = localStorage.getItem("refreshToken");
+  let eventId = localStorage.getItem("eventId");
   if (
-    token == "" ||
-    token == null ||
-    refreshToken == "" ||
+    token === "" ||
+    token === null ||
+    refreshToken === "" ||
     refreshToken == null
   )
     window.location = "signin.html";
@@ -27,6 +28,7 @@ $(document).ready(function() {
       }
     });
   }
+
   function refreshingToken() {
     $.ajax(`${baseUrl}/auth/token/refresh`, {
       data: JSON.stringify({ refresh_token: refreshToken }),
@@ -75,6 +77,7 @@ $(document).ready(function() {
     }
     document.getElementById("industryStudentsList").onchange = reportOptClick;
   }
+
   function createIndustryOpt(id, name, type) {
     return (
       '<option id="industry' +
@@ -93,6 +96,7 @@ $(document).ready(function() {
       "</option>"
     );
   }
+
   function reportOptClick() {
     let objectId = $(this).val();
     let id = objectId.match(/\d+/)[0];
@@ -106,6 +110,7 @@ $(document).ready(function() {
       $("#industrySection").hide();
     }
   }
+
   $("#downloadReport").click(function() {
     let status = filterNav["Students"].status;
     if (status == 0) {
@@ -127,8 +132,9 @@ $(document).ready(function() {
       PostReport(url);
     }
   });
+
   function GetReport(mode) {
-    $.ajax(`${baseUrl}/report`, {
+    $.ajax(`${baseUrl}/event/${eventId}/report`, {
       type: "GET",
       processData: false,
       contentType: "application/json",
@@ -146,8 +152,9 @@ $(document).ready(function() {
       }
     });
   }
+
   function PostReport(id) {
-    $.ajax(`${baseUrl}/report/${id}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/report/${id}`, {
       //   data: JSON.stringify(datas),
       type: "POST",
       processData: false,
@@ -180,8 +187,9 @@ $(document).ready(function() {
     }
     document.getElementById("industryStudentsList").onchange = industryOptClick;
   }
+
   function GetIndustry() {
-    $.ajax(`${baseUrl}/industry`, {
+    $.ajax(`${baseUrl}/event/${eventId}/industry`, {
       type: "GET",
       processData: false,
       contentType: "application/json",
@@ -198,6 +206,7 @@ $(document).ready(function() {
       }
     });
   }
+
   function industryOptClick() {
     let objectId = $(this).val();
     let id = objectId.match(/\d+/)[0];
@@ -207,6 +216,7 @@ $(document).ready(function() {
 
   let schoolEditMode = "default",
     uploadedFile;
+
   // SchoolInformstatuson();
 
   function AddSchoolInformation() {
@@ -214,6 +224,7 @@ $(document).ready(function() {
     $("#schoolDetail").text(SchoolInformation.text);
     $("#imageUrl").attr("src", SchoolInformation.imageUrl);
   }
+
   document.getElementById("imageUrl").addEventListener("click", () => {
     if (schoolEditMode == "edit") {
       document.getElementById("imageUrlInp").click();
@@ -225,6 +236,7 @@ $(document).ready(function() {
     uploadedFile = event.target.files[0];
     $("#imageUrl").attr("src", URL.createObjectURL(uploadedFile));
   }
+
   function enableEditSchool() {
     $("#schoolNameInp").val($("#schoolName").text());
     $("#schoolDetailInp").val($("#schoolDetail").text());
@@ -239,6 +251,7 @@ $(document).ready(function() {
     $("#schoolDetail").hide();
     $("#schoolDetailInp").css("display", "block");
   }
+
   function disableEditSchool() {
     let name = $("#schoolNameInp").val();
     let detail = $("#schoolDetailInp").val();
@@ -253,6 +266,7 @@ $(document).ready(function() {
     $("#schoolDetail").show();
     $("#schoolDetailInp").hide();
   }
+
   $("#editSchoolIcon").click(function() {
     if (schoolEditMode == "default") {
       schoolEditMode = "edit";
@@ -287,8 +301,9 @@ $(document).ready(function() {
       disableEditSchool();
     }
   });
+
   function GetSchoolInformation() {
-    $.ajax(`${baseUrl}/School`, {
+    $.ajax(`${baseUrl}/event/${eventId}/School`, {
       type: "GET",
       processData: true,
       contentType: "application/json",
@@ -305,8 +320,9 @@ $(document).ready(function() {
       }
     });
   }
+
   function PutSchoolInformation(schoolId, datas) {
-    $.ajax(`${baseUrl}/School/${schoolId}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/School/${schoolId}`, {
       data: JSON.stringify(datas),
       type: "PUT",
       processData: false,
@@ -328,12 +344,13 @@ $(document).ready(function() {
       }
     });
   }
+
   function PutAvatar(schoolId) {
     const datas = new FormData();
     datas.append("file", uploadedFile);
     $.ajax({
       type: "PUT",
-      url: `${baseUrl}/School/${schoolId}/Image`,
+      url: `${baseUrl}/event/${eventId}/School/${schoolId}/Image`,
       data: { file: uploadedFile },
       data: datas,
       enctype: "multipart/form-data",
@@ -355,6 +372,7 @@ $(document).ready(function() {
 
   //notification
   let errorMessage;
+
   function notify(from, align, icon, type, animIn, animOut) {
     $.growl(
       {
@@ -391,6 +409,7 @@ $(document).ready(function() {
       }
     );
   }
+
   $(".notifications.btn").on("click", function(e) {
     e.preventDefault();
     var nFrom = $(this).attr("data-from");

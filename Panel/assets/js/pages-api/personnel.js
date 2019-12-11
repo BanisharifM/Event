@@ -12,6 +12,7 @@ $(document).ready(function(){
     if(token==""||token==null||refreshToken==""||refreshToken==null)
         window.location="signin.html"; 
     baseUrl=localStorage.getItem("baseUrl");
+    let eventId = localStorage.getItem("eventId");
     tokenValidate();
 
     function tokenValidate(){
@@ -608,7 +609,7 @@ $(document).ready(function(){
         document.getElementById('toolbarDelete'+objectId).onclick = classDeleteClick;
     }
     function DeleteClass(staffId,classId,courseId){
-        $.ajax(`${baseUrl}/User/Staff/${staffId}/Class/${classId}/Course/${courseId}`, {
+        $.ajax(`${baseUrl}/event/${eventId}/User/Staff/${staffId}/Class/${classId}/Course/${courseId}`, {
             type: "DELETE",
             processData: false,
             contentType: "application/json",
@@ -635,7 +636,7 @@ $(document).ready(function(){
         let staffId=filterNav["Students"].staffId;
         let classId=filterNav["Students"].classId;
         let courseId=filterNav["Students"].courseId;
-        $.ajax(`${baseUrl}/User/Staff/${staffId}/Class/${courseId}/Course/${classId}`, {
+        $.ajax(`${baseUrl}/event/${eventId}/User/Staff/${staffId}/Class/${courseId}/Course/${classId}`, {
             data: JSON.stringify(staff),
             type: "POST",
             processData: false,
@@ -656,7 +657,7 @@ $(document).ready(function(){
     });
 
     function GetAllStaff(){
-        $.ajax(`${baseUrl}/user/staff?teacher=true&staff=true`, {
+        $.ajax(`${baseUrl}/event/${eventId}/user/staff?teacher=true&staff=true`, {
             // data: JSON.stringify({"teacher":true,"staff":true}),
             type: "GET",
             processData: false,
@@ -697,7 +698,7 @@ $(document).ready(function(){
         }
     }
     function PostStaff(staff,type){
-        $.ajax(`${baseUrl}/user/StaffSignup`, {
+        $.ajax(`${baseUrl}/event/${eventId}/user/StaffSignup`, {
             data: JSON.stringify(staff),
             type: "POST",
             processData: false,
@@ -723,7 +724,7 @@ $(document).ready(function(){
         });
     }
     function PutStaff(staff,id,type){
-        $.ajax(`${baseUrl}/user/staff/`+id, {
+        $.ajax(`${baseUrl}/event/${eventId}/user/staff/`+id, {
             data: JSON.stringify(staff),
             type: "PUT",
             processData: false,
@@ -744,7 +745,7 @@ $(document).ready(function(){
         });
     }
     function EnableUser(id,enable){
-        $.ajax(`${baseUrl}/User/${id}/Enable`, {
+        $.ajax(`${baseUrl}/event/${eventId}/User/${id}/Enable`, {
             data: JSON.stringify({"enable": enable}),
             type: "PUT",
             processData: false,
@@ -769,7 +770,7 @@ $(document).ready(function(){
         datas.append("file",uploadedFile)
         $.ajax({
             type: 'PUT',
-            url: `${baseUrl}/User/${id}/Avatar`,
+            url: `${baseUrl}/event/${eventId}/User/${id}/Avatar`,
             data : {"file":uploadedFile},
             data : datas,
             enctype: 'multipart/form-data',
@@ -790,7 +791,7 @@ $(document).ready(function(){
         });
     }
     function GetStaffClass(id){
-        $.ajax(`${baseUrl}/User/Staff/${id}/Class`, {
+        $.ajax(`${baseUrl}/event/${eventId}/User/Staff/${id}/Class`, {
             // data: JSON.stringify({"teacher":true,"staff":true}),
             type: "GET",
             processData: false,
@@ -810,7 +811,7 @@ $(document).ready(function(){
     }
     function DeleteStaff(userId){
         //FIXME:
-        $.ajax(`${baseUrl}/User/${userId}`, {
+        $.ajax(`${baseUrl}/event/${eventId}/User/${userId}`, {
             data: JSON.stringify({"enable": true}),
             type: "DELETE",
             processData: true,
@@ -831,7 +832,7 @@ $(document).ready(function(){
     }
 
     function GetSection(){
-        $.ajax(`${baseUrl}/Section`, {
+        $.ajax(`${baseUrl}/event/${eventId}/Section`, {
             type: "GET",
             processData: false,
             contentType: "application/json",
@@ -857,7 +858,7 @@ $(document).ready(function(){
         }
     }
     function GetGrade(sectionId){
-        $.ajax(`${baseUrl}/Section/${sectionId}/Grade`, {
+        $.ajax(`${baseUrl}/event/${eventId}/Section/${sectionId}/Grade`, {
             type: "GET",
             processData: false,
             contentType: "application/json",
@@ -886,7 +887,7 @@ $(document).ready(function(){
     }
     function GetCourse(gradeId){
         $.ajax({
-            url: `${baseUrl}/Course`,
+            url: `${baseUrl}/event/${eventId}/Course`,
             data:{"gradeId":gradeId},
             type: "GET",
             contentType: "application/json",
@@ -915,7 +916,7 @@ $(document).ready(function(){
     }
     function GetClass(gradeId){
         $.ajax({
-            url: `${baseUrl}/Class`,
+            url: `${baseUrl}/event/${eventId}/Class`,
             data:{"gradeId":gradeId},
             type: "GET",
             contentType: "application/json",

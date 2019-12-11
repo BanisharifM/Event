@@ -8,6 +8,7 @@ $(document).ready(function() {
   var starting = true;
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
+  let eventId = localStorage.getItem("eventId");
   if (
     token == "" ||
     token == null ||
@@ -889,7 +890,7 @@ $(document).ready(function() {
 
   function GetSpeakers() {
     $.ajax({
-      url: `${baseUrl}/user/speakers`,
+      url: `${baseUrl}/event/${eventId}/user/speakers`,
       type: "GET",
       contentType: "application/json",
       headers: { token: token },
@@ -905,7 +906,7 @@ $(document).ready(function() {
     });
   }
   function GetIndustry() {
-    $.ajax(`${baseUrl}/industry`, {
+    $.ajax(`${baseUrl}/event/${eventId}/industry`, {
       type: "GET",
       processData: false,
       contentType: "application/json",
@@ -935,7 +936,7 @@ $(document).ready(function() {
   }
   function GetSchedule() {
     $.ajax({
-      url: `${baseUrl}/schedule`,
+      url: `${baseUrl}/event/${eventId}/schedule`,
       type: "GET",
       contentType: "application/json",
       headers: { token: token },
@@ -1006,7 +1007,7 @@ $(document).ready(function() {
     }
   }
   function DeleteCourse(courseId) {
-    $.ajax(`${baseUrl}/schedule/${courseId}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/schedule/${courseId}`, {
       type: "DELETE",
       processData: true,
       contentType: "application/json",
@@ -1025,7 +1026,7 @@ $(document).ready(function() {
     });
   }
   function PutCourse(data, id) {
-    $.ajax(`${baseUrl}/schedule/` + id, {
+    $.ajax(`${baseUrl}/event/${eventId}/schedule/` + id, {
       data: JSON.stringify(data),
       type: "PUT",
       processData: false,
@@ -1045,7 +1046,7 @@ $(document).ready(function() {
     });
   }
   function PostCourse(data, id) {
-    $.ajax(`${baseUrl}/schedule`, {
+    $.ajax(`${baseUrl}/event/${eventId}/schedule`, {
       data: JSON.stringify(data),
       type: "POST",
       processData: false,
@@ -1066,7 +1067,7 @@ $(document).ready(function() {
   }
   function GetAllProgram() {
     let id = filterNav["ScheduleTime"].industryId;
-    $.ajax(`${baseUrl}/schedule/${id}/program`, {
+    $.ajax(`${baseUrl}/event/${eventId}/schedule/${id}/program`, {
       type: "GET",
       processData: true,
       contentType: "application/json",
@@ -1098,51 +1099,57 @@ $(document).ready(function() {
   }
   function DeleteProgram(programId) {
     let scheduleId = filterNav["ScheduleTime"].industryId;
-    $.ajax(`${baseUrl}/schedule/${scheduleId}/program/${programId}`, {
-      type: "DELETE",
-      processData: false,
-      contentType: "application/json",
-      headers: { token: token },
-      success: function(res) {
-        errorMessage = "با موفقیت انجام شد.";
-        $("#successNotification").trigger("click");
-        barname.splice(
-          barname.findIndex(x => x.id == programId),
-          1
-        );
-        AddAllPrograms();
-      },
-      error: function(jqXHR, textStatus, errorThrown, error) {
-        var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.msg;
-        $("#errorNotification").trigger("click");
+    $.ajax(
+      `${baseUrl}/event/${eventId}/schedule/${scheduleId}/program/${programId}`,
+      {
+        type: "DELETE",
+        processData: false,
+        contentType: "application/json",
+        headers: { token: token },
+        success: function(res) {
+          errorMessage = "با موفقیت انجام شد.";
+          $("#successNotification").trigger("click");
+          barname.splice(
+            barname.findIndex(x => x.id == programId),
+            1
+          );
+          AddAllPrograms();
+        },
+        error: function(jqXHR, textStatus, errorThrown, error) {
+          var err = eval("(" + jqXHR.responseText + ")");
+          errorMessage = err.msg;
+          $("#errorNotification").trigger("click");
+        }
       }
-    });
+    );
   }
   function PutProgram(data, programId) {
     let scheduleId = filterNav["ScheduleTime"].industryId;
-    $.ajax(`${baseUrl}/schedule/${scheduleId}/program/${programId}`, {
-      data: JSON.stringify(data),
-      type: "PUT",
-      processData: false,
-      contentType: "application/json",
-      headers: { token: token },
-      success: function(res) {
-        errorMessage = "با موفقیت انجام شد.";
-        $("#successNotification").trigger("click");
-        pageStatus["Programs"] = states["Programs"].DEFUALT;
-        GetAllProgram();
-      },
-      error: function(jqXHR, textStatus, errorThrown, error) {
-        // set errorMessage
-        var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.msg;
-        $("#errorNotification").trigger("click");
+    $.ajax(
+      `${baseUrl}/event/${eventId}/schedule/${scheduleId}/program/${programId}`,
+      {
+        data: JSON.stringify(data),
+        type: "PUT",
+        processData: false,
+        contentType: "application/json",
+        headers: { token: token },
+        success: function(res) {
+          errorMessage = "با موفقیت انجام شد.";
+          $("#successNotification").trigger("click");
+          pageStatus["Programs"] = states["Programs"].DEFUALT;
+          GetAllProgram();
+        },
+        error: function(jqXHR, textStatus, errorThrown, error) {
+          // set errorMessage
+          var err = eval("(" + jqXHR.responseText + ")");
+          errorMessage = err.msg;
+          $("#errorNotification").trigger("click");
+        }
       }
-    });
+    );
   }
   function PostProgram(id, Program) {
-    $.ajax(`${baseUrl}/schedule/${id}/program`, {
+    $.ajax(`${baseUrl}/event/${eventId}/schedule/${id}/program`, {
       data: JSON.stringify(Program),
       type: "POST",
       processData: false,

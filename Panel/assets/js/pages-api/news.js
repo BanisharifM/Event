@@ -3,6 +3,8 @@ $(document).ready(function() {
   var starting = true;
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
+  eventId = localStorage.getItem("eventId");
+
   if (
     token == "" ||
     token == null ||
@@ -51,7 +53,7 @@ $(document).ready(function() {
   GetAllTags();
 
   function GetAllTags() {
-    $.ajax(`${baseUrl}/news/category`, {
+    $.ajax(`${baseUrl}/event/${eventId}/news/category`, {
       type: "GET",
       processData: true,
       contentType: "application/json",
@@ -85,7 +87,7 @@ $(document).ready(function() {
     mode = "add";
   }
   function PostTags(add_todo, task) {
-    $.ajax(`${baseUrl}/news/category`, {
+    $.ajax(`${baseUrl}/event/${eventId}/news/category`, {
       data: JSON.stringify({ name: task }),
       type: "POST",
       processData: true,
@@ -162,7 +164,7 @@ $(document).ready(function() {
   }
 
   function GetAllStudent() {
-    $.ajax(`${baseUrl}/news`, {
+    $.ajax(`${baseUrl}/event/${eventId}/news`, {
       // data: JSON.stringify({"classId":classId}),
       type: "GET",
       processData: true,
@@ -228,7 +230,7 @@ $(document).ready(function() {
     PostNews(data);
   });
   function PostNews(data) {
-    $.ajax(`${baseUrl}/news`, {
+    $.ajax(`${baseUrl}/event/${eventId}/news`, {
       data: JSON.stringify(data),
       type: "POST",
       processData: true,
@@ -300,10 +302,10 @@ $(document).ready(function() {
   });
 });
 var errorMessage;
-var baseUrl;
+var baseUrl, eventId;
 function delete_todo(e) {
   let token = localStorage.getItem("token");
-  $.ajax(`${baseUrl}/news/category/` + e, {
+  $.ajax(`${baseUrl}/event/${eventId}/news/category/` + e, {
     type: "DELETE",
     processData: true,
     contentType: "application/json",

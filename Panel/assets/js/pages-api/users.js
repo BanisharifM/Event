@@ -8,6 +8,7 @@ $(document).ready(function() {
   var starting = true;
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
+  let eventId = localStorage.getItem("eventId");
   if (
     token == "" ||
     token == null ||
@@ -820,7 +821,7 @@ $(document).ready(function() {
   }
 
   function PutSetValid(id, valid) {
-    $.ajax(`${baseUrl}/user/${id}/valid?value=${valid}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/user/${id}/valid?value=${valid}`, {
       // data: JSON.stringify({ value: speaker }),
       type: "PUT",
       async: false,
@@ -840,7 +841,7 @@ $(document).ready(function() {
     });
   }
   function PutSetSpeaker(id, speaker) {
-    $.ajax(`${baseUrl}/user/${id}/speaker?value=${speaker}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/user/${id}/speaker?value=${speaker}`, {
       // data: JSON.stringify({ value: speaker }),
       async: false,
       type: "PUT",
@@ -868,7 +869,7 @@ $(document).ready(function() {
     datas.append("file", uploadedImage);
     $.ajax({
       type: "POST",
-      url: `${baseUrl}/file/${suffix}`,
+      url: `${baseUrl}/event/${eventId}/file/${suffix}`,
       data: datas,
       enctype: "multipart/form-data",
       processData: false,
@@ -1068,7 +1069,7 @@ $(document).ready(function() {
     $("#deleteTitution").hide();
   }
   function GetIndustry() {
-    $.ajax(`${baseUrl}/industry`, {
+    $.ajax(`${baseUrl}/event/${eventId}/industry`, {
       type: "GET",
       processData: false,
       contentType: "application/json",
@@ -1101,7 +1102,7 @@ $(document).ready(function() {
   }
   function GetCourse(gradeId) {
     $.ajax({
-      url: `${baseUrl}/Course`,
+      url: `${baseUrl}/event/${eventId}/Course`,
       data: { gradeId: gradeId },
       type: "GET",
       contentType: "application/json",
@@ -1138,7 +1139,7 @@ $(document).ready(function() {
     }
   }
   function DeleteCourse(courseId) {
-    $.ajax(`${baseUrl}/Course/${courseId}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/Course/${courseId}`, {
       type: "DELETE",
       processData: true,
       contentType: "application/json",
@@ -1157,7 +1158,7 @@ $(document).ready(function() {
     });
   }
   function PutCourse(data, id) {
-    $.ajax(`${baseUrl}/Course/` + id, {
+    $.ajax(`${baseUrl}/event/${eventId}/Course/` + id, {
       data: JSON.stringify(data),
       type: "PUT",
       processData: false,
@@ -1177,7 +1178,7 @@ $(document).ready(function() {
     });
   }
   function PostCourse(data, id) {
-    $.ajax(`${baseUrl}/Course`, {
+    $.ajax(`${baseUrl}/event/${eventId}/Course`, {
       data: JSON.stringify(data),
       type: "POST",
       processData: false,
@@ -1201,7 +1202,7 @@ $(document).ready(function() {
     datas.append("file", CourseSelectImage);
     $.ajax({
       type: "PUT",
-      url: `${baseUrl}/Course/${id}/Image`,
+      url: `${baseUrl}/event/${eventId}/Course/${id}/Image`,
       data: datas,
       enctype: "multipart/form-data",
       processData: false,
@@ -1221,7 +1222,7 @@ $(document).ready(function() {
   }
   function GetAllStudent() {
     let classId = filterNav["Students"].industryId;
-    $.ajax(`${baseUrl}/user/`, {
+    $.ajax(`${baseUrl}/event/${eventId}/user/`, {
       data: { industry: recentIndustry, page: recentPageStudents },
       type: "GET",
       processData: true,
@@ -1245,7 +1246,7 @@ $(document).ready(function() {
     });
   }
   function GetAllSpeaker() {
-    $.ajax(`${baseUrl}/user/speaker`, {
+    $.ajax(`${baseUrl}/event/${eventId}/user/speaker`, {
       data: { page: recentPageSpeakers },
       type: "GET",
       processData: true,
@@ -1267,7 +1268,7 @@ $(document).ready(function() {
     });
   }
   function getUser(id, type) {
-    $.ajax(`${baseUrl}/user/${id}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/user/${id}`, {
       type: "GET",
       processData: true,
       contentType: "application/json",
@@ -1302,7 +1303,7 @@ $(document).ready(function() {
     checkIconVisiblility(type);
   }
   function DeleteStudent(userId, people, type) {
-    $.ajax(`${baseUrl}/user/${userId}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/user/${userId}`, {
       type: "DELETE",
       processData: true,
       contentType: "application/json",
@@ -1322,7 +1323,7 @@ $(document).ready(function() {
     });
   }
   function PutAllStudent(data, id) {
-    $.ajax(`${baseUrl}/user/${id}/panel`, {
+    $.ajax(`${baseUrl}/event/${eventId}/user/${id}/panel`, {
       data: JSON.stringify(data),
       type: "PUT",
       processData: false,
@@ -1343,7 +1344,7 @@ $(document).ready(function() {
     });
   }
   function PostStudent(data) {
-    $.ajax(`${baseUrl}/user`, {
+    $.ajax(`${baseUrl}/event/${eventId}/user`, {
       data: JSON.stringify(data),
       type: "POST",
       processData: false,
@@ -1369,7 +1370,7 @@ $(document).ready(function() {
     datas.append("file", uploadedFile);
     $.ajax({
       type: "PUT",
-      url: `${baseUrl}/User/${id}/Avatar`,
+      url: `${baseUrl}/event/${eventId}/User/${id}/Avatar`,
       data: { file: uploadedFile },
       data: datas,
       enctype: "multipart/form-data",

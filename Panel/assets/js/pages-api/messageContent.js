@@ -3,6 +3,8 @@ $(document).ready(function() {
   var starting = true;
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
+  let eventId = localStorage.getItem("eventId");
+
   if (
     token == "" ||
     token == null ||
@@ -53,7 +55,7 @@ $(document).ready(function() {
   $("#ticketQuestion").val(question);
 
   function PutNews(answer) {
-    $.ajax(`${baseUrl}/ticket/${id}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/ticket/${id}`, {
       data: JSON.stringify({ answer: answer, adminId: adminId }),
       type: "PUT",
       processData: false,

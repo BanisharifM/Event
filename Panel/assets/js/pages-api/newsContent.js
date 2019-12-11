@@ -2,6 +2,8 @@
 $(document).ready(function() {
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
+  let eventId = localStorage.getItem("eventId");
+
   if (
     token == "" ||
     token == null ||
@@ -82,7 +84,7 @@ $(document).ready(function() {
   };
 
   function GetNews(newsId) {
-    $.ajax(`${baseUrl}/news/${newsId}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/news/${newsId}`, {
       type: "GET",
       processData: false,
       contentType: "application/json",
@@ -278,7 +280,7 @@ $(document).ready(function() {
   };
 
   function GetNewsTag() {
-    $.ajax(`${baseUrl}/news/category`, {
+    $.ajax(`${baseUrl}/event/${eventId}/news/category`, {
       type: "GET",
       processData: false,
       contentType: "application/json",
@@ -343,7 +345,7 @@ $(document).ready(function() {
   });
 
   function PutNews(data) {
-    $.ajax(`${baseUrl}/news/${recentNews.id}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/news/${recentNews.id}`, {
       data: JSON.stringify(data),
       type: "PUT",
       processData: false,
@@ -364,7 +366,7 @@ $(document).ready(function() {
     });
   }
   function DeleteNews() {
-    $.ajax(`${baseUrl}/news/${recentNews.id}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/news/${recentNews.id}`, {
       type: "DELETE",
       processData: false,
       contentType: "application/json",
@@ -437,7 +439,7 @@ $(document).ready(function() {
     datas.append("file", uploadedImage);
     $.ajax({
       type: "POST",
-      url: `${baseUrl}/file/${suffix}`,
+      url: `${baseUrl}/event/${eventId}/file/${suffix}`,
       data: datas,
       enctype: "multipart/form-data",
       processData: false,
@@ -483,7 +485,7 @@ $(document).ready(function() {
     datas.append("file", uploadedFile);
     $.ajax({
       type: "POST",
-      url: `${baseUrl}/file/${suffix}`,
+      url: `${baseUrl}/event/${eventId}/file/${suffix}`,
       data: datas,
       enctype: "multipart/form-data",
       processData: false,

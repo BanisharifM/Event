@@ -2,6 +2,8 @@ $(document).ready(function() {
   var starting = true;
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
+  let eventId = localStorage.getItem("eventId");
+
   if (
     token === "" ||
     token === null ||
@@ -142,7 +144,7 @@ $(document).ready(function() {
   }
 
   function GetMessages() {
-    $.ajax(`${baseUrl}/ticket`, {
+    $.ajax(`${baseUrl}/event/${eventId}/ticket`, {
       type: "GET",
       processData: false,
       async: false,

@@ -4,6 +4,7 @@ $(document).ready(function() {
   var starting = true;
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
+  let eventId = localStorage.getItem("eventId");
   if (
     token == "" ||
     token == null ||
@@ -49,7 +50,7 @@ $(document).ready(function() {
   let userId = localStorage.getItem("userId");
   // Getuser(userId);
   function Getuser(userId) {
-    $.ajax(`${baseUrl}/user/staff/${userId}`, {
+    $.ajax(`${baseUrl}/event/${eventId}/user/staff/${userId}`, {
       type: "GET",
       processData: false,
       contentType: "application/json",
@@ -90,7 +91,7 @@ $(document).ready(function() {
     // PutPhone(newuser);
   });
   function PutPhone(newuser) {
-    $.ajax(`${baseUrl}/user/staff/` + user.id, {
+    $.ajax(`${baseUrl}/event/${eventId}/user/staff/` + user.id, {
       data: JSON.stringify(newuser),
       type: "PUT",
       processData: false,
@@ -117,7 +118,7 @@ $(document).ready(function() {
     PostTicket(text, title);
   });
   function PostTicket(text, title) {
-    $.ajax(`${baseUrl}/Ticket`, {
+    $.ajax(`${baseUrl}/event/${eventId}/Ticket`, {
       data: JSON.stringify({ title: title, text: text }),
       type: "POST",
       processData: true,
@@ -150,7 +151,7 @@ $(document).ready(function() {
     PostResetPass(oldPass, newPass);
   });
   function PostResetPass(oldPass, newPass) {
-    $.ajax(`${baseUrl}/User/ResetPassword`, {
+    $.ajax(`${baseUrl}/event/${eventId}/User/ResetPassword`, {
       data: JSON.stringify({ oldPassword: oldPass, newPassword: newPass }),
       type: "POST",
       processData: true,
@@ -179,7 +180,7 @@ $(document).ready(function() {
   GetAllTags();
 
   function GetAllTags() {
-    $.ajax(`${baseUrl}/industry`, {
+    $.ajax(`${baseUrl}/event/${eventId}/industry`, {
       type: "GET",
       processData: true,
       contentType: "application/json",
@@ -211,7 +212,7 @@ $(document).ready(function() {
     addImageMode = false;
   }
   function PostTags(task, imageUrl) {
-    $.ajax(`${baseUrl}/industry`, {
+    $.ajax(`${baseUrl}/event/${eventId}/industry`, {
       data: JSON.stringify({ imageUrl: imageUrl, name: task }),
       type: "POST",
       processData: true,
@@ -299,7 +300,7 @@ $(document).ready(function() {
     datas.append("file", uploadedImage);
     $.ajax({
       type: "POST",
-      url: `${baseUrl}/file/${suffix}`,
+      url: `${baseUrl}/event/${eventId}/file/${suffix}`,
       data: datas,
       enctype: "multipart/form-data",
       processData: false,
@@ -342,7 +343,7 @@ $(document).ready(function() {
     datas.append("file", uploadedFile);
     $.ajax({
       type: "PUT",
-      url: `${baseUrl}/News/${newsId}/File/Suffix/${suffix}`,
+      url: `${baseUrl}/event/${eventId}/News/${newsId}/File/Suffix/${suffix}`,
       data: datas,
       enctype: "multipart/form-data",
       processData: false,
@@ -414,7 +415,7 @@ $(document).ready(function() {
 });
 function delete_todo(e) {
   let token = localStorage.getItem("token");
-  $.ajax(`${baseUrl}/industry/` + e, {
+  $.ajax(`${baseUrl}/event/${eventId}/industry/` + e, {
     type: "DELETE",
     processData: true,
     contentType: "application/json",
