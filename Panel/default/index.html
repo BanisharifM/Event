@@ -395,18 +395,47 @@
                                     <h5 class="mt-4">گزارشات</h5>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-md-3 col-sm-12">
+                                        <!-- <div class="col-md-3 col-sm-12">
                                             <ul class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                                 aria-orientation="vertical">
 
 
                                             </ul>
-                                        </div>
-                                        <div class="col-md-9 col-sm-12 ">
+                                        </div> -->
+                                        <div class="col-md-12 col-sm-12 ">
                                             <div class="tab-content" id="v-pills-tabContent">
+                                                <nav class="navbar m-b-30  border border-info"
+                                                    style="border-radius: 3px;">
 
+                                                    <div class="col-sm-7">
+                                                        <label>نوع گزارش:</label>
+                                                        <select id="reportStudentsList"
+                                                            class="browser-default custom-select">
+                                                            <option value="یس" disabled selected style="display:none;">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-4" id="industrySection" style="display: none;">
+                                                        <label>حوزه ی فعالیت :</label>
+                                                        <select id="industryStudentsList"
+                                                            class="browser-default custom-select">
+                                                            <option value="یس" disabled selected style="display:none;">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <label> </label>
+                                                        <button type="button" id="downloadReport"
+                                                            class="btn btn-primary btn-icon m-0" data-toggle="tooltip"
+                                                            data-placement="top" title="دانلود"
+                                                            style="float:left;padding: 10px 0px;position:relative;left:5px;top:9px;">
+                                                            <i class="fas fa-cloud-download-alt"
+                                                                style="font-size: 20px;"></i> </button>
+                                                    </div>
+                                                </nav>
 
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -501,6 +530,9 @@
                                 <button id="successNotification" class="btn notifications btn-success"
                                     data-type="success" style="display: none;" data-from="top"
                                     data-align="right">success</button>
+                                <button id="warningNotification" class="btn notifications btn-warning"
+                                    data-type="warning" data-from="top" data-align="right"
+                                    style="display: none;">Warning</button>
 
                             </div>
 

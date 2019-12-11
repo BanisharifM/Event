@@ -3,9 +3,9 @@ $(document).ready(function() {
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
   if (
-    token == "" ||
-    token == null ||
-    refreshToken == "" ||
+    token === "" ||
+    token === null ||
+    refreshToken === "" ||
     refreshToken == null
   )
     window.location = "signin.html";
@@ -201,12 +201,12 @@ $(document).ready(function() {
   }
   $(".notifications.btn").on("click", function(e) {
     e.preventDefault();
-    var nFrom = $(this).attr("data-from");
-    var nAlign = $(this).attr("data-align");
-    var nIcons = $(this).attr("data-notify-icon");
-    var nType = $(this).attr("data-type");
-    var nAnimIn = $(this).attr("data-animation-in");
-    var nAnimOut = $(this).attr("data-animation-out");
+    let nFrom = $(this).attr("data-from");
+    let nAlign = $(this).attr("data-align");
+    let nIcons = $(this).attr("data-notify-icon");
+    let nType = $(this).attr("data-type");
+    let nAnimIn = $(this).attr("data-animation-in");
+    let nAnimOut = $(this).attr("data-animation-out");
     notify(nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
   });
 });
