@@ -391,6 +391,79 @@
                                     </div>
                                 </div>
 
+                                <div class="auth-wrapper">
+                                    <div class="container">
+                                        <div class="card">
+                                            <div class="row no-gutters">
+                                                <div class="col-md-8 col-lg-6 ux-designer">
+                                                    <button class="btn btn-primary" id="editSchool">
+                                                        <i class="fas fa-pencil-alt f-14 mr-0" id="editSchoolIcon"
+                                                            data-toggle="tooltip" data-placement="top"
+                                                            title="ویرایش"></i>
+                                                        <i class="fas fa-check-circle f-14 mr-0" id="saveSchoolIcon"
+                                                            style="display:none;" data-toggle="tooltip"
+                                                            data-placement="top" title="ذخیره"></i>
+                                                        <i id="cancelSchoolIcon"
+                                                            class="fas fa-times-circle f-14 mr-0r label text-white"
+                                                            style="display:none" data-toggle="tooltip"
+                                                            data-placement="bottom" title="لغو"></i>
+                                                    </button>
+                                                    <div class="card-body text-center" style="padding-top: 0;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-sm-10">
+                                                                <div class="mb-4">
+                                                                    <img class="img-fluid"
+                                                                        style="width:130px; height: 130px;"
+                                                                        id="imageUrl"
+                                                                        src="../assets/images/user/avatar-2.jpg"
+                                                                        alt="dashboard-user">
+                                                                    <input id="imageUrlInp" type="file" accept="image/*"
+                                                                        style="display: none" />
+                                                                </div>
+                                                                <h3 id="eventName" class="mb-4">Sign up</h3>
+                                                                <input id="eventNameInp" type="text"
+                                                                    style="display:none">
+                                                                <div class="input-group mb-3">
+                                                                    <textarea type="text" class="form-control"
+                                                                        placeholder="Username" rows="3"
+                                                                        cols="7" ></textarea>
+                                                                </div>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="email" class="form-control"
+                                                                        placeholder="Email">
+                                                                </div>
+                                                                <div class="input-group mb-4">
+                                                                    <input type="password" class="form-control"
+                                                                        placeholder="password">
+                                                                </div>
+                                                                <div class="form-group text-left">
+                                                                    <div class="checkbox checkbox-fill d-inline">
+                                                                        <input type="checkbox" name="checkbox-fill-2"
+                                                                            id="checkbox-fill-2">
+                                                                        <label for="checkbox-fill-2" class="cr">Send me
+                                                                            the <a href="#!">Newsletter</a>
+                                                                            weekly.</label>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="mb-0 text-muted">Allready have an account? <a
+                                                                        href="auth-signin.html">Log
+                                                                        in</a></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-lg-6 d-none d-md-block d-lg-block">
+                                                    <img class="img-fluid" id="imageUrlMap"
+                                                        style="width: 100%;height: 100%;" alt="dashboard-user"
+                                                        src="../assets/images/user/map.jpg">
+                                                    <input id="imageUrlMapInp" type="file" accept="image/*"
+                                                        style="display: none" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-sm-12">
                                     <h5 class="mt-4">گزارشات</h5>
                                     <hr>
@@ -448,7 +521,7 @@
                                 <div class="col-xl-12 col-md-12 m-t-10">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>نمودار مدرسه</h5>
+                                            <h5>نمودار اعضای فعال</h5>
                                             <div class="card-header-right">
                                                 <div class="btn-group card-option">
                                                     <button type="button" class="btn dropdown-toggle"
@@ -487,7 +560,7 @@
                                 <div class="col-xl-12 col-md-12 m-t-10">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>نمودار کلاس</h5>
+                                            <h5>نمودار حوزه فعالیت ها</h5>
                                             <div class="card-header-right">
                                                 <div class="btn-group card-option">
                                                     <button type="button" class="btn dropdown-toggle"
