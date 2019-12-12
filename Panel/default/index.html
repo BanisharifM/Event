@@ -440,7 +440,86 @@
                                     </div>
                                 </div>
 
-                                <button id="showAllClass" type="button" data-toggle="modal" style="display:none"
+
+                                <div class="col-sm-12" style="margin-top: 40px;">
+                                    <h5 class="mt-4">نمودار</h5>
+                                    <hr>
+                                </div>
+                                <div class="col-xl-12 col-md-12 m-t-10">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>نمودار مدرسه</h5>
+                                            <div class="card-header-right">
+                                                <div class="btn-group card-option">
+                                                    <button type="button" class="btn dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        <i class="feather icon-more-horizontal"></i>
+                                                    </button>
+                                                    <ul
+                                                        class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                                        <li class="dropdown-item full-card"><a href="#!"><span><i
+                                                                        class="feather icon-maximize"></i>
+                                                                    maximize</span><span style="display:none"><i
+                                                                        class="feather icon-minimize"></i>
+                                                                    Restore</span></a></li>
+                                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i
+                                                                        class="feather icon-minus"></i>
+                                                                    collapse</span><span style="display:none"><i
+                                                                        class="feather icon-plus"></i> expand</span></a>
+                                                        </li>
+                                                        <li class="dropdown-item reload-card"><a href="#!"><i
+                                                                    class="feather icon-refresh-cw"></i> reload</a></li>
+                                                        <li class="dropdown-item close-card"><a href="#!"><i
+                                                                    class="feather icon-trash"></i> remove</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="earning-price mb-4">
+                                            </div>
+                                            <div id="Widget-line-chart1" class="WidgetlineChart " style="height:400px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-12 m-t-10">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>نمودار کلاس</h5>
+                                            <div class="card-header-right">
+                                                <div class="btn-group card-option">
+                                                    <button type="button" class="btn dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        <i class="feather icon-more-horizontal"></i>
+                                                    </button>
+                                                    <ul
+                                                        class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                                        <li class="dropdown-item full-card"><a href="#!"><span><i
+                                                                        class="feather icon-maximize"></i>
+                                                                    maximize</span><span style="display:none"><i
+                                                                        class="feather icon-minimize"></i>
+                                                                    Restore</span></a></li>
+                                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i
+                                                                        class="feather icon-minus"></i>
+                                                                    collapse</span><span style="display:none"><i
+                                                                        class="feather icon-plus"></i> expand</span></a>
+                                                        </li>
+                                                        <li class="dropdown-item reload-card"><a href="#!"><i
+                                                                    class="feather icon-refresh-cw"></i> reload</a></li>
+                                                        <li class="dropdown-item close-card"><a href="#!"><i
+                                                                    class="feather icon-trash"></i> remove</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-block pb-0">
+                                            <div id="bar-chart2" class="bar-chart2" style="height:350px;"></div>
+                                        </div>
+                                    </div>
+                                </div <button id="showAllClass" type="button" data-toggle="modal" style="display:none"
                                     data-target="#exampleModalLong2"></button>
                                 <div id="exampleModalLong2" class="modal fade" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -552,6 +631,18 @@
     <script src="../assets/plugins/flot/js/jquery.flot.categories.js"></script>
     <script src="../assets/plugins/flot/js/curvedLines.js"></script>
     <script src="../assets/plugins/flot/js/jquery.flot.tooltip.min.js"></script>
+
+    <script src="../assets/plugins/amchart/js/amcharts.js"></script>
+    <script src="../assets/plugins/amchart/js/gauge.js"></script>
+    <script src="../assets/plugins/amchart/js/serial.js"></script>
+    <script src="../assets/plugins/amchart/js/light.js"></script>
+    <script src="../assets/plugins/amchart/js/pie.min.js"></script>
+    <script src="../assets/plugins/amchart/js/ammap.min.js"></script>
+    <script src="../assets/plugins/amchart/js/usaLow.js"></script>
+    <script src="../assets/plugins/amchart/js/radar.js"></script>
+    <script src="../assets/plugins/amchart/js/worldLow.js"></script>
+
+    <script src="../assets/js/pages/chart.js"></script>
 
     <script src="../assets/plugins/waterball/js/createWaterBall-jquery.js"></script>
 

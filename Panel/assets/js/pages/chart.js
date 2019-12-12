@@ -1,11 +1,8 @@
 "use strict";
 $(document).ready(function() {
-  
-
-  var baseUrl=localStorage.getItem("baseUrl");
-
-    let token=localStorage.getItem("token");
-
+  var baseUrl = localStorage.getItem("baseUrl");
+  let eventId = localStorage.getItem("eventId");
+  let token = localStorage.getItem("token");
 
   setTimeout(function() {
     floatchart();
@@ -306,30 +303,32 @@ $(document).ready(function() {
   });
 
   GetStaffClass();
-  function GetStaffClass(){
-    $.ajax(`${baseUrl}/Dashboard/School`, {
-        // data: JSON.stringify({"teacher":true,"staff":true}),
-        type: "GET",
-        processData: false,
-        contentType: "application/json",
-        headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
-        success: function(res) {
-          createChartDatas(res);
-        },
-        error: function(jqXHR, textStatus, errorThrown,error) {
-        }
+  function GetStaffClass() {
+    $.ajax(`${baseUrl}/event/${eventId}/dashboard/mid`, {
+      // data: JSON.stringify({"teacher":true,"staff":true}),
+      type: "GET",
+      processData: false,
+      contentType: "application/json",
+      headers: { token: token },
+      success: function(res) {
+        createChartDatas(res);
+      },
+      error: function(jqXHR, textStatus, errorThrown, error) {}
     });
-}
-function createChartDatas(res){
-  chartDatac=[];
-  for(i in res){
-    let day=res[i].dateTime.substring(0,10);
-    let value=Math.ceil(res[i].grade);
-    let raw={
-      "day":day,
-      "value":value
+  }
+  function createChartDatas(res) {
+    chartDatac = [];
+    let max = 0;
+    for (i in res) {
+      let day = res[i].key.substring(0, 10);
+      let value = Math.ceil(res[i].value);
+      if (value > max) max = value;
+      let raw = {
+        day: day,
+        value: value
+      };
+      chartDatac.push(raw);
     }
-    chartDatac.push(raw);
     var chartc = AmCharts.makeChart("Widget-line-chart1", {
       type: "serial",
       addClassNames: true,
@@ -349,7 +348,12 @@ function createChartDatas(res){
             y: "0%",
             width: "1%",
             height: "1%",
-            feOffset: { result: "offOut", in: "SourceAlpha", dx: "0", dy: "20" },
+            feOffset: {
+              result: "offOut",
+              in: "SourceAlpha",
+              dx: "0",
+              dy: "20"
+            },
             feGaussianBlur: {
               result: "blurOut",
               in: "offOut",
@@ -385,7 +389,7 @@ function createChartDatas(res){
           axisAlpha: 0,
           lineAlpha: 0,
           minimum: -6,
-          maximum: 25
+          maximum: max + 3
         }
       ],
       chartCursor: {
@@ -425,9 +429,7 @@ function createChartDatas(res){
         }
       ]
     });
-
   }
-}
   // var chartDatac = [
   //   { day: "شنبه", value: 60 },
   //   { day: "یکشنبه", value: 45 },
@@ -979,107 +981,105 @@ function createChartDatas(res){
   });
 
   GetStaffClasss();
-  function GetStaffClasss(){
-    $.ajax(`${baseUrl}/Dashboard/class`, {
-        // data: JSON.stringify({"teacher":true,"staff":true}),
-        type: "GET",
-        processData: false,
-        contentType: "application/json",
-        headers: {'Api-Version': '1.0','Authorization': `Bearer ${token}`}, 
-        success: function(res) {
-          createChartDatas2(res);
-        },
-        error: function(jqXHR, textStatus, errorThrown,error) {
-        }
+  function GetStaffClasss() {
+    $.ajax(`${baseUrl}/event/${eventId}/dashboard/iuc`, {
+      // data: JSON.stringify({"teacher":true,"staff":true}),
+      type: "GET",
+      processData: false,
+      contentType: "application/json",
+      headers: { token: token },
+      success: function(res) {
+        createChartDatas2(res);
+      },
+      error: function(jqXHR, textStatus, errorThrown, error) {}
     });
-}
-function createChartDatas2(res){
-  let dataProvider=[];
-  for(i in res){
-    let className=res[i].className;
-    let grade=+Math.round(res[i].grade);
-    let datas={ Year: className,visits: grade};
-    dataProvider.push(datas)
   }
-  var chart = AmCharts.makeChart("bar-chart2", {
-    type: "serial",
-    theme: "light",
-    marginTop: 10,
-    marginRight: 0,
-    valueAxes: [
-      {
-        id: "v2",
-        position: "left",
+  function createChartDatas2(res) {
+    let dataProvider = [];
+    for (i in res) {
+      let className = res[i].key;
+      let grade = +Math.round(res[i].value);
+      let datas = { Year: className, visits: grade };
+      dataProvider.push(datas);
+    }
+    var chart = AmCharts.makeChart("bar-chart2", {
+      type: "serial",
+      theme: "light",
+      marginTop: 10,
+      marginRight: 0,
+      valueAxes: [
+        {
+          id: "v2",
+          position: "left",
+          axisAlpha: 0,
+          lineAlpha: 0,
+          autoGridCount: false,
+          labelFunction: function(value) {
+            return +Math.round(value);
+          }
+        }
+      ],
+      graphs: [
+        // {
+        //   id: "g1",
+        //   valueAxis: "v1",
+        //   lineColor: ["#1de9b6", "#1dc4e9"],
+        //   fillColors: ["#1de9b6", "#1dc4e9"],
+        //   fillAlphas: 1,
+        //   type: "column",
+        //   title: "SALES",
+        //   valueField: "sales",
+        //   columnWidth: 0.3,
+        //   legendValueText: "$[[value]]M",
+        //   balloonText: "<b style='font-size: 130%'>$[[value]]</b>"
+        // },
+        {
+          id: "g2",
+          valueAxis: "v2",
+          lineColor: ["#ffffff", "#ffffff"],
+          fillColors: ["#A389D4 ", "#A389D4 "],
+          fillAlphas: 10,
+          type: "column",
+          title: "",
+          valueField: "visits",
+          columnWidth: 0.3,
+          legendValueText: "",
+          balloonText: "<b style='font-size: 130%'>[[value]]</b>"
+        }
+        // {
+        //   id: "g3",
+        //   valueAxis: "v1",
+        //   lineColor: ["#04a9f5", "#049df5"],
+        //   fillColors: ["#04a9f5", "#049df5"],
+        //   fillAlphas: 1,
+        //   type: "column",
+        //   title: "CLICKS",
+        //   valueField: "clicks",
+        //   columnWidth: 0.3,
+        //   legendValueText: "$[[value]]M",
+        //   balloonText: "[[title]]<br /><b style='font-size: 130%'>$[[value]]M</b>"
+        // }
+      ],
+      chartCursor: {
+        pan: false,
+        valueLineEnabled: false,
+        valueLineBalloonEnabled: false,
+        cursorAlpha: 0,
+        valueLineAlpha: 0
+      },
+      categoryField: "Year",
+      categoryAxis: {
+        dashLength: 1,
+        gridAlpha: 0,
         axisAlpha: 0,
         lineAlpha: 0,
-        autoGridCount: false,
-        labelFunction: function(value) {
-          return +Math.round(value) ;
-        }
-      }
-    ],
-    graphs: [
-      // {
-      //   id: "g1",
-      //   valueAxis: "v1",
-      //   lineColor: ["#1de9b6", "#1dc4e9"],
-      //   fillColors: ["#1de9b6", "#1dc4e9"],
-      //   fillAlphas: 1,
-      //   type: "column",
-      //   title: "SALES",
-      //   valueField: "sales",
-      //   columnWidth: 0.3,
-      //   legendValueText: "$[[value]]M",
-      //   balloonText: "<b style='font-size: 130%'>$[[value]]</b>"
-      // },
-      {
-        id: "g2",
-        valueAxis: "v2",
-        lineColor: ["#ffffff", "#ffffff"],
-        fillColors: ["#A389D4 ", "#A389D4 "],
-        fillAlphas: 10,
-        type: "column",
-        title: "",
-        valueField: "visits",
-        columnWidth: 0.3,
-        legendValueText: "",
-        balloonText: "<b style='font-size: 130%'>[[value]]</b>"
+        minorGridEnabled: true
       },
-      // {
-      //   id: "g3",
-      //   valueAxis: "v1",
-      //   lineColor: ["#04a9f5", "#049df5"],
-      //   fillColors: ["#04a9f5", "#049df5"],
-      //   fillAlphas: 1,
-      //   type: "column",
-      //   title: "CLICKS",
-      //   valueField: "clicks",
-      //   columnWidth: 0.3,
-      //   legendValueText: "$[[value]]M",
-      //   balloonText: "[[title]]<br /><b style='font-size: 130%'>$[[value]]M</b>"
-      // }
-    ],
-    chartCursor: {
-      pan: false,
-      valueLineEnabled: false,
-      valueLineBalloonEnabled: false,
-      cursorAlpha: 0,
-      valueLineAlpha: 0
-    },
-    categoryField: "Year",
-    categoryAxis: {
-      dashLength: 1,
-      gridAlpha: 0,
-      axisAlpha: 0,
-      lineAlpha: 0,
-      minorGridEnabled: true
-    },
-    legend: { useGraphSettings: true, position: "top" },
-    balloon: { borderThickness: 1, shadowAlpha: 0 },
-    "dataProvider": dataProvider
-  });
-
-}
+      legend: { useGraphSettings: true, position: "top" },
+      balloon: { borderThickness: 1, shadowAlpha: 0 },
+      dataProvider: dataProvider
+    });
+  }
   var chart = AmCharts.makeChart("bar-chart3", {
     type: "serial",
     theme: "light",
@@ -1707,7 +1707,13 @@ function floatchart() {
       $("#power-card-chart"),
       [
         {
-          data: [[0, 50], [20, 70], [35, 45], [50, 73], [65, 85]],
+          data: [
+            [0, 50],
+            [20, 70],
+            [35, 45],
+            [50, 73],
+            [65, 85]
+          ],
           color: "#1dc4e9",
           lines: { show: true, fill: false, lineWidth: 3 },
           points: { show: false, radius: 3, fill: true },
@@ -1732,7 +1738,13 @@ function floatchart() {
       $("#processed-bar"),
       [
         {
-          data: [[0, 30], [20, 45], [50, 30], [80, 45], [100, 30]],
+          data: [
+            [0, 30],
+            [20, 45],
+            [50, 30],
+            [80, 45],
+            [100, 30]
+          ],
           color: "#1dc4e9",
           lines: {
             show: true,
@@ -1762,7 +1774,15 @@ function floatchart() {
       $("#transactions"),
       [
         {
-          data: [[0, 48], [1, 30], [2, 25], [3, 30], [4, 20], [5, 40], [6, 30]],
+          data: [
+            [0, 48],
+            [1, 30],
+            [2, 25],
+            [3, 30],
+            [4, 20],
+            [5, 40],
+            [6, 30]
+          ],
           color: "#1dc4e9",
           bars: {
             show: true,
@@ -1795,7 +1815,15 @@ function floatchart() {
       $("#transactions1"),
       [
         {
-          data: [[0, 48], [1, 30], [2, 25], [3, 30], [4, 20], [5, 40], [6, 30]],
+          data: [
+            [0, 48],
+            [1, 30],
+            [2, 25],
+            [3, 30],
+            [4, 20],
+            [5, 40],
+            [6, 30]
+          ],
           color: "#a389d4",
           bars: {
             show: true,
@@ -1828,7 +1856,15 @@ function floatchart() {
       $("#transactions2"),
       [
         {
-          data: [[0, 44], [1, 26], [2, 22], [3, 35], [4, 28], [5, 35], [6, 28]],
+          data: [
+            [0, 44],
+            [1, 26],
+            [2, 22],
+            [3, 35],
+            [4, 28],
+            [5, 35],
+            [6, 28]
+          ],
           color: "#1dc4e9",
           bars: {
             show: true,
@@ -1861,7 +1897,15 @@ function floatchart() {
       $("#transactions3"),
       [
         {
-          data: [[0, 40], [1, 30], [2, 25], [3, 38], [4, 30], [5, 38], [6, 30]],
+          data: [
+            [0, 40],
+            [1, 30],
+            [2, 25],
+            [3, 38],
+            [4, 30],
+            [5, 38],
+            [6, 30]
+          ],
           color: "#1dc4e9",
           bars: {
             show: true,
