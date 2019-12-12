@@ -353,7 +353,7 @@
 
                             <div class="row">
 
-                                <div class="col-md-4 ">
+                                <!-- <div class="col-md-4 ">
                                     <a data-toggle="collapse" href="#multiCollapseExample1" role="button"
                                         aria-expanded="false" aria-controls="multiCollapseExample1">
                                         <div class="card table-card">
@@ -389,6 +389,53 @@
                                         </div>
                                     </div>
 
+                                </div> -->
+
+                                <div class="col-md-4 ">
+                                    <a data-toggle="collapse" href="#multiCollapseExample6" role="button"
+                                        aria-expanded="false" aria-controls="multiCollapseExample1">
+                                        <div class="card table-card">
+                                            <div class="row-table">
+                                                <div class="col-auto theme-bg text-white">
+                                                    <i class="fas fa-users f-15" style="padding: 40px 15px;"></i>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <h4 class="f-w-100">افزودن کاربران ایوند</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="collapse multi-collapse mt-1" id="multiCollapseExample6">
+                                                <div class="card">
+
+                                                    <div class="card-block">
+                                                        <div class="input-group mb-3" id="selectFileNav">
+                                                            <img id="selectFileIcon" class="rounded-circle"
+                                                                style="width:40px; cursor: pointer;"
+                                                                src='../assets/images/user/add-file.png' alt="تصویر"
+                                                                data-toggle="tooltip" data-placement="right"
+                                                                title="انتخاب فایل">
+                                                            <input type="file" name="task-insert"
+                                                                class="form-control add_file_todo"
+                                                                placeholder="انتخاب فایل" required="" id="selectFileInp"
+                                                                style="display: none">
+                                                            <label class="form-control add_file_todo" id="selectFile"
+                                                                style="border: none;"></label>
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-secondary btnFile-icon"
+                                                                    id="addFile-btn" data-toggle="tooltip"
+                                                                    data-placement="top" title="افزودن">
+                                                                    <i class="fa fa-plus m-auto"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-4 ">
                                     <a data-toggle="collapse" href="#multiCollapseExample2" role="button" id="aa"
@@ -486,52 +533,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 ">
-                                    <a data-toggle="collapse" href="#multiCollapseExample6" role="button"
-                                        aria-expanded="false" aria-controls="multiCollapseExample1">
-                                        <div class="card table-card">
-                                            <div class="row-table">
-                                                <div class="col-auto bg-c-gray text-white">
-                                                    <i class="fas fa-users f-15" style="padding: 40px 15px;"></i>
-                                                </div>
-                                                <div class="col text-center">
-                                                    <h4 class="f-w-100">افزودن کاربران ایوند</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="collapse multi-collapse mt-1" id="multiCollapseExample6">
-                                                <div class="card">
-
-                                                    <div class="card-block">
-                                                        <div class="input-group mb-3" id="selectFileNav">
-                                                            <img id="selectFileIcon" class="rounded-circle"
-                                                                style="width:40px; cursor: pointer;"
-                                                                src='../assets/images/user/add-file.png' alt="تصویر"
-                                                                data-toggle="tooltip" data-placement="right"
-                                                                title="انتخاب فایل">
-                                                            <input type="file" name="task-insert"
-                                                                class="form-control add_file_todo"
-                                                                placeholder="انتخاب فایل" required="" id="selectFileInp"
-                                                                style="display: none">
-                                                            <label class="form-control add_file_todo" id="selectFile"
-                                                                style="border: none;"></label>
-                                                            <div class="input-group-append">
-                                                                <button class="btn btn-secondary btnFile-icon"
-                                                                    id="addFile-btn" data-toggle="tooltip"
-                                                                    data-placement="top" title="افزودن">
-                                                                    <i class="fa fa-plus m-auto"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 ">
                                     <a data-toggle="collapse" href="#multiCollapseExample4" role="button"
                                         aria-expanded="false" aria-controls="multiCollapseExample1">
                                         <div class="card table-card">
@@ -552,7 +553,7 @@
                                                     <div class="card-body text-center">
                                                         <input class="form-control mb-4" id="ticketTitle"
                                                             placeholder="عنوان"
-                                                            style="border: 1px solid #ced4da !important;">
+                                                            style="border: 1px solid #ced4da !important;background-color: #f4f7fa !important;">
                                                         <textarea class="form-control mb-4" placeholder="متن"
                                                             id="ticketText" rows="6"></textarea>
                                                         <button id="ticketSend"
