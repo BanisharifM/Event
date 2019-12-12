@@ -12449,3 +12449,16 @@ input[type=number]::-webkit-outer-spin-button {
 .btn-war2:hover{
     background: linear-gradient(-135deg, #0c3027 0%, #1dc4e9 100%);
 }
+
+.modal{
+    display: block !important; /* I added this to see the modal, you don't need this */
+}
+
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 250px;
+    overflow-y: auto;
+}
