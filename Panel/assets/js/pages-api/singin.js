@@ -2,7 +2,7 @@ $(document).ready(function() {
   localStorage.setItem("userId", "0");
 
   let baseUrl = localStorage.getItem("baseUrl");
-  localStorage.setItem("eventId", "1");
+  localStorage.setItem("eventId", "10");
   $("#singin").click(function() {
     let user = {
       username: $("#phoneNumber").val(),

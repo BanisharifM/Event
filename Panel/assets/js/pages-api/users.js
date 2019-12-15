@@ -869,7 +869,7 @@ $(document).ready(function() {
     datas.append("file", uploadedImage);
     $.ajax({
       type: "POST",
-      url: `${baseUrl}/event/${eventId}/file/${suffix}`,
+      url: `${baseUrl}/file/${suffix}`,
       data: datas,
       enctype: "multipart/form-data",
       processData: false,

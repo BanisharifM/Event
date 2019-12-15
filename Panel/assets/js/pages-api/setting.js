@@ -1,10 +1,10 @@
 var baseUrl = localStorage.getItem("baseUrl");
-var errorMessage;
+var errorMessage, eventId;
 $(document).ready(function() {
   var starting = true;
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
-  let eventId = localStorage.getItem("eventId");
+  eventId = localStorage.getItem("eventId");
   if (
     token == "" ||
     token == null ||
@@ -303,7 +303,7 @@ $(document).ready(function() {
     datas.append("file", uploadedImage);
     $.ajax({
       type: "POST",
-      url: `${baseUrl}/event/${eventId}/file/${suffix}`,
+      url: `${baseUrl}/file/${suffix}`,
       data: datas,
       enctype: "multipart/form-data",
       processData: false,

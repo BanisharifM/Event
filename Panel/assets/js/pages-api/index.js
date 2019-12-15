@@ -1,12 +1,13 @@
 $(document).ready(function() {
-  let starting = true;
-  let token = localStorage.getItem("token");
-  let refreshToken = localStorage.getItem("refreshToken");
-  let eventId = localStorage.getItem("eventId");
+  var starting = true;
+  var token = localStorage.getItem("token");
+  var refreshToken = localStorage.getItem("refreshToken");
+  eventId = localStorage.getItem("eventId");
+
   if (
-    token === "" ||
-    token === null ||
-    refreshToken === "" ||
+    token == "" ||
+    token == null ||
+    refreshToken == "" ||
     refreshToken == null
   )
     window.location = "signin.html";
@@ -16,6 +17,7 @@ $(document).ready(function() {
   function tokenValidate() {
     $.ajax(`${baseUrl}/auth/token/check`, {
       type: "GET",
+      async: false,
       processData: true,
       contentType: "application/json",
       headers: { token: token },
@@ -28,7 +30,6 @@ $(document).ready(function() {
       }
     });
   }
-
   function refreshingToken() {
     $.ajax(`${baseUrl}/auth/token/refresh`, {
       data: JSON.stringify({ refresh_token: refreshToken }),
@@ -75,7 +76,7 @@ $(document).ready(function() {
       let StudentsOpt = createIndustryOpt(id, name, type);
       $("#reportStudentsList").append(StudentsOpt);
     }
-    document.getElementById("industryStudentsList").onchange = reportOptClick;
+    document.getElementById("reportStudentsList").onchange = reportOptClick;
   }
 
   function createIndustryOpt(id, name, type) {
@@ -215,14 +216,21 @@ $(document).ready(function() {
   }
 
   let schoolEditMode = "default",
-    uploadedFile;
-
+    uploadedFile,
+    uploadedFileUrl,
+    uploadedFileMap,
+    uploadedFileMapUrl;
   // SchoolInformstatuson();
 
   function AddSchoolInformation() {
-    $("#schoolName").text(SchoolInformation.name);
-    $("#schoolDetail").text(SchoolInformation.text);
+    $("#eventName").text(SchoolInformation.name);
+    $("#eventAddress").text(SchoolInformation.address);
+    // $("#eventMapUrl").val(SchoolInformation.mapUrl);
+    $("#eventLat").val(SchoolInformation.lat);
+    $("#eventLng").val(SchoolInformation.lng);
+    $("#eventDetail").val(SchoolInformation.text);
     $("#imageUrl").attr("src", SchoolInformation.imageUrl);
+    $("#imageUrlMap").attr("src", SchoolInformation.mapUrl);
   }
 
   document.getElementById("imageUrl").addEventListener("click", () => {
@@ -237,63 +245,85 @@ $(document).ready(function() {
     $("#imageUrl").attr("src", URL.createObjectURL(uploadedFile));
   }
 
+  document.getElementById("imageUrlMap").addEventListener("click", () => {
+    if (schoolEditMode == "edit") {
+      document.getElementById("imageUrlMapInp").click();
+    }
+  });
+  document.getElementById("imageUrlMapInp").onchange = imageUrlMapChange;
+
+  function imageUrlMapChange() {
+    uploadedFileMap = event.target.files[0];
+    $("#imageUrlMap").attr("src", URL.createObjectURL(uploadedFileMap));
+  }
+
   function enableEditSchool() {
-    $("#schoolNameInp").val($("#schoolName").text());
-    $("#schoolDetailInp").val($("#schoolDetail").text());
+    $("#eventNameInp").val($("#eventName").text());
+    $("#eventName").hide();
+    $("#eventNameInp").show();
 
-    $("#editSchoolIcon").hide();
-    $("#saveSchoolIcon").show();
-    $("#cancelSchoolIcon").show();
+    $("#editEventIcon").hide();
+    $("#saveEventIcon").show();
+    $("#cancelEventIcon").show();
 
-    $("#schoolName").hide();
-    $("#schoolNameInp").css("display", "block");
-
-    $("#schoolDetail").hide();
-    $("#schoolDetailInp").css("display", "block");
+    $("#eventAddress").prop("disabled", false);
+    $("#eventLat").prop("disabled", false);
+    $("#eventLng").prop("disabled", false);
+    $("#eventDetail").prop("disabled", false);
   }
 
   function disableEditSchool() {
-    let name = $("#schoolNameInp").val();
-    let detail = $("#schoolDetailInp").val();
+    $("#eventName").show();
+    $("#eventNameInp").hide();
 
-    $("#editSchoolIcon").show();
-    $("#saveSchoolIcon").hide();
-    $("#cancelSchoolIcon ").hide();
+    $("#editEventIcon").show();
+    $("#saveEventIcon").hide();
+    $("#cancelEventIcon").hide();
 
-    $("#schoolName").show();
-    $("#schoolNameInp").hide();
-
-    $("#schoolDetail").show();
-    $("#schoolDetailInp").hide();
+    $("#eventAddress").prop("disabled", true);
+    $("#eventLat").prop("disabled", true);
+    $("#eventLng").prop("disabled", true);
+    $("#eventDetail").prop("disabled", true);
   }
 
-  $("#editSchoolIcon").click(function() {
+  $("#editEventIcon").click(function() {
     if (schoolEditMode == "default") {
       schoolEditMode = "edit";
-      $("#schoolNameInp").val($("#schoolName").text());
-      $("#schoolDetailInp").val($("#schoolDetail").text());
       enableEditSchool();
     }
   });
-  $("#saveSchoolIcon").click(function() {
+  $("#saveEventIcon").click(function() {
     if (schoolEditMode == "edit") {
-      if ($("#imageUrl").attr("src") != SchoolInformation.imageUrl)
-        PutAvatar(SchoolInformation.id);
-      let name = $("#schoolNameInp").val();
-      let text = $("#schoolDetailInp").val();
-      if (name != SchoolInformation.name || text != SchoolInformation.text) {
-        let datas = {
-          name: name,
-          text: text
-        };
-        PutSchoolInformation(SchoolInformation.id, datas);
-      } else {
-        schoolEditMode = "default";
-        disableEditSchool();
-      }
+      if ($("#imageUrl").attr("src") != SchoolInformation.imageUrl) {
+        errorMessage = "تا آپلود شدن تصویر رویداد منتظر بمانید !";
+        $("#warningNotification").trigger("click");
+        PutAvatar(uploadedFile, false);
+      } else uploadedFileUrl = SchoolInformation.imageUrl;
+      if ($("#imageUrlMap").attr("src") != SchoolInformation.mapUrl) {
+        errorMessage = "تا آپلود شدن نقشه منتظر بمانید !";
+        $("#warningNotification").trigger("click");
+        PutAvatar(uploadedFileMap, true);
+      } else uploadedFileMapUrl = SchoolInformation.mapUrl;
+
+      let name = $("#eventNameInp").val();
+      let address = $("#eventAddress").val();
+      let lat = $("#eventLat").val();
+      let lng = $("#eventLng").val();
+      let detail = $("#eventDetail").val();
+
+      let datas = {
+        name: name,
+        text: detail,
+        imageUrl: uploadedFileUrl,
+        address: address,
+        mapUrl: uploadedFileMapUrl,
+        lat: lat,
+        lng: lng
+      };
+      PutSchoolInformation(datas);
     }
   });
-  $("#cancelSchoolIcon").click(function() {
+  $("#cancelEventIcon").click(function() {
     if (schoolEditMode == "edit") {
       schoolEditMode = "default";
       $("#imageUrl").attr("src", SchoolInformation.imageUrl);
@@ -301,9 +331,9 @@ $(document).ready(function() {
       disableEditSchool();
     }
   });
-
+  GetSchoolInformation();
   function GetSchoolInformation() {
-    $.ajax(`${baseUrl}/event/${eventId}/School`, {
+    $.ajax(`${baseUrl}/event/${eventId}`, {
       type: "GET",
       processData: true,
       contentType: "application/json",
@@ -321,8 +351,8 @@ $(document).ready(function() {
     });
   }
 
-  function PutSchoolInformation(schoolId, datas) {
-    $.ajax(`${baseUrl}/event/${eventId}/School/${schoolId}`, {
+  function PutSchoolInformation(datas) {
+    $.ajax(`${baseUrl}/event/${eventId}`, {
       data: JSON.stringify(datas),
       type: "PUT",
       processData: false,
@@ -332,9 +362,9 @@ $(document).ready(function() {
         errorMessage = "با موفقیت ویرایش شد.";
         $("#successNotification").trigger("click");
         schoolEditMode = "default";
-        $("#schoolName").text($("#schoolNameInp").val());
-        $("#schoolDetail").text($("#schoolDetailInp").val());
         disableEditSchool();
+        SchoolInformation = res;
+        AddSchoolInformation();
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
@@ -345,27 +375,29 @@ $(document).ready(function() {
     });
   }
 
-  function PutAvatar(schoolId) {
+  function PutAvatar(file, isMap) {
+    let fileType = file.type;
+    let suffix = fileType.substring(fileType.indexOf("/") + 1);
     const datas = new FormData();
-    datas.append("file", uploadedFile);
+    datas.append("file", file);
     $.ajax({
-      type: "PUT",
-      url: `${baseUrl}/event/${eventId}/School/${schoolId}/Image`,
-      data: { file: uploadedFile },
+      type: "POST",
+      url: `${baseUrl}/file/${suffix}`,
       data: datas,
+      async: false,
       enctype: "multipart/form-data",
       processData: false,
       contentType: false,
       headers: { token: token },
       success: function(res) {
-        errorMessage = "تصویر به روز شد.";
-        uploadedFile = false;
-        $("#successNotification").trigger("click");
+        if (isMap) uploadedFileMapUrl = res.url;
+        else uploadedFileUrl = res.url;
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = "fg";
+        errorMessage = "عکس آپلود نشد!";
         $("#errorNotification").trigger("click");
+        return false;
       }
     });
   }
