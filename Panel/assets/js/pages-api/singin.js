@@ -2,7 +2,6 @@ $(document).ready(function() {
   localStorage.setItem("userId", "0");
 
   let baseUrl = localStorage.getItem("baseUrl");
-  localStorage.setItem("eventId", "10");
   $("#singin").click(function() {
     let user = {
       username: $("#phoneNumber").val(),
@@ -21,7 +20,7 @@ $(document).ready(function() {
         localStorage.setItem("token", res.access_token);
         localStorage.setItem("refreshToken", res.refresh_token);
         localStorage.setItem("userId", res.id);
-        window.location = "index.html";
+        window.location = "events.html";
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage
