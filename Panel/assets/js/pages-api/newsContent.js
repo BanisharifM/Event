@@ -319,13 +319,19 @@ $(document).ready(function() {
     DeleteNews();
   });
   $("#saveIcon").click(function() {
-    if (!confirm("آیا مطمئن  هستید؟")) return;
+    // if (!confirm("آیا مطمئن  هستید؟")) return;
     $.each($("#tagsList"), function() {
       newsTagList.push($(this).val());
     });
+    let lastIndex = newsTagList.length - 1;
+    if (newsTagList[lastIndex].length == 0) {
+      errorMessage = "لطفا حداقل یک تگ خبر انتخاب کنید !";
+      $("#warningNotification").trigger("click");
+      return;
+    }
     let arr2 = [];
-    for (i in newsTagList[0]) {
-      let id = newsTagList[0][i].replace("NewsTags", "");
+    for (i in newsTagList[lastIndex]) {
+      let id = newsTagList[lastIndex][i].replace("NewsTags", "");
       arr2.push({ name: newsTag.find(x => x.id == id).name });
     }
     let data = {
@@ -335,7 +341,6 @@ $(document).ready(function() {
       images: newsImagesArr,
       file: newsFile
     };
-    console.log(data);
     PutNews(data);
   });
   $("#cancelIcon").click(function() {
