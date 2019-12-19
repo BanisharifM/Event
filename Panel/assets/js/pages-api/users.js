@@ -601,6 +601,7 @@ $(document).ready(function() {
       type +
       id +
       '" >' +
+      0 +
       phoneNumber +
       "</h6>" +
       '<input id="phoneNumberInp' +

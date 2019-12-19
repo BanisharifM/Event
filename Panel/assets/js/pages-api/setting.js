@@ -4,6 +4,7 @@ $(document).ready(function() {
   var starting = true;
   var token = localStorage.getItem("token");
   var refreshToken = localStorage.getItem("refreshToken");
+  // var userId = localStorage.getItem("userId");
   eventId = localStorage.getItem("eventId");
   if (
     token == "" ||
@@ -17,6 +18,7 @@ $(document).ready(function() {
   function tokenValidate() {
     $.ajax(`${baseUrl}/auth/token/check`, {
       type: "GET",
+      async: false,
       processData: true,
       contentType: "application/json",
       headers: { token: token },
@@ -118,8 +120,13 @@ $(document).ready(function() {
     PostTicket(text, title);
   });
   function PostTicket(text, title) {
-    $.ajax(`${baseUrl}/event/${eventId}/Ticket`, {
-      data: JSON.stringify({ title: title, text: text }),
+    $.ajax(`${baseUrl}/event/${eventId}/ticket/panel`, {
+      data: JSON.stringify({
+        title: title,
+        question: text,
+        eventId: eventId,
+        adminId: userId
+      }),
       type: "POST",
       processData: true,
       contentType: "application/json",
@@ -129,6 +136,7 @@ $(document).ready(function() {
         $("#successNotification").trigger("click");
         $("#ticketText").val("");
         $("#ticketTitle").val("");
+        setTimeout($("#multiCollapseExample4").collapse("hide"), 3000);
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         // set errorMessage

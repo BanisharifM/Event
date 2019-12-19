@@ -12345,6 +12345,9 @@ select {
     outline:none !important;
     box-shadow: none !important;
 }
+.input-border{
+    border: 1px solid rgb(169, 169, 169) !important;
+}
 input:-internal-autofill-selected{
     background-color: inherit !important;
     color: white!important;
@@ -12468,6 +12471,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin-left: 10px;
 }
 .eventImg{
-    width: 70px;
-    height: 70px;
+    border-radius: 2px;
+    width: 80px;
+    height: 80px;
 }

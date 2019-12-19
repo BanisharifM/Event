@@ -48,44 +48,13 @@ $(document).ready(function() {
     });
   }
 
-  let id = localStorage.getItem("Message_ID");
+  let answere = localStorage.getItem("Ticket_Ans");
   let adminId = localStorage.getItem("userId");
-  let title = localStorage.getItem("Message_Title");
-  let question = localStorage.getItem("Message_Qu");
+  let title = localStorage.getItem("Ticket_Title");
+  let question = localStorage.getItem("Ticket_Qu");
   $("#ticketTitle").val(title);
   $("#ticketQuestion").val(question);
-
-  function PutNews(answer) {
-    $.ajax(`${baseUrl}/event/${eventId}/ticket/${id}`, {
-      data: JSON.stringify({ answer: answer, adminId: adminId }),
-      type: "PUT",
-      processData: false,
-      contentType: "application/json",
-      headers: { token: token },
-      success: function(res) {
-        errorMessage = "با موفقیت انجام شد.";
-        $("#successNotification").trigger("click");
-        window.location = "message.html";
-      },
-      error: function(jqXHR, textStatus, errorThrown, error) {
-        // set errorMessage
-        var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = err.msg;
-        $("#errorNotification").trigger("click");
-      }
-    });
-  }
-
-  $("#ticketAnswering").click(function() {
-    let answer = $("#ticketAnswer").val();
-    if (answer == "" || answer == null) {
-      errorMessage = "کادر پاسخ را تکمیل کنید.";
-      $("#errorNotification").trigger("click");
-      return;
-    }
-    if (!confirm("آیا مطمئن  هستید پاسخ داده شود شود؟")) return;
-    PutNews(answer);
-  });
+  $("#ticketAnswer").val(answere);
 
   //notification
   function notify(from, align, icon, type, animIn, animOut) {

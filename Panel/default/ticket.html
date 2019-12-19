@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>پیام</title>
+    <title>پیغام های پشتیبانی</title>
 
 
 
@@ -47,7 +47,7 @@
         <div class="navbar-wrapper">
             <br>
             <div class="navbar-brand header-logo">
-                <a href="index.html" class="b-brand">
+                <a href="events.html" class="b-brand">
                     <img src="../assets/images/widget/event9.png" style="width:200px;height:50px;">
                     <!-- <div class="b-bg">
                         <i class="fas fa-graduation-cap"></i>
@@ -74,10 +74,10 @@
                     <li data-username="message" class="nav-item "><a href="news.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="far fa-newspaper"></i></span><span
                                 class="pcoded-mtext"></span>اخبار</span></a></li>
-                    <li data-username="message" class="nav-item active"><a href="message.html" class="nav-link"><span
+                    <li data-username="message" class="nav-item "><a href="message.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="feather icon-message-circle"></i></span><span
                                 class="pcoded-mtext">پیام</span></a></li>
-                    <li data-username="message" class="nav-item"><a href="setting.html" class="nav-link"><span
+                    <li data-username="message" class="nav-item active"><a href="setting.html" class="nav-link"><span
                                 class="pcoded-micon"><i class="feather icon-settings"></i></span><span
                                 class="pcoded-mtext">تنظیمات</span></a></li>
                     <li data-username="message" class="nav-item"><a href="signin.html" class="nav-link"><span
@@ -92,7 +92,7 @@
     <header class="navbar pcoded-header navbar-expand-lg navbar-light">
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="#!" dideo-checked="true"><span></span></a>
-            <a href="events.html" class="b-brand" dideo-checked="true">
+            <a href="index.html" class="b-brand" dideo-checked="true">
                 <img src="../assets/images/widget/event8.png" style="width:200px;height:50px;">
             </a>
         </div>
@@ -359,7 +359,7 @@
                                             <div class="card-header" id="headingOne">
                                                 <h5 class="mb-0"><a href="#!" data-toggle="collapse"
                                                         data-target="#collapse1" aria-expanded="true"
-                                                        aria-controls="collapse1">لیست پیام ها</a></h5>
+                                                        aria-controls="collapse1">لیست پیغام های پشتیبانی</a></h5>
                                             </div>
                                             <div id="collapse1" class=" card-body collapse show"
                                                 aria-labelledby="headingOne" data-parent="#accordionExample1">
@@ -367,6 +367,7 @@
                                                     <table class="table table-hover">
                                                         <thead>
                                                             <tr>
+                                                                <th class="border-top-0">وضعیت</th>
                                                                 <th class="border-top-0">عنوان</th>
                                                                 <th class="border-top-0">تاریخ</th>
                                                                 <th class="border-top-0">ساعت</th>
@@ -392,6 +393,9 @@
                         data-type="danger" data-from="top" data-align="right">Danger</button>
                     <button id="successNotification" class="btn notifications btn-success" data-type="success"
                         style="display: none;" data-from="top" data-align="right">success</button>
+
+                    <button id="warningNotification" class="btn notifications btn-warning" data-type="warning"
+                        data-from="top" data-align="right" style="display: none;">Warning</button>
 
                 </div>
             </div>
@@ -506,7 +510,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="../assets/plugins/notification/js/bootstrap-growl.min.js"></script>
 
-    <script src="../assets/js/pages-api/message.js"></script>
+    <script src="../assets/js/pages-api/ticket.js"></script>
 
 </body>
 

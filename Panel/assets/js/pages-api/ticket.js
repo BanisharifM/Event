@@ -55,6 +55,7 @@ $(document).ready(function() {
     for (i in exampRes) {
       let id = exampRes[i].id;
       let name = exampRes[i].title;
+      let status = exampRes[i].answered;
       let date = exampRes[i].createDate.substring(0, 10);
       let time = exampRes[i].createDate.substring(11);
       let text = exampRes[i].question
@@ -62,16 +63,19 @@ $(document).ready(function() {
         .slice(0, 15)
         .join(" ");
 
-      let tr = createTestDateTr(id, "TestDate", name, date, time, text);
+      let tr = createTestDateTr(id, "TestDate", name, date, time, text, status);
       $("#TestDateList").append(tr);
       document.getElementById("tr" + id).onclick = gotoMessageContent;
     }
   }
-  function createTestDateTr(id, type, name, date, time, text) {
+  function createTestDateTr(id, type, name, date, time, text, status) {
     return (
       '<tr id="tr' +
       id +
       '" style="cursor:pointer;">' +
+      "<td>" +
+      testStatus(id, type, status) +
+      "</td>" +
       "<td>" +
       testDateName(id, type, name) +
       "</td>" +
@@ -92,13 +96,37 @@ $(document).ready(function() {
     let objectId = $(this).attr("id");
     let id = objectId.match(/\d+/)[0];
     let message = allMessage.find(x => x.id == id);
-    localStorage.setItem("Message_ID", id);
-    localStorage.setItem("Message_Title", message.title);
-    localStorage.setItem("Message_Qu", message.question);
-    window.location = "messageContent.html";
+    if (!message.answered) {
+      errorMessage = "هنوز پاسخی داده نشده است !";
+      $("#warningNotification").trigger("click");
+      return;
+    }
+    localStorage.setItem("Ticket_Ans", message.answer);
+    localStorage.setItem("Ticket_Title", message.title);
+    localStorage.setItem("Ticket_Qu", message.question);
+    window.location = "ticketContent.html";
     //go to news page
   }
 
+  function testStatus(id, type, status) {
+    return (
+      '<div class="to-do-list" style="margin-top:-17px;" disabled>' +
+      '<div class="checkbox-fade fade-in-primary"' +
+      'style="pointer-events:none;">' +
+      '<label class="check-task done-task">' +
+      '<input type="checkbox" checked="">' +
+      '<span class="cr mr-3"' +
+      (status ? "" : 'style="background: #f44236 !important;') +
+      '">' +
+      '<i class="cr-icon fas ' +
+      (status ? 'fa-check"' : 'fa-times"') +
+      'txt-danger"></i>' +
+      "</span>" +
+      "</label>" +
+      "</div>" +
+      "</div>"
+    );
+  }
   function testDateName(id, type, name) {
     return (
       '<h6 id="Name' +
@@ -145,7 +173,7 @@ $(document).ready(function() {
   }
 
   function GetMessages() {
-    $.ajax(`${baseUrl}/event/${eventId}/ticket`, {
+    $.ajax(`${baseUrl}/event/${eventId}/ticket/panel`, {
       type: "GET",
       processData: false,
       async: false,

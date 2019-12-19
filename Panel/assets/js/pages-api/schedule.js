@@ -22,6 +22,7 @@ $(document).ready(function() {
   function tokenValidate() {
     $.ajax(`${baseUrl}/auth/token/check`, {
       type: "GET",
+      async: false,
       processData: true,
       contentType: "application/json",
       headers: { token: token },
@@ -215,7 +216,7 @@ $(document).ready(function() {
       '" >' +
       detail +
       "</span>" +
-      '<input id="dateInp' +
+      '<input class="input-border" id="dateInp' +
       type +
       id +
       '" onClick="this.select();" type="text" value="' +
@@ -241,7 +242,7 @@ $(document).ready(function() {
       '" >' +
       detail +
       "</span>" +
-      '<input id="timeStartInp' +
+      '<input class="input-border" id="timeStartInp' +
       type +
       id +
       '" onClick="this.select();" type="text" value="' +
@@ -267,7 +268,7 @@ $(document).ready(function() {
       '" >' +
       detail +
       "</span>" +
-      '<input id="timeEndInp' +
+      '<input class="input-border" id="timeEndInp' +
       type +
       id +
       '" onClick="this.select();" type="text" value="' +
@@ -498,7 +499,7 @@ $(document).ready(function() {
       '" > ' +
       title +
       "</h6>" +
-      '<input id="titleInp' +
+      '<input class="input-border" id="titleInp' +
       type +
       id +
       '" onClick="this.select();" type="text" value="' +
@@ -520,7 +521,7 @@ $(document).ready(function() {
       '" > ' +
       location +
       "</h6>" +
-      '<input id="locationInp' +
+      '<input class="input-border" id="locationInp' +
       type +
       id +
       '" onClick="this.select();" type="text" value="' +
