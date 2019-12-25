@@ -12472,6 +12472,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .eventImg{
     border-radius: 2px;
-    width: 80px;
-    height: 80px;
+    width:100px;
+    height:100px;
 }
+@media only screen and (max-width: 770px) {
+    #mm {
+      margin-top: 60px !important;
+    }
+  }
