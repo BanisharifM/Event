@@ -655,7 +655,7 @@ $(document).ready(function() {
     $("#userImage").attr("src", people.imageUrl);
     $("#userFirstName").text(people.name);
     $("#userLastName").text(people.lastname);
-    $("#userMobile").text(people.mobile);
+    $("#userMobile").text("0" + people.mobile);
     $("#userBio")
       .val(people.bio)
       .prop("disabled", true);
@@ -741,6 +741,16 @@ $(document).ready(function() {
     let speaker = filterNav[modalType].people.speaker;
     let gender = $("#genderList").val() == "male" ? true : false;
     let id = filterNav[modalType].people.id;
+    let phoneNumber = recentUser.editable
+      ? $("#userMobileInp")
+          .val()
+          .substring(1)
+      : phoneNumber;
+    if (phoneNumber.length != 10) {
+      errorMessage = "شماره تلفن وارد شده معتبر نیست";
+      $("#warningNotification").trigger("click");
+      return;
+    }
 
     let industryObject = $("#industryList").val();
     let industryId = industryObject.match(/\d+/)[0];
@@ -755,9 +765,7 @@ $(document).ready(function() {
         ? "http://pghavin-s1.ir/events/files/da1.jpg"
         : "http://pghavin-s1.ir/events/files/da2.jpg",
       industryId: industryId,
-      mobile: recentUser.editable
-        ? $("#userMobileInp").val()
-        : recentUser.mobile,
+      mobile: phoneNumber,
       bio: $("#userBio").val(),
       gender: gender,
       valid: valid,
