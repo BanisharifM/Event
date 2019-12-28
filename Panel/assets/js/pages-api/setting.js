@@ -329,11 +329,18 @@ $(document).ready(function() {
     });
   }
 
-  let uploadedFile;
+  let uploadedFile, fileTypeId;
   let addFileMode = false;
-  document.getElementById("selectFileIcon").addEventListener("click", () => {
+  document.getElementById("selectFileIcon").addEventListener("click", () => {});
+  function openSelectFile() {
+    let objectId = $(this).attr("id");
+    let id = objectId.match(/\d+/)[0];
+    fileTypeId = id;
+    let type = $(this).attr("format");
+    $("#selectFileInp").attr("accept", "." + type);
+    $("#multiCollapseExample31").collapse("hide");
     document.getElementById("selectFileInp").click();
-  });
+  }
   document.getElementById("selectFileInp").onchange = FileChange;
   function FileChange() {
     uploadedFile = event.target.files[0];
@@ -343,37 +350,79 @@ $(document).ready(function() {
 
   $("#addFile-btn").click(function() {
     if (!addFileMode) return;
-    let fileType = uploadedFile.type;
-    let suffix = fileType.substring(fileType.indexOf("/") + 1);
-    alert(suffix);
-    //   PutFile(recentNews.id,suffix);
+    // let fileType = uploadedFile.type;
+    // let suffix = fileType.substring(fileType.indexOf("/") + 1);
+    // alert(suffix);
+    PutFile();
     addFileMode = false;
   });
   function PutFile(newsId, suffix) {
     const datas = new FormData();
     datas.append("file", uploadedFile);
     $.ajax({
-      type: "PUT",
-      url: `${baseUrl}/event/${eventId}/News/${newsId}/File/Suffix/${suffix}`,
+      type: "POST",
+      url: `${baseUrl}/event/${eventId}/import/${fileTypeId}`,
       data: datas,
       enctype: "multipart/form-data",
       processData: false,
       contentType: false,
       headers: { token: token },
       success: function(res) {
-        recentNews.fileUrl.push(res);
-        AddFiles(recentNews.fileUrl);
-        errorMessage = "فایل افزوده شد.";
+        errorMessage = "با موفقیت آپلود شد !";
         $("#successNotification").trigger("click");
         $("#selectFile").text("");
+        $("#multiCollapseExample6").collapse("hide");
+        document.getElementById("selectFileInp").value = "";
       },
       error: function(jqXHR, textStatus, errorThrown, error) {
         var err = eval("(" + jqXHR.responseText + ")");
-        errorMessage = "فیلم آپلود نشد!";
+        errorMessage = "فایل آپلود نشد !";
         $("#errorNotification").trigger("click");
         return false;
       }
     });
+  }
+
+  //user type list
+  let allType;
+  GetAllType();
+  function GetAllType() {
+    $.ajax(`${baseUrl}/event/${eventId}/import`, {
+      type: "GET",
+      processData: true,
+      contentType: "application/json",
+      headers: { token: token },
+      success: function(res) {
+        allType = res;
+        AddAllType();
+      },
+      error: function(jqXHR, textStatus, errorThrown, error) {
+        // set errorMessage
+        var err = eval("(" + jqXHR.responseText + ")");
+        errorMessage = err.msg;
+        $("#errorNotification").trigger("click");
+      }
+    });
+  }
+  function AddAllType() {
+    $(".new-tasks").empty();
+    for (j in allType) {
+      let tr = typeItem(allType[j].id, allType[j].name, allType[j].format);
+      $(".new-tasks").append(tr);
+      document.getElementById("type" + allType[j].id).onclick = openSelectFile;
+    }
+  }
+  function typeItem(id, typeName, format) {
+    return (
+      '<label id="type' +
+      id +
+      '" format="' +
+      format +
+      '" class="check-task custom-control custom-checkbox d-flex justify-content" style="margin-top:12px; cursor: pointer;">' +
+      '<span class="custom-control-label" for="checkbox11">' +
+      typeName +
+      "</span></label>"
+    );
   }
 
   //notification

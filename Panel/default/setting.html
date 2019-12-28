@@ -412,11 +412,16 @@
 
                                                     <div class="card-block">
                                                         <div class="input-group mb-3" id="selectFileNav">
-                                                            <img id="selectFileIcon" class="rounded-circle"
-                                                                style="width:40px; cursor: pointer;"
-                                                                src='../assets/images/user/add-file.png' alt="تصویر"
-                                                                data-toggle="tooltip" data-placement="right"
-                                                                title="انتخاب فایل">
+
+                                                            <a data-toggle="collapse" href="#multiCollapseExample31"
+                                                                role="button" aria-expanded="false"
+                                                                aria-controls="multiCollapseExample1">
+                                                                <img id="selectFileIcon" class="rounded-circle"
+                                                                    style="width:40px; cursor: pointer;"
+                                                                    src='../assets/images/user/add-file.png' alt="تصویر"
+                                                                    data-toggle="tooltip" data-placement="right"
+                                                                    title="انتخاب فایل">
+                                                            </a>
                                                             <input type="file" name="task-insert"
                                                                 class="form-control add_file_todo"
                                                                 placeholder="انتخاب فایل" required="" id="selectFileInp"
@@ -429,6 +434,22 @@
                                                                     data-placement="top" title="افزودن">
                                                                     <i class="fa fa-plus m-auto"></i>
                                                                 </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="collapse multi-collapse mt-1"
+                                                                    id="multiCollapseExample31">
+
+                                                                    <div class="new-tasks">
+                                                                        <label
+                                                                            class="check-task custom-control custom-checkbox d-flex justify-content"
+                                                                            style="margin-top:12px; cursor: pointer;"><span
+                                                                                class="custom-control-label"
+                                                                                for="checkbox11">نرم
+                                                                                افزار</span></label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -558,7 +579,8 @@
                                                             id="ticketText" rows="6"></textarea>
                                                         <button id="ticketSend"
                                                             class="btn btn-primary shadow-2 mb-3">ارسال</button>
-                                                        <h6><a href="ticket.html"> مشاهده تمامی پیغام ها</a></h6>
+                                                        <h6 style="font-size: 16px;"><a href="ticket.html"> مشاهده تمامی
+                                                                پیغام ها</a></h6>
                                                     </div>
                                                 </div>
                                             </div>
