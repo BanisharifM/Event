@@ -481,14 +481,65 @@ $(document).ready(function() {
     if (!addFileMode) return;
     let fileType = uploadedFile.type;
     let suffix = fileType.substring(fileType.indexOf("/") + 1);
-    PutFile(suffix);
     $("#selectFile").text("انتخاب فایل ...");
+    $("#selectFileNav").hide();
+    $("#progress").show();
+    PutFile(suffix);
+    // testtt();
     addFileMode = false;
   });
   function PutFile(suffix) {
     const datas = new FormData();
     datas.append("file", uploadedFile);
     $.ajax({
+      xhr: function() {
+        var xhr = new window.XMLHttpRequest();
+        xhr.upload.addEventListener(
+          "progress",
+          function(evt) {
+            if (evt.lengthComputable) {
+              var percentComplete = evt.loaded / evt.total;
+              var roundPercentComplete = Math.round(percentComplete * 100);
+              console.log(roundPercentComplete);
+              // console.log(percentComplete);
+              $("#progressBar")
+                .css({
+                  width: percentComplete * 100 + "%"
+                })
+                .text(roundPercentComplete + "%");
+              if (percentComplete < 0.33) {
+                $("#progressBar").addClass("bg-danger");
+              } else if (percentComplete < 0.66) {
+                $("#progressBar")
+                  .removeClass("bg-danger")
+                  .addClass("bg-warning");
+              } else if (percentComplete < 1) {
+                $("#progressBar").removeClass("bg-warning");
+              } else if (percentComplete === 1) {
+                $("#progressBar").addClass("bg-success");
+              }
+            }
+          },
+          false
+        );
+        // xhr.addEventListener(
+        //   "progress",
+        //   function(evt) {
+        //     if (evt.lengthComputable) {
+        //       var percentComplete = evt.loaded / evt.total;
+        //       console.log(percentComplete);
+        //       $("#progressBar")
+        //         .css({
+        //           width: percentComplete * 100 + "%"
+        //         })
+        //         .text(roundPercentComplete * 100 + "%");
+        //     }
+        //   },
+        //   false
+        // );
+        return xhr;
+      },
+
       type: "POST",
       url: `${baseUrl}/file/${suffix}`,
       data: datas,
@@ -500,7 +551,13 @@ $(document).ready(function() {
         newsFile = res.url;
         AddFiles(newsFile);
         errorMessage = "فایل آپلود شد!";
-        $("#selectFileNav").hide();
+        $("#progress").hide();
+        $("#progressBar")
+          .css({
+            width: "0%"
+          })
+          .text("0%")
+          .removeClass("bg-success");
         $("#FileLable").show();
         $("#successNotification").trigger("click");
       },
