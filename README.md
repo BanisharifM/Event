@@ -1,8 +1,7 @@
 <h1 align="center">
   <br>
   <a href="#"><img src="./Panel/assets/images/widget/Logo.png" alt="Event" width="200"></a>
-  <br>
-  EVENT
+  <br>  
   <br>
 </h1>
 
