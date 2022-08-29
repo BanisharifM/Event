@@ -4,13 +4,13 @@ $(document).ready(function() {
   var refreshToken = localStorage.getItem("refreshToken");
   let eventId = localStorage.getItem("eventId");
 
-  if (
-    token === "" ||
-    token === null ||
-    refreshToken === "" ||
-    refreshToken == null
-  )
-    window.location = "signin.html";
+  // if (
+  //   token === "" ||
+  //   token === null ||
+  //   refreshToken === "" ||
+  //   refreshToken == null
+  // )
+  //   window.location = "signin.html";
   baseUrl = localStorage.getItem("baseUrl");
   tokenValidate();
 
